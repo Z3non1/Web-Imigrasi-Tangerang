@@ -39,8 +39,6 @@ body {
   to { opacity: 1; }
 }
 
-/* Tambahkan kode ini di bagian bawah file index.css kamu */
-
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }

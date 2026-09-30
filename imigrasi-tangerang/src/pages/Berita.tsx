@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LanguageContext } from '../App';
 import { 
-  Search, Phone, MapPin, Mail, Shield, Globe, Camera, Hash, Users, ChevronLeft, ChevronRight,
-  Languages, ChevronDown, X, Bot, MessageSquare, ExternalLink, Send 
+  Search, Phone, Shield, Globe, ChevronLeft, ChevronRight,
+  Languages, ChevronDown, X, Bot, MessageSquare, Send 
 } from 'lucide-react';
 
 const translations = {
@@ -34,17 +34,22 @@ const translations = {
 export default function Berita() {
   const { lang, setLang } = useContext(LanguageContext);
   const t = translations[lang as 'ID' | 'EN'];
+  
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState(t.filter.all);
-
   const [isCsOpen, setIsCsOpen] = useState(false);
   const [isIvaraOpen, setIsIvaraOpen] = useState(false);
   const [messages, setMessages] = useState([{ sender: 'ivara', text: lang === 'ID' ? 'Halo! Saya IVARA. Ada yang bisa dibantu?' : 'Hello! I am IVARA. How can I help?' }]);
   const [inputMessage, setInputMessage] = useState('');
 
-  // Sinkronisasi kategori aktif jika bahasa berubah
   useEffect(() => { setActiveCategory(t.filter.all); }, [lang, t.filter.all]);
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => { 
+    window.scrollTo(0, 0); 
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,107 +63,128 @@ export default function Berita() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans relative overflow-hidden">
+      
       {/* NAVBAR */}
-      <nav className="bg-[#0b162c] text-white px-6 py-4 flex items-center justify-between sticky top-0 z-40 shadow-md">
+      <nav className={`fixed w-full top-0 z-50 transition-all duration-500 ease-in-out px-6 py-4 flex items-center justify-between ${isScrolled ? 'bg-[#0b162c]/90 backdrop-blur-md shadow-lg py-3' : 'bg-[#0b162c] shadow-md'}`}>
         <div className="flex items-center space-x-4">
           <div className="flex -space-x-2">
-            <div className="w-12 h-12 bg-[#0b162c] rounded-full border-2 border-white flex items-center justify-center z-10"><div className="w-full h-full bg-yellow-600 rounded-full flex items-center justify-center"><Shield className="w-5 h-5 text-white" /></div></div>
-            <div className="w-12 h-12 bg-[#0b162c] rounded-full border-2 border-white flex items-center justify-center"><div className="w-full h-full bg-teal-600 rounded-full flex items-center justify-center"><Globe className="w-5 h-5 text-white" /></div></div>
+            <div className="w-11 h-11 bg-[#0b162c] rounded-full border-2 border-white flex items-center justify-center z-10 hover:rotate-12 transition-transform duration-300"><div className="w-full h-full bg-yellow-600 rounded-full flex items-center justify-center"><Shield className="w-5 h-5 text-white" /></div></div>
+            <div className="w-11 h-11 bg-[#0b162c] rounded-full border-2 border-white flex items-center justify-center hover:-rotate-12 transition-transform duration-300"><div className="w-full h-full bg-teal-600 rounded-full flex items-center justify-center"><Globe className="w-5 h-5 text-white" /></div></div>
           </div>
           <div className="hidden lg:block leading-tight">
-            <div className="font-bold text-[15px] tracking-wide">KANTOR IMIGRASI KELAS I KHUSUS NON TPI</div>
-            <div className="text-[12px] font-bold text-[#eab308] tracking-wider mt-0.5">TANGERANG</div>
+            <div className="font-bold text-[14px] tracking-wide text-white">KANTOR IMIGRASI KELAS I KHUSUS NON TPI</div>
+            <div className="text-[11px] font-bold text-[#eab308] tracking-wider mt-0.5">TANGERANG</div>
           </div>
         </div>
+        
         <div className="hidden lg:flex items-center space-x-8">
           <div className="flex space-x-7 font-medium text-[14px]">
-            <Link to="/" className="text-white hover:text-[#eab308] mt-0.5">{t.nav.home}</Link>
-            <Link to="/informasi-publik" className="text-white hover:text-[#eab308] mt-0.5">{t.nav.info}</Link>
-            <Link to="/berita" className="text-[#eab308] flex flex-col items-center">{t.nav.news}<span className="w-5 h-[2px] bg-[#eab308] mt-1.5"></span></Link>
-            <Link to="/tentang-kami" className="text-white hover:text-[#eab308] mt-0.5">{t.nav.about}</Link>
-            <Link to="/faq" className="text-white hover:text-[#eab308] mt-0.5">{t.nav.faq}</Link>
+            <Link to="/" className="text-white hover:text-[#eab308] hover:-translate-y-0.5 transition-transform">{t.nav.home}</Link>
+            <Link to="/informasi-publik" className="text-white hover:text-[#eab308] hover:-translate-y-0.5 transition-transform">{t.nav.info}</Link>
+            <Link to="/berita" className="text-[#eab308] flex flex-col items-center">{t.nav.news}<span className="w-5 h-[2px] bg-[#eab308] mt-1.5 transition-all"></span></Link>
+            <Link to="/tentang-kami" className="text-white hover:text-[#eab308] hover:-translate-y-0.5 transition-transform">{t.nav.about}</Link>
+            <Link to="/faq" className="text-white hover:text-[#eab308] hover:-translate-y-0.5 transition-transform">{t.nav.faq}</Link>
           </div>
           <div className="flex items-center space-x-4">
-            <div className="relative flex items-center">
-              <Search className="w-4 h-4 text-gray-400 absolute left-4" />
-              <input type="text" placeholder={t.nav.search} className="pl-10 pr-4 py-2.5 rounded-full bg-[#1e3a5f] text-white focus:outline-none focus:ring-1 focus:ring-yellow-500 w-[180px] text-sm" />
+            <div className="relative flex items-center group">
+              <Search className="w-4 h-4 text-gray-400 absolute left-4 group-focus-within:text-yellow-400 transition-colors" />
+              <input type="text" placeholder={t.nav.search} className="pl-10 pr-4 py-2 rounded-full bg-white/10 border border-white/20 text-white focus:outline-none focus:bg-white/20 focus:ring-1 focus:ring-yellow-500 w-[160px] focus:w-[200px] transition-all duration-300 text-sm backdrop-blur-sm" />
             </div>
             <div className="relative">
-              <button onClick={() => setIsLangOpen(!isLangOpen)} className="flex items-center space-x-1.5 bg-[#1e3a5f] hover:bg-[#2a4a7f] px-3 py-2 rounded-full focus:outline-none">
+              <button onClick={() => setIsLangOpen(!isLangOpen)} className="flex items-center space-x-1.5 bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-2 rounded-full transition-all duration-300">
                 <Languages className="w-4 h-4 text-yellow-400" />
                 <span className="text-sm font-bold text-white">{lang}</span>
-                <ChevronDown className="w-4 h-4 text-white" />
+                <ChevronDown className={`w-4 h-4 text-white transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} />
               </button>
-              {isLangOpen && (
-                <div className="absolute right-0 mt-2 w-32 bg-white rounded-xl shadow-xl overflow-hidden z-50 animate-fade-in">
-                  <button onClick={() => { setLang('ID'); setIsLangOpen(false); }} className={`w-full text-left px-4 py-3 text-sm flex items-center space-x-2 ${lang === 'ID' ? 'bg-blue-50 text-blue-700 font-bold' : 'text-gray-700 hover:bg-gray-50'}`}><span>🇮🇩</span> <span>Indonesia</span></button>
-                  <button onClick={() => { setLang('EN'); setIsLangOpen(false); }} className={`w-full text-left px-4 py-3 text-sm flex items-center space-x-2 ${lang === 'EN' ? 'bg-blue-50 text-blue-700 font-bold' : 'text-gray-700 hover:bg-gray-50'}`}><span>🇬🇧</span> <span>English</span></button>
-                </div>
-              )}
+              <div className={`absolute right-0 mt-3 w-36 bg-white rounded-2xl shadow-2xl overflow-hidden z-50 border border-gray-100 transform origin-top-right transition-all duration-300 ease-out ${isLangOpen ? 'scale-100 opacity-100 visible translate-y-0' : 'scale-95 opacity-0 invisible -translate-y-2'}`}>
+                <button onClick={() => { setLang('ID'); setIsLangOpen(false); }} className={`w-full text-left px-4 py-3 text-sm flex items-center space-x-3 transition-colors ${lang === 'ID' ? 'bg-blue-50 text-blue-700 font-bold' : 'text-gray-700 hover:bg-gray-50'}`}><span className="text-lg">🇮🇩</span> <span>Indonesia</span></button>
+                <button onClick={() => { setLang('EN'); setIsLangOpen(false); }} className={`w-full text-left px-4 py-3 text-sm flex items-center space-x-3 transition-colors border-t border-gray-50 ${lang === 'EN' ? 'bg-blue-50 text-blue-700 font-bold' : 'text-gray-700 hover:bg-gray-50'}`}><span className="text-lg">🇬🇧</span> <span>English</span></button>
+              </div>
             </div>
           </div>
         </div>
       </nav>
 
       {/* HERO SECTION */}
-      <div className="relative bg-[#1e3a8a] h-[260px] animate-fade-in group">
-        <div className="absolute inset-0 overflow-hidden"><img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=1974&auto=format&fit=crop" className="w-full h-full object-cover opacity-50 mix-blend-overlay transition-transform duration-[10s] group-hover:scale-110"/></div>
-        <div className="absolute top-6 left-6 z-20"><Link to="/" className="text-white hover:text-yellow-400 flex items-center font-semibold bg-black/30 px-3 py-1.5 rounded-full"><ChevronLeft className="w-5 h-5 mr-1" /> {t.hero.back}</Link></div>
-        <div className="absolute inset-0 flex flex-col justify-center px-10 lg:px-24">
-          <h1 className="text-4xl lg:text-5xl font-extrabold text-white">{t.hero.title}</h1>
-          <p className="text-gray-200 mt-2 font-medium">{t.hero.sub}</p>
+      <div className="relative bg-[#1e3a8a] h-[350px] overflow-hidden group">
+        <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=1974" className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-overlay transform group-hover:scale-110 transition-transform duration-[15s] ease-out"/>
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-50 to-transparent bottom-0"></div>
+        <div className="absolute top-24 left-6 z-20">
+          <Link to="/" className="text-white hover:text-yellow-400 flex items-center font-semibold bg-white/10 border border-white/20 px-4 py-2 rounded-full backdrop-blur-sm hover:bg-white/20 transition-all"><ChevronLeft className="w-5 h-5 mr-1" /> {t.hero.back}</Link>
+        </div>
+        <div className="absolute inset-0 flex flex-col justify-center items-center lg:items-start lg:pl-24 pt-10">
+          <h1 className="text-4xl lg:text-6xl font-extrabold text-white drop-shadow-lg tracking-tight animate-fade-in-up">{t.hero.title}</h1>
+          <p className="text-gray-200 mt-3 font-medium text-lg lg:text-xl drop-shadow-md animate-fade-in-up delay-100">{t.hero.sub}</p>
         </div>
       </div>
 
-      {/* CONTENT */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full">
-        <div className="flex overflow-x-auto pb-4 mb-8 space-x-3 hide-scrollbar">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full -mt-12 relative z-10">
+        {/* Kategori Berita */}
+        <div className="flex overflow-x-auto pb-6 mb-8 space-x-4 hide-scrollbar animate-fade-in-up delay-200">
           {categories.map((cat, idx) => (
-            <button key={idx} onClick={() => setActiveCategory(cat)} className={`whitespace-nowrap px-5 py-2.5 rounded-lg text-sm font-semibold transition-all border ${activeCategory === cat ? 'bg-[#121b4a] text-white border-[#121b4a]' : 'bg-white text-gray-600 border-gray-200 hover:border-blue-400'}`}>{cat}</button>
+            <button key={idx} onClick={() => setActiveCategory(cat)} className={`whitespace-nowrap px-6 py-3 rounded-2xl text-sm font-extrabold transition-all duration-300 shadow-sm ${activeCategory === cat ? 'bg-[#1e293b] text-white shadow-lg shadow-[#1e293b]/20 scale-105' : 'bg-white text-gray-600 border border-gray-200 hover:border-blue-400 hover:text-blue-700'}`}>{cat}</button>
           ))}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        {/* Grid Berita */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in-up delay-300">
           {filteredNews.map((news) => (
             <Link to={`/berita/${news.id}`} key={news.id}>
-              <div className="group bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between h-full">
+              <div className="group bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between h-full">
                 <div>
-                  <div className="overflow-hidden"><img src={`https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?q=80&w=800&auto=format&fit=crop&sig=${news.id + 10}`} className="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-500"/></div>
-                  <div className="p-6">
-                    <div className="flex items-center space-x-2 text-xs text-gray-500 mb-3"><span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full font-medium">{news.cat}</span><span>• {news.date}</span></div>
-                    <h3 className="font-bold text-gray-900 mb-3 line-clamp-2 leading-snug group-hover:text-blue-600 transition-colors">{news.title}</h3>
-                    <p className="text-sm text-gray-500 line-clamp-2 mb-4">{news.desc}</p>
+                  <div className="overflow-hidden relative">
+                    <img src={`https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?q=80&w=800&sig=${news.id + 10}`} className="w-full h-52 object-cover transform group-hover:scale-110 transition-transform duration-700"/>
+                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-[#1e293b] px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm">{news.cat}</div>
+                  </div>
+                  <div className="p-8">
+                    <div className="flex items-center space-x-2 text-xs text-gray-400 font-medium mb-3"><span>{news.date}</span></div>
+                    <h3 className="font-extrabold text-gray-900 mb-3 text-lg leading-snug group-hover:text-blue-600 transition-colors">{news.title}</h3>
+                    <p className="text-sm text-gray-500 line-clamp-3 leading-relaxed mb-4">{news.desc}</p>
                   </div>
                 </div>
-                <div className="px-6 pb-6"><span className="text-blue-600 font-semibold text-sm flex items-center group/btn">{t.card.read} <ChevronRight className="w-4 h-4 ml-1 transform group-hover/btn:translate-x-1 transition-transform" /></span></div>
+                <div className="px-8 pb-8"><span className="text-blue-600 font-extrabold text-sm flex items-center group/btn">{t.card.read} <ChevronRight className="w-5 h-5 ml-1 transform group-hover/btn:translate-x-1.5 transition-transform" /></span></div>
               </div>
             </Link>
           ))}
         </div>
       </main>
 
-      {/* FAB & JENDELA CHAT (Bilingual) */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-3">
-        <button onClick={() => {setIsIvaraOpen(!isIvaraOpen); setIsCsOpen(false);}} className="w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:-translate-y-1 hover:shadow-2xl transition-all relative">
-          <MessageSquare className="w-6 h-6" /><span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 rounded-full border-2 border-white animate-bounce"></span>
-        </button>
-      </div>
-
-      {isIvaraOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-80 md:w-96 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden flex flex-col h-[480px]">
-          <div className="bg-[#1e293b] text-white px-4 py-3 flex justify-between items-center"><div className="flex items-center space-x-3"><Bot className="w-5 h-5" /><h3 className="font-bold text-sm">IVARA AI</h3></div><button onClick={() => setIsIvaraOpen(false)}><X className="w-5 h-5" /></button></div>
-          <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50 text-sm">
-            {messages.map((msg, index) => (
-              <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[80%] px-4 py-2.5 rounded-2xl shadow-sm ${msg.sender === 'user' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-white border rounded-bl-none'}`}>{msg.text}</div>
-              </div>
-            ))}
+      {/* FAB & JENDELA CHAT (Sama seperti Info Publik) */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-4">
+        <div className={`transform origin-bottom-right transition-all duration-400 ease-out ${isCsOpen ? 'scale-100 opacity-100 visible mb-2' : 'scale-75 opacity-0 invisible h-0'}`}>
+          <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-5 w-72">
+            <div className="flex justify-between items-center mb-4 border-b border-gray-100 pb-3">
+              <h4 className="font-extrabold text-sm text-[#1e293b]">{lang === 'ID' ? 'Layanan Bantuan' : 'Help Center'}</h4>
+              <button onClick={() => setIsCsOpen(false)} className="text-gray-400 hover:text-red-500 bg-gray-50 rounded-full p-1 transition-colors"><X className="w-4 h-4" /></button>
+            </div>
+            <div className="space-y-3 text-sm">
+              <a href="tel:02155790871" className="flex items-center space-x-4 p-3 rounded-2xl hover:bg-blue-50 text-gray-700 transition-colors group"><div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors"><Phone className="w-4 h-4" /></div><div><p className="font-extrabold text-xs text-gray-900">Call Center</p><p className="text-xs text-gray-500 font-medium">(021) 5579 0871</p></div></a>
+              <a href="https://wa.me/628114119000" className="flex items-center space-x-4 p-3 rounded-2xl hover:bg-green-50 text-gray-700 transition-colors group"><div className="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center group-hover:bg-green-500 group-hover:text-white transition-colors"><MessageSquare className="w-4 h-4" /></div><div><p className="font-extrabold text-xs text-gray-900">WhatsApp</p><p className="text-xs text-gray-500 font-medium">0811 411 9000</p></div></a>
+            </div>
           </div>
-          <form onSubmit={handleSendMessage} className="p-3 bg-white flex items-center space-x-2 border-t">
-            <input type="text" value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} placeholder={lang === 'ID' ? "Tulis pesan..." : "Type message..."} className="flex-1 px-4 py-2 border rounded-full text-sm"/>
-            <button type="submit" className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center"><Send className="w-4 h-4 ml-0.5" /></button>
-          </form>
         </div>
-      )}
+        <div className={`transform origin-bottom-right transition-all duration-400 ease-out ${isIvaraOpen ? 'scale-100 opacity-100 visible mb-2' : 'scale-75 opacity-0 invisible h-0'}`}>
+          <div className="w-80 md:w-96 bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col h-[500px]">
+            <div className="bg-gradient-to-r from-[#1e293b] to-[#0f172a] text-white px-5 py-4 flex justify-between items-center shadow-md z-10">
+              <div className="flex items-center space-x-3"><div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center shadow-inner"><Bot className="w-6 h-6 text-white" /></div><div><h3 className="font-extrabold text-sm">IVARA Assistant</h3><p className="text-[10px] text-green-400 flex items-center font-bold"><span className="w-2 h-2 bg-green-400 rounded-full inline-block mr-1.5 animate-pulse"></span> Online</p></div></div>
+              <button onClick={() => setIsIvaraOpen(false)} className="text-gray-400 hover:text-white bg-white/10 rounded-full p-1.5 transition-colors"><X className="w-4 h-4" /></button>
+            </div>
+            <div className="flex-1 p-5 overflow-y-auto space-y-4 bg-gray-50 text-sm">
+              {messages.map((msg, index) => (
+                <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}><div className={`max-w-[85%] px-5 py-3 rounded-2xl shadow-sm font-medium leading-relaxed ${msg.sender === 'user' ? 'bg-blue-600 text-white rounded-br-sm' : 'bg-white border border-gray-100 rounded-bl-sm text-gray-700'}`}>{msg.text}</div></div>
+              ))}
+            </div>
+            <form onSubmit={handleSendMessage} className="p-4 bg-white flex items-center space-x-3 border-t border-gray-100">
+              <input type="text" value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} placeholder={lang === 'ID' ? "Tanya sesuatu..." : "Ask something..."} className="flex-1 px-5 py-3 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all font-medium"/>
+              <button type="submit" className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 active:scale-90 transition-transform shadow-md flex-shrink-0"><Send className="w-5 h-5 ml-1" /></button>
+            </form>
+          </div>
+        </div>
+        <div className="flex items-center space-x-4">
+          <button onClick={() => {setIsCsOpen(!isCsOpen); setIsIvaraOpen(false);}} className={`w-14 h-14 rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl active:scale-90 transition-all duration-300 z-50 ${isCsOpen ? 'bg-red-500 text-white rotate-90' : 'bg-yellow-400 text-[#1e293b] hover:-translate-y-1'}`}>{isCsOpen ? <X className="w-6 h-6" /> : <Phone className="w-6 h-6" />}</button>
+          <button onClick={() => {setIsIvaraOpen(!isIvaraOpen); setIsCsOpen(false);}} className={`w-16 h-16 rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl active:scale-90 transition-all duration-300 z-50 relative ${isIvaraOpen ? 'bg-red-500 text-white rotate-90' : 'bg-green-500 text-white hover:-translate-y-1'}`}>{isIvaraOpen ? <X className="w-7 h-7" /> : <MessageSquare className="w-7 h-7" />}{!isIvaraOpen && <span className="absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-bounce"></span>}</button>
+        </div>
+      </div>
     </div>
   );
 }
