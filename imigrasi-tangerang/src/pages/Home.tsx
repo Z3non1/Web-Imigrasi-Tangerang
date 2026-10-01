@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LanguageContext } from '../App';
+import Footer from '../Footer';
+
 import { 
   Search, Phone, ChevronRight, MapPin, ArrowUpRight, Shield, 
   MessageSquare, Camera, Hash, Users, Globe, Plane, User, 
@@ -387,6 +389,7 @@ export default function Home() {
         </div>
 
       </div>
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LanguageContext } from '../App';
+import Footer from '../Footer';
 import { 
   Search, Phone, Shield, Globe, ChevronLeft, ChevronDown, ChevronRight,
   Languages, X, Bot, MessageSquare, Send, Check, Info, FileText
@@ -368,6 +369,7 @@ export default function LayananApec() {
           <button onClick={() => {setIsIvaraOpen(!isIvaraOpen); setIsCsOpen(false);}} className={`w-16 h-16 rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl active:scale-90 transition-all duration-300 z-50 relative ${isIvaraOpen ? 'bg-red-500 text-white rotate-90' : 'bg-green-500 text-white hover:-translate-y-1'}`}>{isIvaraOpen ? <X className="w-7 h-7" /> : <MessageSquare className="w-7 h-7" />}{!isIvaraOpen && <span className="absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-bounce"></span>}</button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
