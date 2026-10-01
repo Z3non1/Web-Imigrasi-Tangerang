@@ -11,38 +11,71 @@ const passportData = {
     hero: { title: "Paspor Republik Indonesia", sub: "Pilih Jenis Permohonan:" },
     tabs: { new: "PERMOHONAN BARU", replace: "PENGGANTIAN" },
     ui: { 
-      catTitle: "Kategori Pemohon", 
+      catTitle: "Ketentuan Pemohon", 
       catDesc: "Pilih kriteria yang sesuai dengan Anda untuk melihat detail persyaratan.",
-      detailBadge: "Panduan Lengkap",
-      emptyReplace: "Layanan Penggantian Paspor",
-      emptyReplaceDesc: "Halaman ini sedang dalam pembaruan data."
+      detailBadge: "Panduan Lengkap"
     },
-    categories: [
-      "Masyarakat Umum", "Anak Dibawah 17 Tahun", "Anak Dwikenegaraan", 
-      "Calon Pekerja Migran Indonesia", "Haji Umroh", "Anak Yang Lahir Diluar Negeri"
-    ],
-    sections: { info: "Informasi Umum", req: "Persyaratan", proc: "Prosedur", auth: "Mekanisme Pengesahan", cost: "Biaya" },
-    content: {
-      "Masyarakat Umum": {
-        info: ["Permohonan paspor biasa dapat diajukan oleh warga negara Indonesia, baik di dalam maupun luar wilayah Indonesia.", "Paspor biasa terdiri atas paspor biasa elektronik (e-paspor) dan paspor biasa nonelektronik.", "Paspor biasa diterbitkan dengan menggunakan Sistem Informasi Manajemen Keimigrasian."],
-        req: ["Kartu tanda penduduk (KTP) yang masih berlaku atau surat keterangan pindah ke luar negeri.", "Kartu keluarga (KK).", "Dokumen berupa akta kelahiran, akta perkawinan, buku nikah, ijazah, atau surat baptis.", "Surat pewarganegaraan Indonesia bagi Orang Asing yang memperoleh kewarganegaraan Indonesia.", "Surat penetapan ganti nama (bagi yang telah mengganti nama)."],
-        proc: ["Lakukan pendaftaran melalui aplikasi M-Paspor yang dapat diunduh melalui App Store atau Google Play.", "Isi data di aplikasi yang disediakan pada loket permohonan dan lampirkan dokumen persyaratan.", "Tunggu Pejabat Imigrasi memeriksa dokumen kelengkapan.", "Dapatkan tanda terima permohonan dan kode pembayaran.", "Jika dokumen dinyatakan belum lengkap, terima dokumen permohonan yang dikembalikan."],
-        auth: ["Pemeriksaan kelengkapan dan keabsahan persyaratan", "Pembayaran biaya paspor", "Pengambilan foto dan sidik jari", "Wawancara", "Verifikasi", "Adjudikasi"],
-        cost: ["Paspor biasa non-elektronik (Masa Berlaku 5 Tahun): Rp 350.000", "Paspor biasa non-elektronik (Masa Berlaku 10 Tahun): Rp 650.000", "Paspor biasa elektronik (Masa Berlaku 5 Tahun): Rp 650.000", "Paspor biasa elektronik (Masa Berlaku 10 Tahun): Rp 950.000", "Layanan percepatan paspor selesai pada hari yang sama: Rp 1.000.000"]
-      },
-      "Anak Dibawah 17 Tahun": {
-        info: ["Permohonan paspor biasa bagi anak WNI yang belum berusia 17 tahun diajukan oleh orang tua atau wali sah."],
-        req: ["Kartu tanda penduduk (KTP) ayah atau ibu yang masih berlaku.", "Kartu keluarga (KK).", "Akta kelahiran atau surat baptis.", "Akta perkawinan atau buku nikah orang tua.", "Paspor biasa lama bagi yang telah memiliki paspor biasa."],
-        proc: ["Lakukan pendaftaran melalui aplikasi M-Paspor oleh orang tua/wali.", "Isi data dan lampirkan dokumen pada loket.", "Tunggu pemeriksaan oleh Pejabat Imigrasi.", "Dapatkan tanda terima dan kode pembayaran."],
-        auth: ["Pemeriksaan kelengkapan persyaratan", "Pembayaran biaya paspor", "Pengambilan foto & biometrik", "Wawancara (didampingi orang tua)"],
-        cost: ["Paspor biasa nonelektronik 48 halaman: Rp 350.000", "Paspor biasa elektronik 48 halaman: Rp 650.000", "Layanan percepatan paspor: Rp 1.000.000"]
-      },
-      "Default": {
-        info: ["Informasi spesifik menyesuaikan dengan kategori yang dipilih sesuai dengan Peraturan Keimigrasian terbaru."],
-        req: ["KTP yang masih berlaku.", "Kartu Keluarga (KK).", "Dokumen pendukung sesuai dengan kategori pemohon."],
-        proc: ["Pendaftaran antrean via M-Paspor.", "Penyerahan berkas di kantor imigrasi.", "Pengambilan biometrik dan wawancara."],
-        auth: ["Pemeriksaan berkas", "Pembayaran", "Foto & Sidik Jari", "Wawancara", "Verifikasi"],
-        cost: ["Paspor biasa nonelektronik: Rp 350.000", "Paspor biasa elektronik: Rp 650.000", "Layanan percepatan: Rp 1.000.000"]
+    // DATA UNTUK PERMOHONAN BARU
+    new: {
+      categories: ["Masyarakat Umum", "Anak Dibawah 17 Tahun", "Anak Dwikenegaraan", "Calon Pekerja Migran Indonesia", "Haji Umroh", "Anak Yang Lahir Diluar Negeri"],
+      sections: { info: "Informasi Umum", req: "Persyaratan", proc: "Prosedur", auth: "Mekanisme Pengesahan", cost: "Biaya" },
+      content: {
+        "Masyarakat Umum": {
+          info: ["Permohonan paspor biasa dapat diajukan oleh warga negara Indonesia, baik di dalam maupun luar wilayah Indonesia.", "Paspor biasa terdiri atas paspor biasa elektronik (e-paspor) dan paspor biasa nonelektronik.", "Paspor biasa diterbitkan dengan menggunakan Sistem Informasi Manajemen Keimigrasian."],
+          req: ["Kartu tanda penduduk (KTP) yang masih berlaku atau surat keterangan pindah ke luar negeri.", "Kartu keluarga (KK).", "Dokumen berupa akta kelahiran, akta perkawinan, buku nikah, ijazah, atau surat baptis.", "Surat pewarganegaraan Indonesia bagi Orang Asing yang memperoleh kewarganegaraan Indonesia.", "Surat penetapan ganti nama (bagi yang telah mengganti nama)."],
+          proc: ["Lakukan pendaftaran melalui aplikasi M-Paspor yang dapat diunduh melalui App Store atau Google Play.", "Isi data di aplikasi yang disediakan pada loket permohonan dan lampirkan dokumen persyaratan.", "Tunggu Pejabat Imigrasi memeriksa dokumen kelengkapan.", "Dapatkan tanda terima permohonan dan kode pembayaran.", "Jika dokumen dinyatakan belum lengkap, terima dokumen permohonan yang dikembalikan."],
+          auth: ["Pemeriksaan kelengkapan dan keabsahan persyaratan", "Pembayaran biaya paspor", "Pengambilan foto dan sidik jari", "Wawancara", "Verifikasi", "Adjudikasi"],
+          cost: ["Paspor biasa non-elektronik (Masa Berlaku 5 Tahun): Rp 350.000", "Paspor biasa non-elektronik (Masa Berlaku 10 Tahun): Rp 650.000", "Paspor biasa elektronik (Masa Berlaku 5 Tahun): Rp 650.000", "Paspor biasa elektronik (Masa Berlaku 10 Tahun): Rp 950.000", "Layanan percepatan paspor selesai pada hari yang sama: Rp 1.000.000"]
+        },
+        "Anak Dibawah 17 Tahun": {
+          info: ["Permohonan paspor biasa bagi anak WNI yang belum berusia 17 tahun diajukan oleh orang tua atau wali sah."],
+          req: ["Kartu tanda penduduk (KTP) ayah atau ibu yang masih berlaku.", "Kartu keluarga (KK).", "Akta kelahiran atau surat baptis.", "Akta perkawinan atau buku nikah orang tua.", "Paspor biasa lama bagi yang telah memiliki paspor biasa."],
+          proc: ["Lakukan pendaftaran melalui aplikasi M-Paspor oleh orang tua/wali.", "Isi data dan lampirkan dokumen pada loket.", "Tunggu pemeriksaan oleh Pejabat Imigrasi.", "Dapatkan tanda terima dan kode pembayaran."],
+          auth: ["Pemeriksaan kelengkapan persyaratan", "Pembayaran biaya paspor", "Pengambilan foto & biometrik", "Wawancara (didampingi orang tua)"],
+          cost: ["Paspor biasa nonelektronik 48 halaman: Rp 350.000", "Paspor biasa elektronik 48 halaman: Rp 650.000", "Layanan percepatan paspor: Rp 1.000.000"]
+        },
+        "Default": {
+          info: ["Informasi spesifik menyesuaikan dengan kategori yang dipilih sesuai dengan Peraturan Keimigrasian terbaru."],
+          req: ["KTP yang masih berlaku.", "Kartu Keluarga (KK).", "Dokumen pendukung sesuai dengan kategori pemohon."],
+          proc: ["Pendaftaran antrean via M-Paspor.", "Penyerahan berkas di kantor imigrasi.", "Pengambilan biometrik dan wawancara."],
+          auth: ["Pemeriksaan berkas", "Pembayaran", "Foto & Sidik Jari", "Wawancara", "Verifikasi"],
+          cost: ["Paspor biasa nonelektronik: Rp 350.000", "Paspor biasa elektronik: Rp 650.000", "Layanan percepatan: Rp 1.000.000"]
+        }
+      }
+    },
+    // DATA UNTUK PENGGANTIAN PASPOR
+    replace: {
+      categories: ["Pengubahan Data Paspor", "Penggantian Paspor di Luar Negeri", "Paspor Akan Habis Masa Berlaku", "Paspor Rusak", "Paspor Hilang"],
+      sections: { info: "Informasi Umum", req: "Persyaratan", proc: "Prosedur", auth: "Mekanisme Penerbitan", cost: "Biaya" },
+      content: {
+        "Pengubahan Data Paspor": {
+          info: ["Perubahan data identitas diri pemegang paspor dapat diajukan kepada Kepala Kantor Imigrasi atau Pejabat Imigrasi.", "Perubahan meliputi nama, tempat tanggal lahir, atau jenis kelamin."],
+          req: ["Paspor lama.", "Kartu tanda penduduk (KTP) dan kartu keluarga (KK).", "Dokumen lain yang dikeluarkan oleh instansi pemerintah sebagai dasar perubahan data paspor, seperti surat penetapan pengadilan, akta kelahiran, surat nikah, atau dokumen sejenis."],
+          proc: ["Anda melakukan pengajuan permohonan.", "Anda mendapatkan persetujuan Kepala Kantor Imigrasi atau Pejabat Imigrasi.", "Anda mendapatkan persetujuan Direktur Jenderal Imigrasi.", "Paspor baru Anda diterbitkan."],
+          auth: ["Serahkan berkas persyaratan (asli dan fotokopi) serta Perdim 11 yang telah diisi lengkap kepada petugas loket.", "Petugas akan memproses perubahan data paspor.", "Pejabat Imigrasi akan menyetujui perubahan data paspor.", "Petugas akan mencetak paspor baru Anda setelah mendapatkan persetujuan.", "Paspor baru yang telah selesai akan diberikan kepada Anda."],
+          cost: ["Pelayanan ini dikenakan biaya penggantian paspor (Sesuai dengan tarif PNBP paspor biasa atau elektronik yang dipilih)."]
+        },
+        "Paspor Hilang": {
+          info: ["Penggantian paspor biasa dapat diajukan jika memenuhi salah satu dari persyaratan: masa berlakunya akan habis, rusak, atau hilang.", "Penggantian paspor hilang memerlukan proses Berita Acara Pemeriksaan (BAP) oleh petugas imigrasi."],
+          req: ["Surat lapor kehilangan dari kepolisian setempat.", "Kartu tanda penduduk (KTP) yang masih berlaku.", "Kartu keluarga (KK).", "Akta lahir / Ijazah / Buku Nikah.", "Tambahan: Surat keterangan dari kelurahan (jika hilang karena musibah/keadaan kahar)."],
+          proc: ["Datang Ke Kantor Imigrasi Terdekat.", "Isi data pada loket permohonan dan lampirkan dokumen kelengkapan.", "Tunggu Pejabat Imigrasi memeriksa dokumen permohonan dalam Berita Acara Pemeriksaan (BAP).", "BAP disampaikan kepada Kepala Kantor Imigrasi untuk pertimbangan.", "Jika disetujui, Pejabat Imigrasi akan mengganti paspor setelah Anda melakukan pembayaran."],
+          auth: ["Jika hilang karena musibah (kebakaran, banjir, gempa), dapat diberikan penggantian langsung.", "Jika hilang karena unsur kurang hati-hati, diberikan penggantian paspor biasa.", "Jika hilang karena unsur kecerobohan atau kelalaian, pemberian paspor biasa dapat ditangguhkan minimal 6 bulan sampai maksimal 2 tahun."],
+          cost: ["Biaya beban paspor hilang: Rp 1.000.000", "Paspor Biasa Non Elektronik (48 Halaman): Rp 350.000", "Paspor Biasa Elektronik (48 Halaman): Rp 650.000"]
+        },
+        "Paspor Rusak": {
+          info: ["Paspor dinyatakan rusak jika pada saat proses penerbitan atau setelahnya (robek, basah, terbakar, tercoret) sehingga keterangan di dalamnya menjadi tidak jelas atau memberi kesan tidak pantas sebagai dokumen resmi."],
+          req: ["Paspor lama yang rusak.", "Kartu tanda penduduk (KTP) yang masih berlaku.", "Kartu keluarga (KK).", "Akta lahir / Ijazah / Buku Nikah."],
+          proc: ["Datang Ke Kantor Imigrasi.", "Penyerahan berkas dan paspor yang rusak di loket permohonan.", "Proses Berita Acara Pemeriksaan (BAP) oleh Pejabat Imigrasi untuk mengetahui penyebab kerusakan.", "Persetujuan Kepala Kantor Imigrasi.", "Pembayaran biaya dan denda (jika disebabkan kelalaian)."],
+          auth: ["Sama seperti paspor hilang, Pejabat akan menilai apakah kerusakan terjadi karena musibah (keadaan kahar) atau karena kelalaian/kecerobohan pemegang paspor."],
+          cost: ["Biaya beban paspor rusak: Rp 500.000", "Paspor Biasa Non Elektronik: Rp 350.000", "Paspor Biasa Elektronik: Rp 650.000", "Catatan: Biaya beban Rp 0 jika rusak karena keadaan kahar (banjir, gempa, kebakaran)."]
+        },
+        "Default": {
+          info: ["Penggantian paspor dapat dilakukan melalui aplikasi M-Paspor (jika perpanjangan biasa) atau langsung ke kantor imigrasi (jika BAP/Hilang/Rusak)."],
+          req: ["KTP Elektronik.", "Kartu Keluarga (KK).", "Paspor lama."],
+          proc: ["Daftar antrean via M-Paspor atau datang langsung sesuai jenis layanan.", "Penyerahan berkas, biometrik, dan wawancara."],
+          auth: ["Pemeriksaan berkas", "Pembayaran", "Foto & Sidik Jari", "Wawancara", "Verifikasi"],
+          cost: ["Paspor Biasa Non-Elektronik: Rp 350.000", "Paspor Biasa Elektronik: Rp 650.000"]
+        }
       }
     }
   },
@@ -52,29 +85,46 @@ const passportData = {
     ui: { 
       catTitle: "Applicant Category", 
       catDesc: "Select the criteria that applies to you to view detailed requirements.",
-      detailBadge: "Complete Guide",
-      emptyReplace: "Passport Replacement Service",
-      emptyReplaceDesc: "This page is currently being updated."
+      detailBadge: "Complete Guide"
     },
-    categories: [
-      "General Public", "Children Under 17", "Dual Citizenship Children", 
-      "Indonesian Migrant Workers", "Hajj / Umrah", "Children Born Overseas"
-    ],
-    sections: { info: "General Information", req: "Requirements", proc: "Procedures", auth: "Authentication Mechanism", cost: "Fees" },
-    content: {
-      "General Public": {
-        info: ["Standard passport applications can be submitted by Indonesian citizens, both inside and outside Indonesian territory.", "Standard passports consist of electronic (e-passport) and non-electronic passports."],
-        req: ["Valid ID Card (KTP).", "Family Card (KK).", "Birth certificate, marriage certificate, or diploma.", "Name change decree (if applicable)."],
-        proc: ["Register via the M-Paspor app.", "Submit documents at the immigration counter.", "Wait for document verification.", "Make the payment using the provided code."],
-        auth: ["Document Verification", "Payment", "Biometric Data Collection", "Interview", "Final Adjudication"],
-        cost: ["Non-electronic passport (5 Years): Rp 350,000", "Electronic passport (5 Years): Rp 650,000", "Same-day expedited service: Rp 1,000,000"]
-      },
-      "Default": {
-        info: ["Specific information tailored to the selected category according to the latest Immigration Regulations."],
-        req: ["Valid ID Card.", "Family Card.", "Supporting documents as required."],
-        proc: ["Queue registration via M-Paspor.", "Document submission at the office.", "Biometrics and interview."],
-        auth: ["Document Verification", "Payment", "Biometrics", "Interview", "Verification"],
-        cost: ["Non-electronic passport: Rp 350,000", "Electronic passport: Rp 650,000", "Expedited service: Rp 1,000,000"]
+    new: {
+      categories: ["General Public", "Children Under 17", "Dual Citizenship Children", "Indonesian Migrant Workers", "Hajj / Umrah", "Children Born Overseas"],
+      sections: { info: "General Information", req: "Requirements", proc: "Procedures", auth: "Authentication Mechanism", cost: "Fees" },
+      content: {
+        "General Public": {
+          info: ["Standard passport applications can be submitted by Indonesian citizens, both inside and outside Indonesian territory.", "Standard passports consist of electronic (e-passport) and non-electronic passports."],
+          req: ["Valid ID Card (KTP).", "Family Card (KK).", "Birth certificate, marriage certificate, or diploma.", "Name change decree (if applicable)."],
+          proc: ["Register via the M-Paspor app.", "Submit documents at the immigration counter.", "Wait for document verification.", "Make the payment using the provided code."],
+          auth: ["Document Verification", "Payment", "Biometric Data Collection", "Interview", "Final Adjudication"],
+          cost: ["Non-electronic passport (5 Years): Rp 350,000", "Electronic passport (5 Years): Rp 650,000", "Same-day expedited service: Rp 1,000,000"]
+        },
+        "Default": {
+          info: ["Specific information tailored to the selected category according to the latest Immigration Regulations."],
+          req: ["Valid ID Card.", "Family Card.", "Supporting documents as required."],
+          proc: ["Queue registration via M-Paspor.", "Document submission at the office.", "Biometrics and interview."],
+          auth: ["Document Verification", "Payment", "Biometrics", "Interview", "Verification"],
+          cost: ["Non-electronic passport: Rp 350,000", "Electronic passport: Rp 650,000", "Expedited service: Rp 1,000,000"]
+        }
+      }
+    },
+    replace: {
+      categories: ["Data Alteration", "Overseas Replacement", "Expiring Passport", "Damaged Passport", "Lost Passport"],
+      sections: { info: "General Information", req: "Requirements", proc: "Procedures", auth: "Issuance Mechanism", cost: "Fees" },
+      content: {
+        "Data Alteration": {
+          info: ["Changes to personal identity data can be submitted to the Head of the Immigration Office.", "Changes include name, place/date of birth, or gender."],
+          req: ["Old passport.", "Valid ID Card and Family Card.", "Court decree or supporting documents for the change."],
+          proc: ["Submit the application.", "Wait for approval from the Head of Immigration and Director General.", "New passport is issued."],
+          auth: ["Submit documents to the counter.", "Officer processes the data change.", "New passport is printed after approval."],
+          cost: ["Standard passport replacement fees apply."]
+        },
+        "Default": {
+          info: ["Passport replacement procedures depend on the cause (expiring, lost, or damaged)."],
+          req: ["Valid ID Card.", "Family Card.", "Old Passport (or Police Report if lost)."],
+          proc: ["Register via M-Paspor or walk-in for BAP cases.", "Submit documents, biometrics, and interview."],
+          auth: ["Document Verification", "Payment", "Biometrics", "Interview"],
+          cost: ["Non-electronic passport: Rp 350,000", "Electronic passport: Rp 650,000", "Lost fine: Rp 1,000,000", "Damaged fine: Rp 500,000"]
+        }
       }
     }
   }
@@ -88,7 +138,8 @@ export default function LayananPaspor() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
   
-  const [activeTab, setActiveTab] = useState('new');
+  // STATE TABS & KATEGORI
+  const [activeTab, setActiveTab] = useState<'new' | 'replace'>('new');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
   const [expandedSection, setExpandedSection] = useState<string | null>('info');
@@ -105,6 +156,14 @@ export default function LayananPaspor() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Fungsi untuk mengubah Tab (Otomatis me-reset index kategori ke 0)
+  const handleTabChange = (tab: 'new' | 'replace') => {
+    setActiveTab(tab);
+    setActiveCategoryIndex(0);
+    setExpandedSection('info');
+    setIsDropdownOpen(false);
+  };
+
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputMessage.trim()) return;
@@ -112,10 +171,10 @@ export default function LayananPaspor() {
     setInputMessage('');
   };
 
-  const activeCategoryName = t.categories[activeCategoryIndex];
-  const activeContentID = passportData.ID.content[passportData.ID.categories[activeCategoryIndex] as keyof typeof passportData.ID.content] || passportData.ID.content["Default"];
-  const activeContentEN = passportData.EN.content[passportData.EN.categories[activeCategoryIndex] as keyof typeof passportData.EN.content] || passportData.EN.content["Default"];
-  const activeContent = lang === 'ID' ? activeContentID : activeContentEN;
+  // Logika pengambilan data dinamis berdasarkan Tab yang aktif
+  const currentTabData = t[activeTab];
+  const activeCategoryName = currentTabData.categories[activeCategoryIndex];
+  const activeContent = currentTabData.content[activeCategoryName as keyof typeof currentTabData.content] || currentTabData.content["Default"];
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans relative overflow-hidden">
@@ -165,107 +224,97 @@ export default function LayananPaspor() {
           <div>
             <p className="text-gray-300 text-sm font-bold mb-3 uppercase tracking-wider">{t.hero.sub}</p>
             <div className="flex space-x-4">
-              <button onClick={() => setActiveTab('new')} className={`px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 shadow-lg ${activeTab === 'new' ? 'bg-blue-600 text-white scale-105' : 'bg-white/10 text-gray-300 hover:bg-white/20 backdrop-blur-sm'}`}>{t.tabs.new}</button>
-              <button onClick={() => setActiveTab('replace')} className={`px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 shadow-lg ${activeTab === 'replace' ? 'bg-blue-600 text-white scale-105' : 'bg-white/10 text-gray-300 hover:bg-white/20 backdrop-blur-sm'}`}>{t.tabs.replace}</button>
+              <button onClick={() => handleTabChange('new')} className={`px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 shadow-lg ${activeTab === 'new' ? 'bg-blue-600 text-white scale-105' : 'bg-white/10 text-gray-300 hover:bg-white/20 backdrop-blur-sm'}`}>{t.tabs.new}</button>
+              <button onClick={() => handleTabChange('replace')} className={`px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 shadow-lg ${activeTab === 'replace' ? 'bg-blue-600 text-white scale-105' : 'bg-white/10 text-gray-300 hover:bg-white/20 backdrop-blur-sm'}`}>{t.tabs.replace}</button>
             </div>
           </div>
         </div>
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full flex-1">
-        {activeTab === 'new' ? (
-          <div className="flex flex-col lg:flex-row gap-8 items-start animate-fade-in-up delay-100">
+        <div className="flex flex-col lg:flex-row gap-8 items-start animate-fade-in-up delay-100">
+          
+          {/* PANEL KIRI: KATEGORI PEMOHON */}
+          <div className="w-full lg:w-1/3 bg-white p-6 rounded-3xl shadow-xl border border-gray-100 lg:sticky lg:top-28 z-20">
+            <div className="flex items-center space-x-3 mb-2">
+              <div className="bg-blue-100 p-2 rounded-xl text-blue-600"><Info className="w-5 h-5" /></div>
+              <h3 className="font-extrabold text-xl text-[#1e293b]">{t.ui.catTitle}</h3>
+            </div>
+            <p className="text-gray-500 text-sm mb-6 ml-1 leading-relaxed">{t.ui.catDesc}</p>
             
-            {/* PANEL KIRI: KATEGORI PEMOHON (KETENTUAN) */}
-            <div className="w-full lg:w-1/3 bg-white p-6 rounded-3xl shadow-xl border border-gray-100 lg:sticky lg:top-28 z-20">
-              <div className="flex items-center space-x-3 mb-2">
-                <div className="bg-blue-100 p-2 rounded-xl text-blue-600"><Info className="w-5 h-5" /></div>
-                <h3 className="font-extrabold text-xl text-[#1e293b]">{t.ui.catTitle}</h3>
-              </div>
-              <p className="text-gray-500 text-sm mb-6 ml-1 leading-relaxed">{t.ui.catDesc}</p>
-              
-              {/* Desktop Menu (List) */}
-              <div className="hidden lg:flex flex-col space-y-2">
-                {t.categories.map((cat, idx) => (
-                  <button 
-                    key={idx} 
-                    onClick={() => { setActiveCategoryIndex(idx); setExpandedSection('info'); }} 
-                    className={`w-full text-left px-5 py-4 rounded-2xl flex items-center justify-between transition-all duration-300 ${activeCategoryIndex === idx ? 'bg-blue-600 text-white shadow-md scale-105' : 'bg-gray-50 text-gray-600 hover:bg-blue-50 hover:text-blue-600'}`}
-                  >
-                    <span className="font-bold text-sm">{cat}</span>
-                    <ChevronRight className={`w-4 h-4 transition-transform ${activeCategoryIndex === idx ? 'translate-x-1' : ''}`} />
-                  </button>
-                ))}
-              </div>
-
-              {/* Mobile Menu (Dropdown Bouncy) */}
-              <div className="lg:hidden relative">
-                <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="w-full bg-blue-50 border border-blue-100 text-blue-700 rounded-2xl px-5 py-4 flex items-center justify-between shadow-sm focus:outline-none transition-all duration-300">
-                  <span className="font-extrabold text-base">{activeCategoryName}</span>
-                  <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+            {/* Desktop Menu (List) */}
+            <div className="hidden lg:flex flex-col space-y-2">
+              {currentTabData.categories.map((cat, idx) => (
+                <button 
+                  key={idx} 
+                  onClick={() => { setActiveCategoryIndex(idx); setExpandedSection('info'); }} 
+                  className={`w-full text-left px-5 py-4 rounded-2xl flex items-center justify-between transition-all duration-300 ${activeCategoryIndex === idx ? 'bg-blue-600 text-white shadow-md scale-105' : 'bg-gray-50 text-gray-600 hover:bg-blue-50 hover:text-blue-600'}`}
+                >
+                  <span className="font-bold text-sm">{cat}</span>
+                  <ChevronRight className={`w-4 h-4 transition-transform ${activeCategoryIndex === idx ? 'translate-x-1' : ''}`} />
                 </button>
-                <div className={`absolute left-0 right-0 mt-3 bg-white border border-gray-100 rounded-2xl shadow-2xl z-40 overflow-hidden transition-all duration-300 origin-top ${isDropdownOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
-                  <div className="py-2 bg-gray-50/50">
-                    {t.categories.map((cat, idx) => (
-                      <button key={idx} onClick={() => { setActiveCategoryIndex(idx); setIsDropdownOpen(false); setExpandedSection('info'); }} className={`w-full text-left px-5 py-3.5 flex items-center justify-between hover:bg-blue-100 transition-colors ${activeCategoryIndex === idx ? 'bg-blue-100/50 text-blue-700' : 'text-gray-700'}`}>
-                        <span className="font-bold text-sm">{cat}</span>
-                        {activeCategoryIndex === idx && <Check className="w-4 h-4 text-blue-600" />}
-                      </button>
-                    ))}
-                  </div>
+              ))}
+            </div>
+
+            {/* Mobile Menu (Dropdown Bouncy) */}
+            <div className="lg:hidden relative">
+              <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="w-full bg-blue-50 border border-blue-100 text-blue-700 rounded-2xl px-5 py-4 flex items-center justify-between shadow-sm focus:outline-none transition-all duration-300">
+                <span className="font-extrabold text-base">{activeCategoryName}</span>
+                <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+              <div className={`absolute left-0 right-0 mt-3 bg-white border border-gray-100 rounded-2xl shadow-2xl z-40 overflow-hidden transition-all duration-300 origin-top ${isDropdownOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
+                <div className="py-2 bg-gray-50/50">
+                  {currentTabData.categories.map((cat, idx) => (
+                    <button key={idx} onClick={() => { setActiveCategoryIndex(idx); setIsDropdownOpen(false); setExpandedSection('info'); }} className={`w-full text-left px-5 py-3.5 flex items-center justify-between hover:bg-blue-100 transition-colors ${activeCategoryIndex === idx ? 'bg-blue-100/50 text-blue-700' : 'text-gray-700'}`}>
+                      <span className="font-bold text-sm">{cat}</span>
+                      {activeCategoryIndex === idx && <Check className="w-4 h-4 text-blue-600" />}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* PANEL KANAN: DETAIL KONTEN (AKORDION) */}
-            <div className="w-full lg:w-2/3 bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-gray-100 min-h-[500px]">
-              <div className="border-b border-gray-100 pb-5 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <h3 className="font-extrabold text-2xl md:text-3xl text-[#1e293b]">{activeCategoryName}</h3>
-                <span className="bg-green-100 text-green-700 text-xs font-extrabold px-3 py-1.5 rounded-full flex items-center self-start sm:self-auto"><FileText className="w-3.5 h-3.5 mr-1" /> {t.ui.detailBadge}</span>
-              </div>
-
-              <div className="space-y-4 animate-fade-in">
-                {Object.entries(t.sections).map(([key, title]) => {
-                  const contentData = activeContent[key as keyof typeof activeContent];
-                  const isExpanded = expandedSection === key;
-                  
-                  return (
-                    <div key={key} className={`bg-white border rounded-2xl overflow-hidden transition-all duration-300 ${isExpanded ? 'border-blue-400 ring-4 ring-blue-50 shadow-md' : 'border-gray-200 hover:border-blue-300 shadow-sm'}`}>
-                      <button onClick={() => setExpandedSection(isExpanded ? null : key)} className="w-full text-left px-6 py-5 flex items-center justify-between focus:outline-none bg-white">
-                        <span className={`font-extrabold text-lg transition-colors ${isExpanded ? 'text-blue-700' : 'text-[#1e293b]'}`}>{title}</span>
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 ${isExpanded ? 'bg-blue-100' : 'bg-gray-50'}`}>
-                          <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${isExpanded ? 'rotate-180 text-blue-700' : 'text-gray-400'}`} />
-                        </div>
-                      </button>
-                      <div className={`transition-all duration-400 ease-in-out origin-top ${isExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                        <div className="px-6 pb-6 pt-2 border-t border-gray-100 bg-gray-50/30">
-                          <ul className="list-decimal list-inside space-y-3 text-gray-700 font-medium leading-relaxed">
-                            {contentData.map((item: string, i: number) => (
-                              <li key={i} className="pl-2 relative">{item}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+          {/* PANEL KANAN: DETAIL KONTEN (AKORDION DINAMIS) */}
+          <div className="w-full lg:w-2/3 bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-gray-100 min-h-[500px]">
+            <div className="border-b border-gray-100 pb-5 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <h3 className="font-extrabold text-2xl md:text-3xl text-[#1e293b] leading-tight">{activeCategoryName}</h3>
+              <span className="bg-green-100 text-green-700 text-xs font-extrabold px-3 py-1.5 rounded-full flex items-center self-start sm:self-auto flex-shrink-0"><FileText className="w-3.5 h-3.5 mr-1" /> {t.ui.detailBadge}</span>
             </div>
 
+            <div className="space-y-4 animate-fade-in" key={activeTab + activeCategoryIndex}>
+              {Object.entries(currentTabData.sections).map(([key, title]) => {
+                const contentData = activeContent[key as keyof typeof activeContent];
+                const isExpanded = expandedSection === key;
+                
+                return (
+                  <div key={key} className={`bg-white border rounded-2xl overflow-hidden transition-all duration-300 ${isExpanded ? 'border-blue-400 ring-4 ring-blue-50 shadow-md' : 'border-gray-200 hover:border-blue-300 shadow-sm'}`}>
+                    <button onClick={() => setExpandedSection(isExpanded ? null : key)} className="w-full text-left px-6 py-5 flex items-center justify-between focus:outline-none bg-white group">
+                      <span className={`font-extrabold text-lg transition-colors ${isExpanded ? 'text-blue-700' : 'text-[#1e293b] group-hover:text-blue-600'}`}>{title}</span>
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 ${isExpanded ? 'bg-blue-100' : 'bg-gray-50'}`}>
+                        <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${isExpanded ? 'rotate-180 text-blue-700' : 'text-gray-400'}`} />
+                      </div>
+                    </button>
+                    <div className={`transition-all duration-400 ease-in-out origin-top ${isExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                      <div className="px-6 pb-6 pt-2 border-t border-gray-100 bg-gray-50/30">
+                        <ul className="list-decimal list-outside ml-4 space-y-3 text-gray-700 font-medium leading-relaxed">
+                          {contentData.map((item: string, i: number) => (
+                            <li key={i} className="pl-1">{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        ) : (
-          /* Tab Penggantian Placeholder */
-          <div className="bg-white border border-gray-200 rounded-3xl p-16 text-center animate-fade-in-up shadow-sm max-w-3xl mx-auto">
-            <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-5"><Shield className="w-10 h-10 text-gray-400" /></div>
-            <h3 className="text-2xl font-extrabold text-gray-800 mb-2">{t.ui.emptyReplace}</h3>
-            <p className="text-gray-500 font-medium">{t.ui.emptyReplaceDesc}</p>
-          </div>
-        )}
+
+        </div>
       </main>
 
       {/* FAB: Animasi Pop Mulus */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-4">
-        {/* ... (Konten CS dan IVARA tetap dipertahankan seperti halaman sebelumnya) ... */}
         <div className={`transform origin-bottom-right transition-all duration-400 ease-out ${isCsOpen ? 'scale-100 opacity-100 visible mb-2' : 'scale-75 opacity-0 invisible h-0'}`}>
           <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-5 w-72">
             <div className="flex justify-between items-center mb-4 border-b border-gray-100 pb-3">
