@@ -4,7 +4,7 @@ import { LanguageContext } from '../App';
 import Footer from '../Footer';
 import { 
   Search, Phone, Shield, Globe, ChevronLeft, ChevronDown, ChevronUp,
-  Languages, X, Bot, MessageSquare, Send, FileText
+  Languages, X, Bot, MessageSquare, Send, FileText, CheckCircle2, Info, Menu
 } from 'lucide-react';
 
 const translations = {
@@ -47,6 +47,7 @@ export default function Faq() {
   const [isIvaraOpen, setIsIvaraOpen] = useState(false);
   const [messages, setMessages] = useState([{ sender: 'ivara', text: lang === 'ID' ? 'Halo! Saya IVARA.' : 'Hello! I am IVARA.' }]);
   const [inputMessage, setInputMessage] = useState('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => { setActiveCategory(t.content.categories[0]); }, [lang, t.content.categories]);
   
@@ -69,45 +70,90 @@ export default function Faq() {
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans relative overflow-hidden">
       
       {/* NAVBAR */}
-      <nav className={`fixed w-full top-0 z-50 transition-all duration-500 ease-in-out px-6 py-4 flex items-center justify-between ${isScrolled ? 'bg-[#0b162c]/90 backdrop-blur-md shadow-lg py-3' : 'bg-[#0b162c] shadow-md'}`}>
-        <div className="flex items-center space-x-4">
-          <div className="flex -space-x-2">
-            <div className="w-11 h-11 bg-[#0b162c] rounded-full border-2 border-white flex items-center justify-center z-10 hover:rotate-12 transition-transform duration-300"><div className="w-full h-full bg-yellow-600 rounded-full flex items-center justify-center"><Shield className="w-5 h-5 text-white" /></div></div>
-            <div className="w-11 h-11 bg-[#0b162c] rounded-full border-2 border-white flex items-center justify-center hover:-rotate-12 transition-transform duration-300"><div className="w-full h-full bg-teal-600 rounded-full flex items-center justify-center"><Globe className="w-5 h-5 text-white" /></div></div>
-          </div>
-          <div className="hidden lg:block leading-tight">
-            <div className="font-bold text-[14px] tracking-wide text-white">KANTOR IMIGRASI KELAS I KHUSUS NON TPI</div>
-            <div className="text-[11px] font-bold text-[#eab308] tracking-wider mt-0.5">TANGERANG</div>
-          </div>
-        </div>
-        
-        <div className="hidden lg:flex items-center space-x-8">
-          <div className="flex space-x-7 font-medium text-[14px]">
-            <Link to="/" className="text-white hover:text-[#eab308] hover:-translate-y-0.5 transition-transform">{t.nav.home}</Link>
-            <Link to="/informasi-publik" className="text-white hover:text-[#eab308] hover:-translate-y-0.5 transition-transform">{t.nav.info}</Link>
-            <Link to="/berita" className="text-white hover:text-[#eab308] hover:-translate-y-0.5 transition-transform">{t.nav.news}</Link>
-            <Link to="/tentang-kami" className="text-white hover:text-[#eab308] hover:-translate-y-0.5 transition-transform">{t.nav.about}</Link>
-            <Link to="/faq" className="text-[#eab308] flex flex-col items-center">{t.nav.faq}<span className="w-5 h-[2px] bg-[#eab308] mt-1.5 transition-all"></span></Link>
-          </div>
-          <div className="flex items-center space-x-4">
-            <div className="relative flex items-center group">
-              <Search className="w-4 h-4 text-gray-400 absolute left-4 z-10 pointer-events-none group-focus-within:text-yellow-400 transition-colors" />
-              <input type="text" placeholder={t.nav.search} className="relative pl-10 pr-4 py-2 rounded-full bg-white/10 border border-white/20 text-white focus:outline-none focus:bg-white/20 focus:ring-1 focus:ring-yellow-500 w-[160px] focus:w-[200px] transition-all duration-300 text-sm" />
-            </div>
-            <div className="relative">
-              <button onClick={() => setIsLangOpen(!isLangOpen)} className="flex items-center space-x-1.5 bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-2 rounded-full transition-all duration-300">
-                <Languages className="w-4 h-4 text-yellow-400" />
-                <span className="text-sm font-bold text-white">{lang}</span>
-                <ChevronDown className={`w-4 h-4 text-white transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} />
-              </button>
-              <div className={`absolute right-0 mt-3 w-36 bg-white rounded-2xl shadow-2xl overflow-hidden z-50 border border-gray-100 transform origin-top-right transition-all duration-300 ease-out ${isLangOpen ? 'scale-100 opacity-100 visible translate-y-0' : 'scale-95 opacity-0 invisible -translate-y-2'}`}>
-                <button onClick={() => { setLang('ID'); setIsLangOpen(false); }} className={`w-full text-left px-4 py-3 text-sm flex items-center space-x-3 transition-colors ${lang === 'ID' ? 'bg-blue-50 text-blue-700 font-bold' : 'text-gray-700 hover:bg-gray-50'}`}><span className="text-lg">🇮🇩</span> <span>Indonesia</span></button>
-                <button onClick={() => { setLang('EN'); setIsLangOpen(false); }} className={`w-full text-left px-4 py-3 text-sm flex items-center space-x-3 transition-colors border-t border-gray-50 ${lang === 'EN' ? 'bg-blue-50 text-blue-700 font-bold' : 'text-gray-700 hover:bg-gray-50'}`}><span className="text-lg">🇬🇧</span> <span>English</span></button>
+      <nav className={`fixed w-full top-0 z-50 transition-all duration-500 ease-in-out px-4 md:px-6 py-4 flex items-center justify-between ${isScrolled ? 'bg-[#0b162c]/90 backdrop-blur-md shadow-lg py-3' : 'bg-[#0b162c] shadow-md'}`}>
+              
+              {/* KIRI: Logo & Judul */}
+              <div className="flex items-center space-x-3 md:space-x-4">
+                <div className="flex -space-x-2">
+                  <div className="w-10 h-10 md:w-11 md:h-11 bg-[#0b162c] rounded-full border-2 border-white flex items-center justify-center z-10 hover:rotate-12 transition-transform duration-300"><Shield className="w-4 h-4 md:w-5 md:h-5 text-yellow-500" /></div>
+                  <div className="w-10 h-10 md:w-11 md:h-11 bg-[#0b162c] rounded-full border-2 border-white flex items-center justify-center hover:-rotate-12 transition-transform duration-300"><Globe className="w-4 h-4 md:w-5 md:h-5 text-teal-500" /></div>
+                </div>
+                <div className="leading-tight">
+                  <div className="font-bold text-[11px] md:text-[14px] tracking-wide text-white">KANTOR IMIGRASI KELAS I KHUSUS</div>
+                  <div className="text-[9px] md:text-[11px] font-bold text-[#eab308] tracking-wider mt-0.5">NON TPI TANGERANG</div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </nav>
+              
+              {/* KANAN (DESKTOP): Menu, Search, Lang (Otomatis Hilang di HP) */}
+              <div className="hidden lg:flex items-center space-x-8">
+                <div className="flex space-x-7 font-medium text-[14px]">
+                  <Link to="/" className="text-white hover:text-[#eab308] transition-transform">{lang === 'ID' ? 'Beranda' : 'Home'}</Link>
+                  <Link to="/informasi-publik" className="text-white hover:text-[#eab308] transition-transform">{lang === 'ID' ? 'Informasi Publik' : 'Public Information'}</Link>
+                  <Link to="/berita" className="text-white hover:text-[#eab308] transition-transform">{lang === 'ID' ? 'Berita' : 'News'}</Link>
+                  <Link to="/tentang-kami" className="text-white hover:text-[#eab308] transition-transform">{lang === 'ID' ? 'Tentang Kami' : 'About Us'}</Link>
+                </div>
+                <div className="flex items-center space-x-4">
+                  <div className="relative flex items-center group">
+                    <Search className="w-4 h-4 text-gray-400 absolute left-4 z-10 pointer-events-none group-focus-within:text-yellow-400 transition-colors" />
+                    <input type="text" placeholder={lang === 'ID' ? 'Cari...' : 'Search...'} className="relative pl-10 pr-4 py-2 rounded-full bg-white/10 border border-white/20 text-white focus:outline-none focus:bg-white/20 focus:ring-1 focus:ring-yellow-500 w-[160px] focus:w-[200px] transition-all duration-300 text-sm" />
+                  </div>
+                  <div className="relative">
+                    <button onClick={() => setIsLangOpen(!isLangOpen)} className="flex items-center space-x-1.5 bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-2 rounded-full transition-all duration-300">
+                      <Languages className="w-4 h-4 text-yellow-400" /><span className="text-sm font-bold text-white">{lang}</span><ChevronDown className={`w-4 h-4 text-white transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    <div className={`absolute right-0 mt-3 w-36 bg-white rounded-2xl shadow-2xl overflow-hidden z-50 border border-gray-100 transform origin-top-right transition-all duration-300 ease-out ${isLangOpen ? 'scale-100 opacity-100 visible translate-y-0' : 'scale-95 opacity-0 invisible -translate-y-2'}`}>
+                      <button onClick={() => { setLang('ID'); setIsLangOpen(false); }} className={`w-full text-left px-4 py-3 text-sm flex items-center space-x-3 transition-colors ${lang === 'ID' ? 'bg-blue-50 text-blue-700 font-bold' : 'text-gray-700 hover:bg-gray-50'}`}><span className="text-lg">🇮🇩</span> <span>Indonesia</span></button>
+                      <button onClick={() => { setLang('EN'); setIsLangOpen(false); }} className={`w-full text-left px-4 py-3 text-sm flex items-center space-x-3 transition-colors border-t border-gray-50 ${lang === 'EN' ? 'bg-blue-50 text-blue-700 font-bold' : 'text-gray-700 hover:bg-gray-50'}`}><span className="text-lg">🇬🇧</span> <span>English</span></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+              {/* KANAN (MOBILE): Tombol Hamburger (Hanya Muncul di HP) */}
+              <button onClick={() => setIsMobileMenuOpen(true)} className="lg:hidden text-white hover:text-yellow-400 focus:outline-none p-2 bg-white/5 rounded-xl border border-white/10">
+                <Menu className="w-6 h-6" />
+              </button>
+      
+              {/* ================= MOBILE SIDEBAR MENU ================= */}
+              {/* Latar Hitam Transparan */}
+              <div className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] transition-opacity duration-300 lg:hidden ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMobileMenuOpen(false)}></div>
+              
+              {/* Kotak Sidebar dari Kanan */}
+              <div className={`fixed top-0 right-0 h-full w-[280px] bg-[#0b162c] z-[70] shadow-2xl transform transition-transform duration-300 ease-in-out lg:hidden flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                <div className="flex items-center justify-between p-5 border-b border-white/10">
+                  <span className="text-yellow-400 font-extrabold tracking-widest text-sm uppercase">Navigasi</span>
+                  <button onClick={() => setIsMobileMenuOpen(false)} className="text-gray-400 hover:text-white bg-white/10 rounded-full p-2 transition-colors"><X className="w-5 h-5" /></button>
+                </div>
+                
+                <div className="flex-1 overflow-y-auto p-6 space-y-8">
+                  {/* Mobile Search */}
+                  <div className="relative flex items-center">
+                    <Search className="w-4 h-4 text-gray-400 absolute left-4 z-10 pointer-events-none" />
+                    <input type="text" placeholder={lang === 'ID' ? 'Cari...' : 'Search...'} className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-yellow-500 text-sm" />
+                  </div>
+      
+                  {/* Mobile Links */}
+                  <div className="flex flex-col space-y-5">
+                    <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-white hover:text-yellow-400 font-bold text-sm tracking-wide">{lang === 'ID' ? 'Beranda' : 'Home'}</Link>
+                    <Link to="/informasi-publik" onClick={() => setIsMobileMenuOpen(false)} className="text-white hover:text-yellow-400 font-bold text-sm tracking-wide">Informasi Publik</Link>
+                    <Link to="/berita" onClick={() => setIsMobileMenuOpen(false)} className="text-white hover:text-yellow-400 font-bold text-sm tracking-wide">Berita</Link>
+                    <Link to="/tentang-kami" onClick={() => setIsMobileMenuOpen(false)} className="text-white hover:text-yellow-400 font-bold text-sm tracking-wide">Tentang Kami</Link>
+                    <Link to="/faq" onClick={() => setIsMobileMenuOpen(false)} className="text-white hover:text-yellow-400 font-bold text-sm tracking-wide">FAQ</Link>
+                  </div>
+      
+                  {/* Mobile Language Toggle */}
+                  <div className="pt-6 border-t border-white/10">
+                    <span className="text-gray-400 text-xs font-bold uppercase tracking-wider mb-4 block">Ganti Bahasa / Language</span>
+                    <div className="flex space-x-3">
+                      <button onClick={() => { setLang('ID'); setIsMobileMenuOpen(false); }} className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-all ${lang === 'ID' ? 'bg-blue-600 text-white shadow-md' : 'bg-white/10 text-gray-300 hover:bg-white/20'}`}>ID 🇮🇩</button>
+                      <button onClick={() => { setLang('EN'); setIsMobileMenuOpen(false); }} className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-all ${lang === 'EN' ? 'bg-blue-600 text-white shadow-md' : 'bg-white/10 text-gray-300 hover:bg-white/20'}`}>EN 🇬🇧</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* ================= END MOBILE SIDEBAR ================= */}
+      
+            </nav>
 
       {/* HERO SECTION */}
       <div className="relative bg-[#1e3a8a] h-[300px] overflow-hidden group">
