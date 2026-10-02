@@ -325,11 +325,6 @@ export default function Home() {
         </div>
       </main>
 
-      {/* FOOTER */}
-      <footer className="bg-[#1e293b] text-white pt-16 pb-8 mt-auto border-t-[6px] border-yellow-500 relative z-20">
-        <div className="text-center text-sm text-gray-400 px-6 font-medium"><p>&copy; {new Date().getFullYear()} {t.footer.rights}</p></div>
-      </footer>
-
       {/* FAB: Animasi Pop Mulus */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-4">
         

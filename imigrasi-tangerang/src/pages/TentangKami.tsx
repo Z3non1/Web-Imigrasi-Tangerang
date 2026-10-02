@@ -14,7 +14,6 @@ const translations = {
     sec1: { sub: "Kilas Balik Instansi", title: "Sejarah & Selayang Pandang", p1: "TANGERANG - Berawal dari Pos Imigrasi kecil yang menginduk pada Kantor Imigrasi Jakarta Barat...", p2: "Kini, dengan predikat Kelas I Khusus Non TPI, Kantor Imigrasi Tangerang memegang peranan krusial sebagai garda terdepan penjaga pintu gerbang negara." },
     sec4: { title: "Visi Instansi", visi: '"Terwujudnya Pelayanan Keimigrasian dan Penegakan Hukum yang Modern, Transparan, Humanis."' },
     sec5: { title: "Struktur Organisasi", items: [{id: 1, title: "Sub Bagian Tata Usaha", desc: "Melaksanakan urusan ketatausahaan, kepegawaian, keuangan kantor."}, {id: 2, title: "Seksi Lalu Lintas Keimigrasian", desc: "Melayani permohonan paspor RI dan perlintasan wilayah."}] },
-    footer: { rights: "Direktorat Jenderal Imigrasi. Hak Cipta Dilindungi." }
   },
   EN: {
     nav: { home: "Home", info: "Public Info", news: "News", about: "About Us", faq: "FAQ", search: "Search..." },
@@ -22,7 +21,6 @@ const translations = {
     sec1: { sub: "Agency Flashback", title: "History & Overview", p1: "TANGERANG - Starting from a small Immigration Post under the West Jakarta Immigration Office...", p2: "Now, holding the Special Class I Non-TPI status, the Tangerang Immigration Office plays a crucial role as the frontline guardian of the nation's gates." },
     sec4: { title: "Agency Vision", visi: '"Realizing Modern, Transparent, and Humane Immigration Services and Law Enforcement."' },
     sec5: { title: "Organizational Structure", items: [{id: 1, title: "Administration Sub-Section", desc: "Handles administrative, staffing, and financial affairs."}, {id: 2, title: "Immigration Traffic Section", desc: "Serves RI passport applications and border crossings."}] },
-    footer: { rights: "Directorate General of Immigration. All Rights Reserved." }
   }
 };
 
@@ -110,7 +108,7 @@ export default function TentangKami() {
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-6 py-12 space-y-24 animate-fade-in-up delay-100">
+      <main className="max-w-7xl mx-auto px-6 py-12 space-y-24 animate-fade-in-up delay-100 mb-20">
         
         <section className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
@@ -119,7 +117,7 @@ export default function TentangKami() {
             <div className="space-y-4 text-gray-600 text-sm md:text-base leading-relaxed text-justify"><p>{t.sec1.p1}</p><p>{t.sec1.p2}</p></div>
           </div>
           <div className="rounded-3xl overflow-hidden shadow-2xl group">
-            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200" className="w-full h-[400px] object-cover transform group-hover:scale-105 transition-transform duration-700" />
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200" className="w-full h-[400px] object-cover transform group-hover:scale-105 transition-transform duration-700" alt="Gedung Imigrasi" />
           </div>
         </section>
 
@@ -150,10 +148,6 @@ export default function TentangKami() {
           </div>
         </section>
       </main>
-
-      <footer className="bg-[#1e293b] text-white pt-10 pb-6 mt-auto border-t-4 border-yellow-500">
-        <div className="text-center text-sm text-gray-400 font-medium"><p>&copy; {new Date().getFullYear()} {t.footer.rights}</p></div>
-      </footer>
 
       {/* FAB: Animasi Pop Mulus */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-4">

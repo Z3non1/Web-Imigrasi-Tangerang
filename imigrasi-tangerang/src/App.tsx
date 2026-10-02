@@ -9,9 +9,11 @@ import InformasiPublik from './pages/InformasiPublik';
 import Faq from './pages/Faq';
 import TentangKami from './pages/TentangKami';
 
-// Import halaman Layanan WNI
+// Import halaman Layanan WNI & WNA
 import LayananPaspor from './pages/LayananPaspor'; 
 import LayananApec from './pages/LayananApec'; 
+import LayananVisa from './pages/LayananVisa';
+import LayananVoaBvk from './pages/LayananVoaBvk';
 
 // Buat Context Global untuk Bahasa
 export const LanguageContext = createContext<any>(null);
@@ -36,9 +38,11 @@ function App() {
           <Route path="/faq" element={<Faq />} />
           <Route path="/tentang-kami" element={<TentangKami />} />
           
-          {/* ---> RUTE LAYANAN WNI <--- */}
+          {/* ---> RUTE LAYANAN WNI & WNA<--- */}
           <Route path="/layanan-wni/paspor" element={<LayananPaspor />} />
           <Route path="/layanan-wni/apec" element={<LayananApec />} />
+          <Route path="/layanan-wna/visa" element={<LayananVisa />} />
+          <Route path="/layanan-wna/voa" element={<LayananVoaBvk />} />
           
         </Routes>
       </Router>
