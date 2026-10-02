@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LanguageContext } from '../App';
 import Footer from '../Footer';
+import { useLocation } from 'react-router-dom';
 
 import { 
   Search, Phone, ChevronRight, MapPin, ArrowUpRight, Shield, 
@@ -85,6 +86,7 @@ export default function Home() {
   const [isCsOpen, setIsCsOpen] = useState(false);
   const [isIvaraOpen, setIsIvaraOpen] = useState(false);
   const [activeServiceTab, setActiveServiceTab] = useState<'wni' | 'wna' | null>(null);
+  const location = useLocation();
 
   const [messages, setMessages] = useState([{ sender: 'ivara', text: lang === 'ID' ? 'Halo! Saya IVARA. Ada yang bisa dibantu?' : 'Hello! I am IVARA. How can I help you?' }]);
   const [inputMessage, setInputMessage] = useState('');
@@ -145,13 +147,40 @@ export default function Home() {
           </div>
         </div>
         
-        {/* KANAN (DESKTOP): Menu, Search, Lang (Otomatis Hilang di HP) */}
+        {/* KANAN (DESKTOP): Menu dengan Indikator Halaman Aktif */}
         <div className="hidden lg:flex items-center space-x-8">
           <div className="flex space-x-7 font-medium text-[14px]">
-            <Link to="/" className="text-white hover:text-[#eab308] transition-transform">{lang === 'ID' ? 'Beranda' : 'Home'}</Link>
-            <Link to="/informasi-publik" className="text-white hover:text-[#eab308] transition-transform">{lang === 'ID' ? 'Informasi Publik' : 'Public Information'}</Link>
-            <Link to="/berita" className="text-white hover:text-[#eab308] transition-transform">{lang === 'ID' ? 'Berita' : 'News'}</Link>
-            <Link to="/tentang-kami" className="text-white hover:text-[#eab308] transition-transform">{lang === 'ID' ? 'Tentang Kami' : 'About Us'}</Link>
+            
+            {/* Beranda */}
+            <Link to="/" className={`flex flex-col items-center transition-all duration-300 ${location.pathname === '/' ? 'text-[#eab308] font-bold' : 'text-white hover:text-[#eab308] hover:-translate-y-0.5'}`}>
+              {lang === 'ID' ? 'Beranda' : 'Home'}
+              {location.pathname === '/' && <span className="w-5 h-[2px] bg-[#eab308] mt-1.5 transition-all"></span>}
+            </Link>
+
+            {/* Informasi Publik */}
+            <Link to="/informasi-publik" className={`flex flex-col items-center transition-all duration-300 ${location.pathname === '/informasi-publik' ? 'text-[#eab308] font-bold' : 'text-white hover:text-[#eab308] hover:-translate-y-0.5'}`}>
+              {lang === 'ID' ? 'Informasi Publik' : 'Public Info'}
+              {location.pathname === '/informasi-publik' && <span className="w-5 h-[2px] bg-[#eab308] mt-1.5 transition-all"></span>}
+            </Link>
+
+            {/* Berita */}
+            <Link to="/berita" className={`flex flex-col items-center transition-all duration-300 ${location.pathname.startsWith('/berita') ? 'text-[#eab308] font-bold' : 'text-white hover:text-[#eab308] hover:-translate-y-0.5'}`}>
+              {lang === 'ID' ? 'Berita' : 'News'}
+              {location.pathname.startsWith('/berita') && <span className="w-5 h-[2px] bg-[#eab308] mt-1.5 transition-all"></span>}
+            </Link>
+
+            {/* Tentang Kami */}
+            <Link to="/tentang-kami" className={`flex flex-col items-center transition-all duration-300 ${location.pathname === '/tentang-kami' ? 'text-[#eab308] font-bold' : 'text-white hover:text-[#eab308] hover:-translate-y-0.5'}`}>
+              {lang === 'ID' ? 'Tentang Kami' : 'About Us'}
+              {location.pathname === '/tentang-kami' && <span className="w-5 h-[2px] bg-[#eab308] mt-1.5 transition-all"></span>}
+            </Link>
+
+            {/* FAQ */}
+            <Link to="/faq" className={`flex flex-col items-center transition-all duration-300 ${location.pathname === '/faq' ? 'text-[#eab308] font-bold' : 'text-white hover:text-[#eab308] hover:-translate-y-0.5'}`}>
+              FAQ
+              {location.pathname === '/faq' && <span className="w-5 h-[2px] bg-[#eab308] mt-1.5 transition-all"></span>}
+            </Link>
+
           </div>
           <div className="flex items-center space-x-4">
             <div className="relative flex items-center group">
@@ -288,51 +317,50 @@ export default function Home() {
         {/* CEK STATUS: Form Responsif & Elegan */}
         <div className="grid lg:grid-cols-2 gap-10 md:gap-12 items-center mb-24 md:mb-28 animate-fade-in-up delay-200">
   
-  {/* Kolom Kiri: Teks & Gambar */}
-  <div>
-    <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1e293b] mb-4 leading-tight">
-      {t.cek.title} <br className="hidden sm:block"/> <span className="text-blue-600">{t.cek.subtitle}</span>
-    </h2>
-    <div className="w-20 md:w-24 h-1.5 bg-yellow-500 mb-6 md:mb-8 rounded-full"></div>
-    <div className="rounded-3xl shadow-xl overflow-hidden group">
-      {/* Gambar disesuaikan tingginya: h-56 untuk HP, h-72 untuk Desktop */}
-      <img src="https://images.unsplash.com/photo-1559589689-577aabd1ce4c?q=80&w=2070" className="w-full h-56 md:h-72 object-cover transform transition-transform duration-700 group-hover:scale-105" alt="Cek Status" />
-    </div>
-  </div>
+        {/* Kolom Kiri: Teks & Gambar */}
+          <div>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1e293b] mb-4 leading-tight">
+            {t.cek.title} <br className="hidden sm:block"/> <span className="text-blue-600">{t.cek.subtitle}</span>
+          </h2>
+          <div className="w-20 md:w-24 h-1.5 bg-yellow-500 mb-6 md:mb-8 rounded-full"></div>
+          <div className="rounded-3xl shadow-xl overflow-hidden group">
+          {/* Gambar disesuaikan tingginya: h-56 untuk HP, h-72 untuk Desktop */}
+          <img src="https://images.unsplash.com/photo-1559589689-577aabd1ce4c?q=80&w=2070" className="w-full h-56 md:h-72 object-cover transform transition-transform duration-700 group-hover:scale-105" alt="Cek Status" />
+        </div>
+      </div>
 
-  {/* Kolom Kanan: Form Pengecekan */}
-  <div className="bg-white p-5 sm:p-8 md:p-10 rounded-3xl shadow-2xl border border-gray-100 transform transition-all hover:shadow-blue-900/5">
+      {/* Kolom Kanan: Form Pengecekan */}
+      <div className="bg-white p-5 sm:p-8 md:p-10 rounded-3xl shadow-2xl border border-gray-100 transform transition-all hover:shadow-blue-900/5">
     
-    <div className="mb-5 md:mb-6">
-      <label className="block text-xs md:text-sm font-bold text-gray-700 mb-2 md:mb-3">{t.cek.labelNum}</label>
-      <input type="text" value={noPermohonan} onChange={(e) => {setNoPermohonan(e.target.value); setCheckStatus('idle');}} placeholder={t.cek.placeholderNum} className="w-full px-4 md:px-5 py-3 md:py-4 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium text-sm md:text-base" />
-    </div>
+      <div className="mb-5 md:mb-6">
+        <label className="block text-xs md:text-sm font-bold text-gray-700 mb-2 md:mb-3">{t.cek.labelNum}</label>
+        <input type="text" value={noPermohonan} onChange={(e) => {setNoPermohonan(e.target.value); setCheckStatus('idle');}} placeholder={t.cek.placeholderNum} className="w-full px-4 md:px-5 py-3 md:py-4 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium text-sm md:text-base" />
+      </div>
     
-    <div className="mb-6 md:mb-8">
-      <label className="block text-xs md:text-sm font-bold text-gray-700 mb-2 md:mb-3">{t.cek.labelCap}</label>
+      <div className="mb-6 md:mb-8">
+       <label className="block text-xs md:text-sm font-bold text-gray-700 mb-2 md:mb-3">{t.cek.labelCap}</label>
       {/* PERBAIKAN CAPTCHA: flex-col di HP (tumpuk bawah), flex-row di PC (jejer samping) */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="flex space-x-3 w-full sm:w-auto">
-          <div className="flex-1 sm:flex-none bg-gray-50 px-4 md:px-5 py-3 md:py-4 rounded-xl font-mono font-bold tracking-[0.3em] text-base md:text-lg border border-gray-200 text-blue-800 flex items-center justify-center select-none shadow-inner">{activeCaptcha}</div>
-          <button onClick={generateNewCaptcha} className="p-3 md:p-4 text-gray-500 hover:text-white bg-gray-50 hover:bg-blue-600 rounded-xl border border-gray-200 transition-all duration-300 hover:shadow-md flex-shrink-0"><RefreshCw className="w-5 h-5" /></button>
+            <div className="flex-1 sm:flex-none bg-gray-50 px-4 md:px-5 py-3 md:py-4 rounded-xl font-mono font-bold tracking-[0.3em] text-base md:text-lg border border-gray-200 text-blue-800 flex items-center justify-center select-none shadow-inner">{activeCaptcha}</div>
+             <button onClick={generateNewCaptcha} className="p-3 md:p-4 text-gray-500 hover:text-white bg-gray-50 hover:bg-blue-600 rounded-xl border border-gray-200 transition-all duration-300 hover:shadow-md flex-shrink-0"><RefreshCw className="w-5 h-5" /></button>
+            </div>
+              <input type="text" value={captchaInput} onChange={(e) => {setCaptchaInput(e.target.value); if(checkStatus === 'error_captcha') setCheckStatus('idle');}} placeholder={t.cek.placeholderCap} className="w-full sm:flex-1 px-4 md:px-5 py-3 md:py-4 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium text-sm md:text-base" />
+            </div>
+          </div>
+
+          <button onClick={handleCekStatus} className="w-full bg-[#1e293b] text-white font-bold py-3.5 md:py-4 rounded-xl hover:bg-blue-700 transform hover:-translate-y-1 hover:shadow-lg active:scale-95 transition-all duration-300 text-sm md:text-lg">
+            {t.cek.btn}
+          </button>
+
+          <div className="mt-5 md:mt-6 h-auto md:h-20">
+            {checkStatus === 'success' && <div className="p-3 md:p-4 bg-green-50 border border-green-200 text-green-700 rounded-xl text-xs md:text-sm font-bold flex items-start space-x-2 md:space-x-3 animate-fade-in"><CheckCircle2 className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-green-500" /><span>{t.cek.success}</span></div>}
+            {checkStatus === 'error_not_found' && <div className="p-3 md:p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-xs md:text-sm font-bold flex items-start space-x-2 md:space-x-3 animate-fade-in"><AlertCircle className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-red-500" /><span>{t.cek.errNum}</span></div>}
+            {checkStatus === 'error_captcha' && <div className="p-3 md:p-4 bg-orange-50 border border-orange-200 text-orange-700 rounded-xl text-xs md:text-sm font-bold flex items-start space-x-2 md:space-x-3 animate-fade-in"><AlertCircle className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-orange-500" /><span>{t.cek.errCap}</span></div>}
+            {checkStatus === 'idle' && <p className="text-[11px] md:text-xs text-gray-400 mt-2 md:mt-3 text-center">{t.cek.note}</p>}
+          </div>
         </div>
-        <input type="text" value={captchaInput} onChange={(e) => {setCaptchaInput(e.target.value); if(checkStatus === 'error_captcha') setCheckStatus('idle');}} placeholder={t.cek.placeholderCap} className="w-full sm:flex-1 px-4 md:px-5 py-3 md:py-4 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium text-sm md:text-base" />
       </div>
-    </div>
-
-    <button onClick={handleCekStatus} className="w-full bg-[#1e293b] text-white font-bold py-3.5 md:py-4 rounded-xl hover:bg-blue-700 transform hover:-translate-y-1 hover:shadow-lg active:scale-95 transition-all duration-300 text-sm md:text-lg">
-      {t.cek.btn}
-    </button>
-
-    <div className="mt-5 md:mt-6 h-auto md:h-20">
-      {checkStatus === 'success' && <div className="p-3 md:p-4 bg-green-50 border border-green-200 text-green-700 rounded-xl text-xs md:text-sm font-bold flex items-start space-x-2 md:space-x-3 animate-fade-in"><CheckCircle2 className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-green-500" /><span>{t.cek.success}</span></div>}
-      {checkStatus === 'error_not_found' && <div className="p-3 md:p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-xs md:text-sm font-bold flex items-start space-x-2 md:space-x-3 animate-fade-in"><AlertCircle className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-red-500" /><span>{t.cek.errNum}</span></div>}
-      {checkStatus === 'error_captcha' && <div className="p-3 md:p-4 bg-orange-50 border border-orange-200 text-orange-700 rounded-xl text-xs md:text-sm font-bold flex items-start space-x-2 md:space-x-3 animate-fade-in"><AlertCircle className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-orange-500" /><span>{t.cek.errCap}</span></div>}
-      {checkStatus === 'idle' && <p className="text-[11px] md:text-xs text-gray-400 mt-2 md:mt-3 text-center">{t.cek.note}</p>}
-    </div>
-    
-  </div>
-</div>
 
         {/* LAYANAN GRID: Efek Hover Lembut */}
         <div className="mb-28 animate-fade-in-up delay-300">

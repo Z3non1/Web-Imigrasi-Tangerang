@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LanguageContext } from '../App';
+import { useLocation } from 'react-router-dom';
 import { 
   Search, Phone, Shield, Globe, ChevronLeft, FileText, 
   Languages, ChevronDown, X, Bot, MessageSquare, Send, CheckCircle2, Info, Menu
@@ -43,6 +44,7 @@ export default function InformasiPublik() {
   const [messages, setMessages] = useState([{ sender: 'ivara', text: lang === 'ID' ? 'Halo! Saya IVARA. Ada yang bisa dibantu?' : 'Hello! I am IVARA. How can I help you?' }]);
   const [inputMessage, setInputMessage] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   // Efek Scroll untuk Navbar Glassmorphism
   useEffect(() => { 
@@ -77,14 +79,41 @@ export default function InformasiPublik() {
                 </div>
               </div>
               
-              {/* KANAN (DESKTOP): Menu, Search, Lang (Otomatis Hilang di HP) */}
-              <div className="hidden lg:flex items-center space-x-8">
-                <div className="flex space-x-7 font-medium text-[14px]">
-                  <Link to="/" className="text-white hover:text-[#eab308] transition-transform">{lang === 'ID' ? 'Beranda' : 'Home'}</Link>
-                  <Link to="/informasi-publik" className="text-white hover:text-[#eab308] transition-transform">{lang === 'ID' ? 'Informasi Publik' : 'Public Information'}</Link>
-                  <Link to="/berita" className="text-white hover:text-[#eab308] transition-transform">{lang === 'ID' ? 'Berita' : 'News'}</Link>
-                  <Link to="/tentang-kami" className="text-white hover:text-[#eab308] transition-transform">{lang === 'ID' ? 'Tentang Kami' : 'About Us'}</Link>
-                </div>
+              {/* KANAN (DESKTOP): Menu dengan Indikator Halaman Aktif */}
+        <div className="hidden lg:flex items-center space-x-8">
+          <div className="flex space-x-7 font-medium text-[14px]">
+            
+            {/* Beranda */}
+            <Link to="/" className={`flex flex-col items-center transition-all duration-300 ${location.pathname === '/' ? 'text-[#eab308] font-bold' : 'text-white hover:text-[#eab308] hover:-translate-y-0.5'}`}>
+              {lang === 'ID' ? 'Beranda' : 'Home'}
+              {location.pathname === '/' && <span className="w-5 h-[2px] bg-[#eab308] mt-1.5 transition-all"></span>}
+            </Link>
+
+            {/* Informasi Publik */}
+            <Link to="/informasi-publik" className={`flex flex-col items-center transition-all duration-300 ${location.pathname === '/informasi-publik' ? 'text-[#eab308] font-bold' : 'text-white hover:text-[#eab308] hover:-translate-y-0.5'}`}>
+              {lang === 'ID' ? 'Informasi Publik' : 'Public Info'}
+              {location.pathname === '/informasi-publik' && <span className="w-5 h-[2px] bg-[#eab308] mt-1.5 transition-all"></span>}
+            </Link>
+
+            {/* Berita */}
+            <Link to="/berita" className={`flex flex-col items-center transition-all duration-300 ${location.pathname.startsWith('/berita') ? 'text-[#eab308] font-bold' : 'text-white hover:text-[#eab308] hover:-translate-y-0.5'}`}>
+              {lang === 'ID' ? 'Berita' : 'News'}
+              {location.pathname.startsWith('/berita') && <span className="w-5 h-[2px] bg-[#eab308] mt-1.5 transition-all"></span>}
+            </Link>
+
+            {/* Tentang Kami */}
+            <Link to="/tentang-kami" className={`flex flex-col items-center transition-all duration-300 ${location.pathname === '/tentang-kami' ? 'text-[#eab308] font-bold' : 'text-white hover:text-[#eab308] hover:-translate-y-0.5'}`}>
+              {lang === 'ID' ? 'Tentang Kami' : 'About Us'}
+              {location.pathname === '/tentang-kami' && <span className="w-5 h-[2px] bg-[#eab308] mt-1.5 transition-all"></span>}
+            </Link>
+
+            {/* FAQ */}
+            <Link to="/faq" className={`flex flex-col items-center transition-all duration-300 ${location.pathname === '/faq' ? 'text-[#eab308] font-bold' : 'text-white hover:text-[#eab308] hover:-translate-y-0.5'}`}>
+              FAQ
+              {location.pathname === '/faq' && <span className="w-5 h-[2px] bg-[#eab308] mt-1.5 transition-all"></span>}
+            </Link>
+
+          </div>
                 <div className="flex items-center space-x-4">
                   <div className="relative flex items-center group">
                     <Search className="w-4 h-4 text-gray-400 absolute left-4 z-10 pointer-events-none group-focus-within:text-yellow-400 transition-colors" />

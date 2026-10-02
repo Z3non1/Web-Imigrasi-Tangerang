@@ -232,13 +232,14 @@ export default function LayananVisa() {
              </div>
              
              {/* KANAN (DESKTOP): Menu, Search, Lang (Otomatis Hilang di HP) */}
-             <div className="hidden lg:flex items-center space-x-8">
-               <div className="flex space-x-7 font-medium text-[14px]">
-                 <Link to="/" className="text-white hover:text-[#eab308] transition-transform">{lang === 'ID' ? 'Beranda' : 'Home'}</Link>
-                 <Link to="/informasi-publik" className="text-white hover:text-[#eab308] transition-transform">{lang === 'ID' ? 'Informasi Publik' : 'Public Information'}</Link>
-                 <Link to="/berita" className="text-white hover:text-[#eab308] transition-transform">{lang === 'ID' ? 'Berita' : 'News'}</Link>
-                 <Link to="/tentang-kami" className="text-white hover:text-[#eab308] transition-transform">{lang === 'ID' ? 'Tentang Kami' : 'About Us'}</Link>
-               </div>
+        <div className="hidden lg:flex items-center space-x-8">
+          <div className="flex space-x-7 font-medium text-[14px]">
+            <Link to="/" className="text-white hover:text-[#eab308] hover:-translate-y-0.5 transition-transform duration-300">{lang === 'ID' ? 'Beranda' : 'Home'}</Link>
+            <Link to="/informasi-publik" className="text-white hover:text-[#eab308] hover:-translate-y-0.5 transition-transform duration-300">{lang === 'ID' ? 'Informasi Publik' : 'Public Info'}</Link>
+            <Link to="/berita" className="text-white hover:text-[#eab308] hover:-translate-y-0.5 transition-transform duration-300">{lang === 'ID' ? 'Berita' : 'News'}</Link>
+            <Link to="/tentang-kami" className="text-white hover:text-[#eab308] hover:-translate-y-0.5 transition-transform duration-300">{lang === 'ID' ? 'Tentang Kami' : 'About Us'}</Link>
+            <Link to="/faq" className="text-white hover:text-[#eab308] hover:-translate-y-0.5 transition-transform duration-300">FAQ</Link>
+          </div>
                <div className="flex items-center space-x-4">
                  <div className="relative flex items-center group">
                    <Search className="w-4 h-4 text-gray-400 absolute left-4 z-10 pointer-events-none group-focus-within:text-yellow-400 transition-colors" />
@@ -301,7 +302,7 @@ export default function LayananVisa() {
              {/* ================= END MOBILE SIDEBAR ================= */}
      
            </nav>
-           
+
       {/* HERO SECTION */}
       <div className="relative bg-[#0f172a] pt-28 pb-10 px-6 lg:px-12 xl:px-24">
         <div className="absolute inset-0 overflow-hidden"><img src="https://images.unsplash.com/photo-1542204165-65bf26472b9b?q=80&w=2074" className="w-full h-full object-cover opacity-20" /></div>
