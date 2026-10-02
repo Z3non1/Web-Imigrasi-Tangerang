@@ -14,6 +14,7 @@ import LayananPaspor from './pages/LayananPaspor';
 import LayananApec from './pages/LayananApec'; 
 import LayananVisa from './pages/LayananVisa';
 import LayananVoaBvk from './pages/LayananVoaBvk';
+import LayananIzinTinggal from './pages/LayananIzinTinggal';
 
 // Buat Context Global untuk Bahasa
 export const LanguageContext = createContext<any>(null);
@@ -43,6 +44,7 @@ function App() {
           <Route path="/layanan-wni/apec" element={<LayananApec />} />
           <Route path="/layanan-wna/visa" element={<LayananVisa />} />
           <Route path="/layanan-wna/voa" element={<LayananVoaBvk />} />
+          <Route path="/layanan-wna/izin" element={<LayananIzinTinggal />} />
           
         </Routes>
       </Router>

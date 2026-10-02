@@ -193,8 +193,8 @@ export default function LayananVisa() {
           </div>
           <div className="flex items-center space-x-4">
             <div className="relative flex items-center group">
-              <Search className="w-4 h-4 text-gray-400 absolute left-4 group-focus-within:text-yellow-400 transition-colors" />
-              <input type="text" placeholder={ui.search} className="pl-10 pr-4 py-2 rounded-full bg-white/10 border border-white/20 text-white focus:outline-none focus:bg-white/20 focus:ring-1 focus:ring-yellow-500 w-[160px] focus:w-[200px] transition-all duration-300 text-sm backdrop-blur-sm" />
+              <Search className="w-4 h-4 text-gray-400 absolute left-4 z-10 pointer-events-none group-focus-within:text-yellow-400 transition-colors" />
+              <input type="text" placeholder={ui.search} className="relative pl-10 pr-4 py-2 rounded-full bg-white/10 border border-white/20 text-white focus:outline-none focus:bg-white/20 focus:ring-1 focus:ring-yellow-500 w-[160px] focus:w-[200px] transition-all duration-300 text-sm" />
             </div>
             <div className="relative">
               <button onClick={() => setIsLangOpen(!isLangOpen)} className="flex items-center space-x-1.5 bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-2 rounded-full transition-all duration-300">

@@ -7,166 +7,254 @@ import {
   Languages, X, Bot, MessageSquare, Send, Check, Info, FileText
 } from 'lucide-react';
 
-const subjekData = {
+const izinTinggalData = {
   ID: {
-    hero: { title: "Daftar Subjek VoA, BVK & Calling Visa", sub: "Layanan Fasilitas Keimigrasian WNA" },
+    hero: { title: "Izin Tinggal Keimigrasian", sub: "Layanan Fasilitas Keimigrasian WNA" },
     ui: { 
       catTitle: "Ketentuan", 
-      catDesc: "Pilih kategori daftar subjek di bawah ini untuk melihat detail negara atau titik masuk.",
-      detailBadge: "Daftar Lengkap"
+      catDesc: "Pilih jenis layanan izin tinggal di bawah ini untuk melihat informasi, persyaratan, dan prosedur lengkap.",
+      detailBadge: "Detail Layanan"
     },
     categories: [
-      "Daftar Subjek Bebas Visa Kunjungan", 
-      "Daftar Subjek Calling Visa", 
-      "Titik Masuk Bagi Pemegang E-VoA", 
-      "Daftar Subjek Visa on Arrival"
+      "Perpanjangan ITK", 
+      "Perpanjangan ITAS", 
+      "Perpanjangan ITAP", 
+      "Alih Status ITK-ITAS", 
+      "Alih Status ITAS-ITAP", 
+      "Pemberian ITAP Tanpa Alih Status", 
+      "Pelaporan ITAP"
     ],
     content: {
-      "Daftar Subjek Bebas Visa Kunjungan": {
-        sections: { negara: "Daftar Negara, Pemerintah Dari Daerah Administrasi Khusus Suatu Negara, dan Entitas Tertentu" },
-        data: {
-          negara: [
-            "Brunei Darussalam", "Malaysia", "Tailan", "Vietnam", "Philipina", "Kamboja", 
-            "Singapura", "Myanmar", "Laos", "Timor Leste", "Suriname", "Kolombia", 
-            "Hong Kong", "Turki", "Brazil", "Peru", "Kazakhstan", "Makau", "Belarus", 
-            "Warga Negara Asing pemegang permanent resident Singapura yang melalui Tempat Pemeriksaan Imigrasi tertentu."
-          ]
-        }
+      "Perpanjangan ITK": {
+        "Informasi Umum": [
+          "Izin Tinggal Kunjungan (ITK) diberikan kepada Orang Asing yang masuk wilayah Indonesia dengan Visa Kunjungan.",
+          "Perpanjangan ITK dapat diberikan paling banyak 4 (empat) kali berturut-turut, di mana setiap kali perpanjangan diberikan paling lama 30 (tiga puluh) hari.",
+          "Permohonan perpanjangan Izin Tinggal diajukan oleh Orang Asing atau Penjamin kepada Kepala Kantor Imigrasi yang wilayah kerjanya meliputi tempat tinggal Orang Asing."
+        ],
+        "Persyaratan Dokumen": [
+          "Mengisi formulir aplikasi data (dapat diunduh atau disediakan di Kantor Imigrasi).",
+          "Paspor Kebangsaan yang sah dan masih berlaku (Asli dan Fotokopi).",
+          "Surat penjaminan dari Penjamin (bermaterai), kecuali bagi WNA yang berkunjung untuk tujuan wisata.",
+          "KTP Penjamin (Fotokopi).",
+          "Tiket kembali atau tiket terusan untuk melanjutkan perjalanan ke negara lain."
+        ],
+        "Proses Permohonan": [
+          "1. Penerimaan dan pemeriksaan berkas permohonan.",
+          "2. Pembayaran biaya imigrasi sesuai tarif PNBP.",
+          "3. Pengambilan foto dan sidik jari (jika diperlukan).",
+          "4. Wawancara (jika diperlukan).",
+          "5. Persetujuan Kepala Kantor Imigrasi.",
+          "6. Penerbitan Perpanjangan ITK."
+        ],
+        "Waktu Proses dan Penyelesaian": [
+          "Penyelesaian permohonan perpanjangan ITK adalah 3 (tiga) hari kerja sejak pembayaran PNBP dilakukan."
+        ],
+        "Biaya": [
+          "Perpanjangan ITK masa berlaku 30 hari: Rp 500.000",
+          "Perpanjangan ITK masa berlaku 60 hari: Rp 750.000"
+        ]
       },
-      "Daftar Subjek Calling Visa": {
-        sections: { negara: "Daftar Negara, Pemerintah Dari Daerah Administrasi Khusus Suatu Negara, dan Entitas Tertentu" },
-        data: {
-          negara: ["Afganistan", "Israel", "Korea Utara", "Liberia", "Nigeria", "Somalia"]
-        }
+      "Perpanjangan ITAS": {
+        "Informasi Umum": [
+          "Izin Tinggal Terbatas (ITAS) diberikan kepada WNA yang masuk wilayah Indonesia dengan Visa Tinggal Terbatas (VITAS) atau alih status dari ITK.",
+          "Perpanjangan ITAS diberikan oleh Kepala Kantor Imigrasi dengan jangka waktu paling lama 1 (satu) atau 2 (dua) tahun setiap kali perpanjangan."
+        ],
+        "Persyaratan Dokumen": [
+          "Surat permohonan dari Penjamin / Sponsor.",
+          "Surat jaminan dari Penjamin dan Fotokopi KTP Penjamin.",
+          "Paspor Kebangsaan yang sah dan masih berlaku.",
+          "Dokumen pendukung sesuai maksud dan tujuan (contoh: IMTA dari Kemenaker untuk TKA, Surat Keterangan Mahasiswa untuk pelajar, atau Buku Nikah untuk penyatuan keluarga)."
+        ],
+        "Proses Permohonan": [
+          "1. Pemohon mengajukan permohonan melalui loket layanan Izin Tinggal Kantor Imigrasi.",
+          "2. Pemeriksaan kelengkapan dokumen.",
+          "3. Pembayaran biaya PNBP.",
+          "4. Pengambilan data biometrik (foto dan sidik jari).",
+          "5. Proses penyelesaian dan penerbitan ITAS elektronik (e-ITAS)."
+        ],
+        "Waktu Proses dan Penyelesaian": [
+          "Waktu penyelesaian perpanjangan ITAS adalah maksimal 3 (tiga) hari kerja setelah pengambilan foto dan sidik jari."
+        ],
+        "Biaya": [
+          "ITAS masa berlaku paling lama 6 (enam) bulan: Rp 1.000.000",
+          "ITAS masa berlaku paling lama 1 (satu) tahun: Rp 1.500.000",
+          "ITAS masa berlaku paling lama 2 (dua) tahun: Rp 2.000.000"
+        ]
       },
-      "Titik Masuk Bagi Pemegang E-VoA": {
-        sections: { 
-          bandara: "Tempat Pemeriksaan Imigrasi di Bandara",
-          plbn: "Tempat Pemeriksaan Imigrasi di Pos Lintas Batas",
-          pelabuhan: "Tempat Pemeriksaan Imigrasi di Pelabuhan"
-        },
-        data: {
-          bandara: [
-            "Halim Perdanakusuma, DKI Jakarta", "Hang Nadim, Kepulauan Riau", "Juanda, Jawa Timur", 
-            "Kualanamu, Sumatera Utara", "Minangkabau, Sumatera Barat", "Ngurah Rai, Bali", 
-            "Soekarno Hatta, DKI Jakarta", "Sultan Aji Muhammad Sulaiman, Kalimantan Timur", 
-            "Sultan Hasanuddin, Sulawesi Selatan", "Sultan Iskandar Muda, Aceh", 
-            "Yogyakarta, Daerah Istimewa Yogyakarta", "Zainuddin Abdul Madjid, Nusa Tenggara Barat"
-          ],
-          plbn: [
-            "Aruk, Kalimantan Barat", "Entikong, Kalimantan Barat", "Mota'ain, Nusa Tenggara Timur", 
-            "Motamasin, Nusa Tenggara Timur", "Skouw, Papua", "Nangabadau, Kalimantan Barat"
-          ],
-          pelabuhan: [
-            "Achmad Yani, Maluku Utara", "Amamapare, Papua", "Batam Centre, Kepulauan Riau", 
-            "Benoa, Bali", "Dumai, Riau", "Marina Ancol, DKI Jakarta", "Nongsa Terminal Bahari, Kepulauan Riau", 
-            "Tanjung Balai Karimun, Kepulauan Riau", "Tanjung Priok, DKI Jakarta", 
-            "Pelabuhan Bandar Bintan Telani Lagoi, Kepulauan Riau", "Citra Tri Tunas, Kepulauan Riau"
-          ]
-        }
+      "Perpanjangan ITAP": {
+        "Informasi Umum": [
+          "Izin Tinggal Tetap (ITAP) diberikan untuk jangka waktu 5 (lima) tahun dan dapat diperpanjang untuk jangka waktu tidak terbatas.",
+          "Permohonan perpanjangan ITAP diajukan dalam jangka waktu paling cepat 3 (tiga) bulan dan paling lama pada hari kerja sebelum ITAP berakhir."
+        ],
+        "Persyaratan Dokumen": [
+          "Mengisi formulir aplikasi.",
+          "Paspor kebangsaan yang sah dan masih berlaku.",
+          "ITAP lama yang akan diperpanjang.",
+          "Surat keterangan domisili dari instansi berwenang.",
+          "Fotokopi KTP Penjamin dan Kartu Keluarga (jika ada penjamin).",
+          "Dokumen pendukung lain yang relevan sesuai tujuan tinggal."
+        ],
+        "Proses Permohonan": [
+          "1. Penyerahan berkas persyaratan.",
+          "2. Pengambilan data biometrik.",
+          "3. Pembayaran biaya perpanjangan ITAP.",
+          "4. Verifikasi dokumen dan persetujuan dari Direktur Jenderal Imigrasi melalui Kanwil Kemenkumham.",
+          "5. Penerbitan perpanjangan ITAP."
+        ],
+        "Biaya": [
+          "Perpanjangan ITAP jangka waktu tidak terbatas: Rp 10.000.000"
+        ]
       },
-      "Daftar Subjek Visa on Arrival": {
-        sections: { negara: "Daftar Negara, Pemerintah Dari Daerah Administrasi Khusus Suatu Negara, dan Entitas Tertentu" },
-        data: {
-          negara: [
-            "Afrika Selatan", "Albania", "Amerika Serikat", "Andorra", "Arab Saudi", "Argentina", "Armenia", "Australia", 
-            "Austria", "Azerbaijan", "Bahrain", "Belanda", "Belgia", "Belarus", "Bosnia Herzegovina", "Brazil", 
-            "Brunei Darussalam", "Bulgaria", "Ceko", "Chile", "Denmark", "Ekuador", "Estonia", "Filipina", "Finlandia", 
-            "Guatemala", "Hong Kong", "Hungaria", "India", "Inggris", "Irlandia", "Islandia", "Italia", "Jepang", 
-            "Jerman", "Kamboja", "Kanada", "Kazakhstan", "Kenya", "Kolombia", "Korea Selatan", "Kroasia", "Kuwait", 
-            "Laos", "Latvia", "Liechtenstein", "Lituania", "Luksemburg", "Makau", "Malaysia", "Maladewa", "Malta", 
-            "Maroko", "Meksiko", "Mesir", "Monako", "Myanmar", "Norwegia", "Oman", "Palestina", "Papua Nugini", 
-            "Prancis", "Peru", "Polandia", "Portugal", "Qatar", "Rumania", "Rusia", "Rwanda", "Selandia Baru", 
-            "Serbia", "Seychelles", "Singapura", "Siprus", "Slowakia", "Slovenia", "Spanyol", "Suriname", "Swedia", 
-            "Swiss", "Taiwan", "Thailand", "Timor Leste", "Tiongkok", "Tunisia", "Turki", "Uni Emirat Arab", 
-            "Uzbekistan", "Ukraina", "Vatikan", "Venezuela", "Vietnam", "Yordania", "Yunani"
-          ]
-        }
+      "Alih Status ITK-ITAS": {
+        "Informasi Umum": [
+          "Orang Asing pemegang Izin Tinggal Kunjungan (ITK) dapat mengalihstatuskan izin tinggalnya menjadi Izin Tinggal Terbatas (ITAS).",
+          "Permohonan alih status ITK menjadi ITAS diajukan dalam waktu paling lama 30 (tiga puluh) hari sebelum masa berlaku ITK berakhir."
+        ],
+        "Persyaratan Dokumen": [
+          "Paspor Kebangsaan yang sah dan masih berlaku.",
+          "Bukti pendaftaran dan surat penjaminan dari Penjamin.",
+          "Dokumen persyaratan khusus sesuai dengan tujuan tinggal (contoh: Rekomendasi Kementerian terkait, akta nikah, dsb)."
+        ],
+        "Proses Permohonan": [
+          "1. Pemohon mendaftarkan permohonan secara online atau langsung di Kantor Imigrasi.",
+          "2. Verifikasi dokumen dan penerbitan pengantar pembayaran PNBP.",
+          "3. Pengambilan biometrik.",
+          "4. Persetujuan Kepala Kantor Imigrasi dan penerbitan e-ITAS."
+        ]
+      },
+      "Alih Status ITAS-ITAP": {
+        "Informasi Umum": [
+          "Pemegang ITAS dapat mengajukan alih status menjadi ITAP setelah tinggal sekurang-kurangnya 3 (tiga) tahun berturut-turut di Indonesia.",
+          "Bagi ITAS penyatuan keluarga (suami/istri WNI), dapat dialihstatuskan setelah usia pernikahan mencapai 2 (dua) tahun."
+        ],
+        "Persyaratan Dokumen": [
+          "Surat permohonan dari Penjamin.",
+          "Paspor Kebangsaan dan ITAS yang sah dan masih berlaku.",
+          "Surat Keterangan Tempat Tinggal (SKTT) dari Dinas Kependudukan.",
+          "Surat Keterangan Catatan Kepolisian (SKCK).",
+          "Buku nikah (bagi penyatuan keluarga dengan WNI) atau dokumen tenaga kerja/investasi."
+        ],
+        "Biaya": [
+          "Biaya Alih Status ITAS ke ITAP (5 Tahun): Rp 5.000.000",
+          "Izin Masuk Kembali (IMK) 2 Tahun: Rp 1.750.000"
+        ]
+      },
+      "Pemberian ITAP Tanpa Alih Status": {
+        "Informasi Umum": [
+          "Dalam kondisi tertentu sesuai peraturan perundang-undangan (misalnya subjek anak berkewarganegaraan ganda atau eks-WNI), WNA dapat diberikan ITAP secara langsung tanpa melalui tahapan alih status dari ITAS terlebih dahulu."
+        ],
+        "Persyaratan Dokumen": [
+          "Paspor Kebangsaan.",
+          "Bukti pengembalian dokumen keimigrasian RI (bagi eks-WNI) atau akta kelahiran (bagi anak berkewarganegaraan ganda)."
+        ]
+      },
+      "Pelaporan ITAP": {
+        "Informasi Umum": [
+          "Orang Asing pemegang Izin Tinggal Tetap dengan jangka waktu tidak terbatas wajib melapor setiap 5 tahun sekali kepada Kepala Kantor Imigrasi yang wilayah kerjanya meliputi tempat tinggal Orang Asing."
+        ],
+        "Persyaratan Dokumen": [
+          "Persyaratan Umum: Paspor Kebangsaan yang sah dan masih berlaku, serta Izin Tinggal Tetap (ITAP).",
+          "Persyaratan Khusus: Bukti keabsahan perusahaan/pekerjaan, bukti rekening terbaru, atau dokumen relevan lain yang menguatkan maksud menetap di Indonesia."
+        ],
+        "Proses Permohonan": [
+          "1. Penerimaan pelaporan Izin Tinggal Tetap.",
+          "2. Pengambilan foto.",
+          "3. Persetujuan Kepala Kantor Imigrasi.",
+          "4. Penerbitan Izin Tinggal Tetap dengan tanggal pelaporan baru."
+        ],
+        "Waktu Proses dan Penyelesaian": [
+          "Permohonan diteruskan oleh Kepala Kantor Imigrasi ke Direktur Jenderal Imigrasi dalam jangka waktu paling lama 3 hari kerja.",
+          "Izin Tinggal Tetap virtual dikirimkan secara elektronik kepada Orang Asing/Penjamin."
+        ],
+        "Biaya": [
+          "Tidak dikenakan biaya (Rp 0)."
+        ],
+        "Dasar Hukum": [
+          "1. Peraturan Menteri Hukum dan HAM RI Nomor 22 Tahun 2023 tentang Visa dan Izin Tinggal.",
+          "2. Peraturan Menteri Keuangan RI Nomor 9/PMK.02/2022 tentang Jenis dan Tarif PNBP Pelayanan Keimigrasi."
+        ]
       }
     }
   },
   EN: {
-    hero: { title: "Subject List for VoA, BVK & Calling Visa", sub: "Immigration Facilities for Foreign Nationals" },
+    hero: { title: "Immigration Stay Permit", sub: "Immigration Facilities for Foreign Nationals" },
     ui: { 
       catTitle: "Provisions", 
-      catDesc: "Select a subject category below to view detailed countries or entry points.",
-      detailBadge: "Complete List"
+      catDesc: "Select a stay permit service below to view complete information, requirements, and procedures.",
+      detailBadge: "Service Details"
     },
     categories: [
-      "Subject List for Visa-Free Visit (BVK)", 
-      "Subject List for Calling Visa", 
-      "Entry Points for E-VoA Holders", 
-      "Subject List for Visa on Arrival (VoA)"
+      "Perpanjangan ITK", 
+      "Perpanjangan ITAS", 
+      "Perpanjangan ITAP", 
+      "Alih Status ITK-ITAS", 
+      "Alih Status ITAS-ITAP", 
+      "Pemberian ITAP Tanpa Alih Status", 
+      "Pelaporan ITAP"
     ],
     content: {
-      "Subject List for Visa-Free Visit (BVK)": {
-        sections: { negara: "List of Countries, Governments of Special Administrative Regions, and Certain Entities" },
-        data: {
-          negara: [
-            "Brunei Darussalam", "Malaysia", "Thailand", "Vietnam", "Philippines", "Cambodia", 
-            "Singapore", "Myanmar", "Laos", "Timor Leste", "Suriname", "Colombia", 
-            "Hong Kong", "Turkey", "Brazil", "Peru", "Kazakhstan", "Macau", "Belarus", 
-            "Foreign nationals holding Singapore permanent resident status passing through certain Immigration Checkpoints."
-          ]
-        }
+      "Perpanjangan ITK": {
+        "Informasi Umum": [
+          "Visit Stay Permit (ITK) is granted to Foreigners entering Indonesian territory with a Visit Visa.",
+          "ITK extensions can be granted up to 4 (four) consecutive times, with each extension valid for a maximum of 30 days."
+        ],
+        "Persyaratan Dokumen": [
+          "Application form.",
+          "Valid National Passport.",
+          "Guarantee letter from Guarantor.",
+          "Guarantor's ID Card (KTP)."
+        ],
+        "Proses Permohonan": [
+          "1. Document submission.",
+          "2. Payment of immigration fees.",
+          "3. Biometric data collection (if required).",
+          "4. Approval and issuance."
+        ],
+        "Waktu Proses dan Penyelesaian": ["3 (three) working days after payment is confirmed."],
+        "Biaya": ["30-day extension: Rp 500,000", "60-day extension: Rp 750,000"]
       },
-      "Subject List for Calling Visa": {
-        sections: { negara: "List of Countries, Governments of Special Administrative Regions, and Certain Entities" },
-        data: {
-          negara: ["Afghanistan", "Israel", "North Korea", "Liberia", "Nigeria", "Somalia"]
-        }
+      "Perpanjangan ITAS": {
+        "Informasi Umum": ["Limited Stay Permit (ITAS) is granted to foreigners holding a VITAS or those changing status from ITK."],
+        "Persyaratan Dokumen": ["Guarantor letter", "Valid Passport", "Supporting documents based on purpose of stay."],
+        "Proses Permohonan": ["1. Submit application.", "2. Verification.", "3. Payment.", "4. Biometrics.", "5. e-ITAS issuance."],
+        "Waktu Proses dan Penyelesaian": ["Max 3 working days after biometrics."],
+        "Biaya": ["6 months: Rp 1,000,000", "1 year: Rp 1,500,000", "2 years: Rp 2,000,000"]
       },
-      "Entry Points for E-VoA Holders": {
-        sections: { 
-          bandara: "Immigration Checkpoints at Airports",
-          plbn: "Immigration Checkpoints at Cross-Border Posts",
-          pelabuhan: "Immigration Checkpoints at Seaports"
-        },
-        data: {
-          bandara: [
-            "Halim Perdanakusuma, DKI Jakarta", "Hang Nadim, Riau Islands", "Juanda, East Java", 
-            "Kualanamu, North Sumatra", "Minangkabau, West Sumatra", "Ngurah Rai, Bali", 
-            "Soekarno Hatta, DKI Jakarta", "Sultan Aji Muhammad Sulaiman, East Kalimantan", 
-            "Sultan Hasanuddin, South Sulawesi", "Sultan Iskandar Muda, Aceh", 
-            "Yogyakarta, Special Region of Yogyakarta", "Zainuddin Abdul Madjid, West Nusa Tenggara"
-          ],
-          plbn: [
-            "Aruk, West Kalimantan", "Entikong, West Kalimantan", "Mota'ain, East Nusa Tenggara", 
-            "Motamasin, East Nusa Tenggara", "Skouw, Papua", "Nangabadau, West Kalimantan"
-          ],
-          pelabuhan: [
-            "Achmad Yani, North Maluku", "Amamapare, Papua", "Batam Centre, Riau Islands", 
-            "Benoa, Bali", "Dumai, Riau", "Marina Ancol, DKI Jakarta", "Nongsa Terminal Bahari, Riau Islands", 
-            "Tanjung Balai Karimun, Riau Islands", "Tanjung Priok, DKI Jakarta", 
-            "Bandar Bintan Telani Lagoi Port, Riau Islands", "Citra Tri Tunas, Riau Islands"
-          ]
-        }
+      "Perpanjangan ITAP": {
+        "Informasi Umum": ["Permanent Stay Permit (ITAP) is valid for 5 years and can be extended for an unlimited period."],
+        "Persyaratan Dokumen": ["Application form", "Valid passport", "Current ITAP", "Domicile letter"],
+        "Proses Permohonan": ["1. Submission", "2. Biometrics", "3. Payment", "4. Verification by Regional Office/Dirjen", "5. Issuance"],
+        "Biaya": ["Unlimited duration ITAP extension: Rp 10,000,000"]
       },
-      "Subject List for Visa on Arrival (VoA)": {
-        sections: { negara: "List of Countries, Governments of Special Administrative Regions, and Certain Entities" },
-        data: {
-          negara: [
-            "South Africa", "Albania", "United States", "Andorra", "Saudi Arabia", "Argentina", "Armenia", "Australia", 
-            "Austria", "Azerbaijan", "Bahrain", "Netherlands", "Belgium", "Belarus", "Bosnia and Herzegovina", "Brazil", 
-            "Brunei Darussalam", "Bulgaria", "Czech Republic", "Chile", "Denmark", "Ecuador", "Estonia", "Philippines", "Finland", 
-            "Guatemala", "Hong Kong", "Hungary", "India", "United Kingdom", "Ireland", "Iceland", "Italy", "Japan", 
-            "Germany", "Cambodia", "Canada", "Kazakhstan", "Kenya", "Colombia", "South Korea", "Croatia", "Kuwait", 
-            "Laos", "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Malaysia", "Maldives", "Malta", 
-            "Morocco", "Mexico", "Egypt", "Monaco", "Myanmar", "Norway", "Oman", "Palestine", "Papua New Guinea", 
-            "France", "Peru", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "New Zealand", 
-            "Serbia", "Seychelles", "Singapore", "Cyprus", "Slovakia", "Slovenia", "Spain", "Suriname", "Sweden", 
-            "Switzerland", "Taiwan", "Thailand", "Timor Leste", "China", "Tunisia", "Turkey", "United Arab Emirates", 
-            "Uzbekistan", "Ukraine", "Vatican City", "Venezuela", "Vietnam", "Jordan", "Greece"
-          ]
-        }
+      "Alih Status ITK-ITAS": {
+        "Informasi Umum": ["Foreigners holding ITK can apply to change their status to ITAS. Must be applied at least 30 days before ITK expires."],
+        "Persyaratan Dokumen": ["Valid Passport", "Guarantor letter", "Specific requirement documents (e.g., Marriage certificate, Ministry recommendation)."],
+        "Proses Permohonan": ["1. Online/Offline Registration", "2. Payment", "3. Biometrics", "4. e-ITAS issuance"]
+      },
+      "Alih Status ITAS-ITAP": {
+        "Informasi Umum": ["ITAS holders can apply for ITAP after living consecutively for 3 years in Indonesia."],
+        "Persyaratan Dokumen": ["Guarantor letter", "Valid Passport and ITAS", "Police Certificate (SKCK)", "Supporting documents"],
+        "Biaya": ["Change to ITAP (5 Years): Rp 5,000,000", "Re-entry Permit (IMK) 2 Years: Rp 1,750,000"]
+      },
+      "Pemberian ITAP Tanpa Alih Status": {
+        "Informasi Umum": ["Under specific conditions (e.g., ex-Indonesian citizens or dual citizenship children), ITAP can be granted directly without prior ITAS."],
+        "Persyaratan Dokumen": ["Valid Passport", "Proof of return of RI documents or birth certificate."]
+      },
+      "Pelaporan ITAP": {
+        "Informasi Umum": ["Foreigners holding an unlimited Permanent Stay Permit must report every 5 years to the Immigration Office."],
+        "Persyaratan Dokumen": ["Valid Passport and ITAP", "Proof of corporate legitimacy, recent bank statements, or other relevant documents."],
+        "Proses Permohonan": ["1. Submit report", "2. Photo taking", "3. Approval", "4. Issuance of new report date"],
+        "Waktu Proses dan Penyelesaian": ["Forwarded to Directorate General within 3 days. Virtual ITAP delivered electronically."],
+        "Biaya": ["No charge (Rp 0)."],
+        "Dasar Hukum": ["Permenkumham No. 22 Year 2023 on Visas and Stay Permits.", "Ministry of Finance Regulation No. 9/PMK.02/2022."]
       }
     }
   }
 };
 
-export default function LayananVoaBvk() {
+export default function LayananIzinTinggal() {
   const { lang, setLang } = useContext(LanguageContext);
-  const t = subjekData[lang as 'ID' | 'EN'];
+  const t = izinTinggalData[lang as 'ID' | 'EN'];
   const ui = lang === 'ID' ? { home: "Beranda", search: "Cari..." } : { home: "Home", search: "Search..." };
   
   const [isScrolled, setIsScrolled] = useState(false);
@@ -180,7 +268,7 @@ export default function LayananVoaBvk() {
 
   const [isCsOpen, setIsCsOpen] = useState(false);
   const [isIvaraOpen, setIsIvaraOpen] = useState(false);
-  const [messages, setMessages] = useState([{ sender: 'ivara', text: lang === 'ID' ? 'Halo! Ada yang bisa dibantu mengenai daftar visa?' : 'Hello! Need help with visa lists?' }]);
+  const [messages, setMessages] = useState([{ sender: 'ivara', text: lang === 'ID' ? 'Halo! Ada yang bisa dibantu mengenai Izin Tinggal Keimigrasian?' : 'Hello! Need help with Immigration Stay Permits?' }]);
   const [inputMessage, setInputMessage] = useState('');
 
   useEffect(() => { 
@@ -190,14 +278,14 @@ export default function LayananVoaBvk() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Ambil Data Kategori Aktif (Ditegaskan sebagai 'any' agar TypeScript tidak komplain)
+  // Ambil Data Kategori Aktif
   const activeCategoryName = t.categories[activeCategoryIndex];
   const activeContent = (t.content as any)[activeCategoryName];
 
   // Buka semua section secara default tiap kali kategori berubah
   useEffect(() => {
-    if (activeContent && activeContent.sections) {
-      setExpandedSections(Object.keys(activeContent.sections));
+    if (activeContent) {
+      setExpandedSections(Object.keys(activeContent));
     }
   }, [activeCategoryIndex, lang]);
 
@@ -254,7 +342,8 @@ export default function LayananVoaBvk() {
 
       {/* HERO SECTION */}
       <div className="relative bg-[#1e293b] pt-28 pb-10 px-6 lg:px-12 xl:px-24">
-        <div className="absolute inset-0 overflow-hidden"><img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074" className="w-full h-full object-cover opacity-20" /></div>
+        {/* Latar Belakang Hero */}
+        <div className="absolute inset-0 overflow-hidden"><img src="https://images.unsplash.com/photo-1556761175-5973dc0f32b7?q=80&w=2070" className="w-full h-full object-cover opacity-25" /></div>
         <div className="relative z-10 animate-fade-in-up">
           <Link to="/" className="inline-flex items-center text-gray-300 hover:text-white mb-6 font-medium bg-white/10 px-4 py-1.5 rounded-full backdrop-blur-sm transition-colors"><ChevronLeft className="w-5 h-5 mr-1" /> {lang === 'ID' ? 'Kembali' : 'Back'}</Link>
           <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg">{t.hero.title}</h1>
@@ -306,7 +395,7 @@ export default function LayananVoaBvk() {
             </div>
           </div>
 
-          {/* PANEL KANAN: DETAIL KONTEN (ACCORDION NEGARA/LOKASI) */}
+          {/* PANEL KANAN: DETAIL KONTEN (ACCORDION) */}
           <div className="w-full lg:w-2/3 bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-gray-100 min-h-[500px]">
             <div className="border-b border-gray-100 pb-5 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <h3 className="font-extrabold text-2xl md:text-3xl text-[#1e293b] leading-tight">{activeCategoryName}</h3>
@@ -314,16 +403,15 @@ export default function LayananVoaBvk() {
             </div>
 
             <div className="space-y-4 animate-fade-in" key={activeCategoryIndex}>
-              {Object.entries(activeContent.sections || {}).map(([key, title]) => {
+              {Object.entries(activeContent || {}).map(([key, listData]) => {
                 const isExpanded = expandedSections.includes(key);
-                const sectionTitle = String(title); // Diperbaiki: ditegaskan sebagai string agar TS tidak komplain
-                const listData = ((activeContent.data as any)[key] as string[]) || []; // Diperbaiki tipe any
+                const items = listData as string[]; // Assertion array string
                 
                 return (
                   <div key={key} className={`bg-white border rounded-2xl overflow-hidden transition-all duration-300 ${isExpanded ? 'border-blue-400 ring-4 ring-blue-50 shadow-md' : 'border-gray-200 hover:border-blue-300 shadow-sm'}`}>
                     <button onClick={() => toggleSection(key)} className="w-full text-left px-6 py-5 flex items-center justify-between focus:outline-none bg-white group">
                       <span className={`font-extrabold text-lg leading-snug pr-4 transition-colors ${isExpanded ? 'text-blue-700' : 'text-[#1e293b] group-hover:text-blue-600'}`}>
-                        {sectionTitle}
+                        {key}
                       </span>
                       <div className={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center transition-colors duration-300 ${isExpanded ? 'bg-blue-100' : 'bg-gray-50'}`}>
                         <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${isExpanded ? 'rotate-180 text-blue-700' : 'text-gray-400'}`} />
@@ -331,12 +419,11 @@ export default function LayananVoaBvk() {
                     </button>
                     <div className={`transition-all duration-500 ease-in-out origin-top ${isExpanded ? 'max-h-[3000px] opacity-100' : 'max-h-0 opacity-0'}`}>
                       <div className="px-6 pb-6 pt-2 border-t border-gray-100 bg-gray-50/30">
-                        {/* Menampilkan daftar dengan sistem kolom ganda jika datanya banyak */}
-                        <ol className={`list-decimal list-outside ml-5 space-y-2 text-gray-700 font-medium ${listData.length > 20 ? 'md:columns-2 gap-8' : ''}`}>
-                          {listData.map((item, i) => (
-                            <li key={i} className="pl-1 mb-2 leading-relaxed break-inside-avoid">{item}</li>
+                        <ul className="list-disc list-outside ml-5 space-y-2 text-gray-700 font-medium">
+                          {items.map((item, i) => (
+                            <li key={i} className="pl-1 mb-2 leading-relaxed">{item}</li>
                           ))}
-                        </ol>
+                        </ul>
                       </div>
                     </div>
                   </div>
