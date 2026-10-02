@@ -1,134 +1,156 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LanguageContext } from '../App';
-import Footer from '../Footer'; // Sesuaikan path ini jika lokasinya berbeda
+import Footer from '../Footer';
 import { 
   Search, Phone, Shield, Globe, ChevronLeft, ChevronDown, 
-  Languages, X, Bot, MessageSquare, Send, CheckCircle2, CreditCard, FileText, HelpCircle, Map, Clock
+  Languages, X, Bot, MessageSquare, Send, CheckCircle2, FileText, Info
 } from 'lucide-react';
 
 const visaData = {
   ID: {
-    hero: { title: "Daftar Visa Indonesia", sub: "Layanan Keimigrasian untuk Warga Negara Asing" },
-    sidebar: {
-      about: "Tentang Visa",
-      categories: "Kategori Visa Utama",
-      requirements: "Syarat dan Dokumen",
-      fees: "Biaya PNBP",
-      apply: "Cara Mengajukan",
-      extension: "Perpanjangan Visa"
+    hero: { title: "Daftar Visa Indonesia", sub: "Layanan Fasilitas Keimigrasian WNA" },
+    ui: { 
+      catTitle: "Daftar Isi", 
+      catDesc: "Klik menu di bawah untuk langsung menuju ke bagian informasi yang Anda butuhkan."
     },
+    sections: [
+      { id: "single-entry", label: "Visa Kunjungan (Single Entry)" },
+      { id: "multiple-entry", label: "Visa Kunjungan Beberapa Kali" },
+      { id: "voa", label: "Visa Kunjungan Saat Kedatangan (VoA)" },
+      { id: "vitas", label: "Visa Tinggal Terbatas (VITAS)" },
+      { id: "persyaratan", label: "Persyaratan Umum" },
+      { id: "proses", label: "Proses Permohonan & Biaya" }
+    ],
     content: {
-      about: {
-        title: "Tentang Visa Indonesia",
-        desc: "Visa Republik Indonesia adalah keterangan tertulis yang diberikan oleh Pejabat yang Berwenang di Perwakilan Republik Indonesia atau di tempat lain yang ditetapkan oleh Pemerintah Republik Indonesia, yang memuat persetujuan bagi Orang Asing untuk melakukan perjalanan ke Wilayah Indonesia dan menjadi dasar untuk pemberian Izin Tinggal. Saat ini Indonesia menerapkan sistem e-Visa untuk memudahkan WNA mengajukan visa secara daring."
-      },
-      categories: {
-        title: "Kategori Visa Utama",
+      "single-entry": {
+        title: "Visa Kunjungan 1 (Satu) Kali Perjalanan (Single Entry)",
+        desc: "Diberikan kepada Orang Asing yang akan melakukan perjalanan ke Wilayah Indonesia dalam rangka kunjungan untuk waktu paling lama 60 (enam puluh) hari.",
         items: [
-          { name: "Visa Kunjungan Saat Kedatangan (Visa on Arrival / VoA)", desc: "Diberikan kepada WNA dari negara subjek VoA untuk tujuan wisata, kunjungan pemerintahan, pembicaraan bisnis, pembelian barang, atau transit. Masa berlaku 30 hari." },
-          { name: "Visa Kunjungan (Single Entry / Multiple Entry)", desc: "Untuk wisata, keluarga, bisnis, atau kegiatan sosial budaya. Single Entry berlaku untuk 1 kali kunjungan (maks 60 hari). Multiple Entry berlaku hingga 1 atau 5 tahun." },
-          { name: "Visa Tinggal Terbatas (VITAS)", desc: "Diberikan untuk tujuan bekerja, penanaman modal (investor), penelitian, belajar, penyatuan keluarga, atau repatriasi. Memerlukan penjamin." },
-          { name: "Visa Pelajar / Mahasiswa", desc: "Khusus untuk WNA yang akan menempuh pendidikan di lembaga pendidikan formal di Indonesia." }
+          { code: "B211A", name: "Wisata, Keluarga, Sosial, Seni Budaya, Pemerintahan, Olahraga", detail: "Masa berlaku 60 hari. Dapat diperpanjang." },
+          { code: "B211B", name: "Bisnis, Calon Tenaga Kerja Asing dalam Uji Coba", detail: "Masa berlaku 60 hari. Dapat diperpanjang." },
+          { code: "B211C", name: "Jurnalistik dan Pembuatan Film", detail: "Masa berlaku 60 hari. Memerlukan rekomendasi kementerian terkait." }
         ]
       },
-      requirements: {
-        title: "Persyaratan Umum",
+      "multiple-entry": {
+        title: "Visa Kunjungan Beberapa Kali Perjalanan (Multiple Entry)",
+        desc: "Diberikan kepada Orang Asing yang akan melakukan perjalanan ke Wilayah Indonesia untuk beberapa kali kunjungan yang berlaku paling lama 1 (satu) hingga 5 (lima) tahun.",
         items: [
-          "Paspor kebangsaan yang masih berlaku minimal 6 (enam) bulan.",
-          "Surat penjaminan dari Penjamin (kecuali untuk visa wisata tertentu).",
-          "Bukti memiliki biaya hidup bagi dirinya dan/atau keluarganya selama berada di Wilayah Indonesia (rekening koran dengan saldo minimal US$ 2,000).",
+          { code: "D212", name: "Bisnis, Keluarga, Pemerintahan", detail: "Setiap kunjungan maksimal 60 hari. Tidak dapat diperpanjang statusnya." }
+        ]
+      },
+      "voa": {
+        title: "Visa Kunjungan Saat Kedatangan (Visa on Arrival / VoA)",
+        desc: "Diberikan kepada warga negara asing dari negara subjek VoA saat tiba di Tempat Pemeriksaan Imigrasi (TPI) tertentu.",
+        items: [
+          { code: "B213", name: "Kunjungan Wisata, Bisnis, Pemerintahan", detail: "Masa berlaku 30 hari. Dapat diperpanjang 1 (satu) kali untuk 30 hari berikutnya." }
+        ]
+      },
+      "vitas": {
+        title: "Visa Tinggal Terbatas (VITAS)",
+        desc: "Diberikan kepada Orang Asing yang bermaksud tinggal di Indonesia dalam jangka waktu yang terbatas untuk berbagai keperluan.",
+        items: [
+          { code: "C312", name: "Tenaga Kerja Asing (Bekerja)", detail: "Memerlukan Rekomendasi/RPTKA dari Kementerian Ketenagakerjaan." },
+          { code: "C313", name: "Penanaman Modal Asing (PMA) / Investor (1 Tahun)", detail: "Memerlukan Rekomendasi dari BKPM." },
+          { code: "C314", name: "Penanaman Modal Asing (PMA) / Investor (2 Tahun)", detail: "Memerlukan Rekomendasi dari BKPM." },
+          { code: "C316", name: "Pendidikan / Mahasiswa", detail: "Memerlukan Rekomendasi dari Kemendikbudristek." },
+          { code: "C317", name: "Penyatuan Keluarga", detail: "Ikut suami/istri WNI atau orang tua pemegang ITAS/ITAP." }
+        ]
+      },
+      "persyaratan": {
+        title: "Persyaratan Dokumen Umum",
+        desc: "Dokumen dasar yang umumnya harus dipersiapkan sebelum mengajukan permohonan visa Indonesia:",
+        itemsList: [
+          "Paspor Kebangsaan yang sah dan masih berlaku minimal 6 (enam) bulan.",
+          "Surat penjaminan dari Penjamin, kecuali untuk peruntukan wisata secara mandiri.",
+          "Bukti memiliki biaya hidup bagi dirinya dan/atau keluarganya selama berada di Wilayah Indonesia (rekening koran minimal USD 2.000).",
           "Tiket kembali atau tiket terusan untuk melanjutkan perjalanan ke negara lain.",
-          "Pasfoto berwarna terbaru.",
-          "Dokumen pendukung lainnya sesuai dengan maksud dan tujuan kedatangan (seperti kontrak kerja untuk VITAS)."
+          "Pasfoto berwarna terbaru berukuran 4x6 dengan latar belakang merah/putih."
         ]
       },
-      fees: {
-        title: "Biaya Pembuatan Visa",
-        desc: "Biaya Penerimaan Negara Bukan Pajak (PNBP) menyesuaikan dengan jenis visa yang diajukan:",
-        items: [
-          { name: "Visa on Arrival (VoA)", price: "Rp 500.000" },
-          { name: "Visa Kunjungan Satu Kali Perjalanan (Single Entry)", price: "US$ 50 (atau Rp 1.500.000 untuk eVisa tertentu)" },
-          { name: "Visa Kunjungan Beberapa Kali Perjalanan (Multiple Entry - 1 Tahun)", price: "Rp 3.000.000" },
-          { name: "Visa Tinggal Terbatas (VITAS)", price: "Mulai dari US$ 150" }
+      "proses": {
+        title: "Proses Permohonan & Komponen Biaya",
+        desc: "Saat ini pengajuan visa Indonesia wajib dilakukan secara daring (online) melalui portal resmi Direktorat Jenderal Imigrasi RI.",
+        infoBox: "Portal Resmi Pengajuan: molina.imigrasi.go.id",
+        itemsList: [
+          "Visa on Arrival (VoA): Rp 500.000 / USD 35",
+          "Visa Kunjungan Single Entry (B211A/B/C): USD 50",
+          "Visa Kunjungan Multiple Entry (1 Tahun): Rp 3.000.000",
+          "Visa Tinggal Terbatas (VITAS): Mulai dari USD 150 (tergantung jenis & masa berlaku)"
         ]
-      },
-      apply: {
-        title: "Cara Mengajukan e-Visa",
-        steps: [
-          "Kunjungi portal resmi e-Visa Direktorat Jenderal Imigrasi di molina.imigrasi.go.id",
-          "Buat akun pendaftar (Register) bagi penjamin atau WNA.",
-          "Pilih jenis visa yang sesuai dengan tujuan kunjungan.",
-          "Isi formulir aplikasi dan unggah dokumen persyaratan dalam format yang diminta (PDF/JPG).",
-          "Lakukan pembayaran PNBP melalui kartu kredit (jaringan Visa/Mastercard) atau bank persepsi (Simponi).",
-          "Jika disetujui, e-Visa akan dikirimkan langsung ke alamat email terdaftar."
-        ]
-      },
-      extension: {
-        title: "Perpanjangan Visa & Izin Tinggal",
-        desc: "Sebagian besar visa seperti VoA dan Visa Kunjungan dapat diperpanjang (extend). Perpanjangan dapat dilakukan secara daring melalui website Molina atau datang langsung ke Kantor Imigrasi terdekat sebelum masa berlaku visa habis. Keterlambatan perpanjangan (overstay) akan dikenakan denda sebesar Rp 1.000.000 per hari."
       }
     }
   },
   EN: {
-    hero: { title: "Indonesian Visa Registration", sub: "Immigration Services for Foreign Nationals" },
-    sidebar: {
-      about: "About Visa",
-      categories: "Main Visa Categories",
-      requirements: "Requirements & Documents",
-      fees: "Visa Fees",
-      apply: "How to Apply",
-      extension: "Visa Extension"
+    hero: { title: "Indonesian Visa Index", sub: "Immigration Facilities for Foreign Nationals" },
+    ui: { 
+      catTitle: "Table of Contents", 
+      catDesc: "Click a menu below to jump directly to the specific information section."
     },
+    sections: [
+      { id: "single-entry", label: "Visit Visa (Single Entry)" },
+      { id: "multiple-entry", label: "Visit Visa (Multiple Entry)" },
+      { id: "voa", label: "Visa on Arrival (VoA)" },
+      { id: "vitas", label: "Limited Stay Visa (VITAS)" },
+      { id: "persyaratan", label: "General Requirements" },
+      { id: "proses", label: "Application & Fees" }
+    ],
     content: {
-      about: {
-        title: "About Indonesian Visa",
-        desc: "An Indonesian Visa is a written statement given by an Authorized Official at an Indonesian Representative or at other places determined by the Government, containing approval for Foreigners to travel into the Indonesian Territory and serves as the basis for granting Stay Permits. Indonesia currently implements an e-Visa system for easier online applications."
-      },
-      categories: {
-        title: "Main Visa Categories",
+      "single-entry": {
+        title: "Single Entry Visit Visa",
+        desc: "Granted to Foreigners intending to travel to the Indonesian Territory for a visit not exceeding 60 (sixty) days.",
         items: [
-          { name: "Visa on Arrival (VoA / e-VoA)", desc: "Granted to foreigners from eligible countries for tourism, government visits, business meetings, purchasing goods, or transit. Valid for 30 days." },
-          { name: "Visit Visa (Single Entry / Multiple Entry)", desc: "For tourism, family, business, or socio-cultural activities. Single Entry is valid for a maximum of 60 days. Multiple Entry is valid for up to 1 or 5 years." },
-          { name: "Limited Stay Visa (VITAS)", desc: "Granted for the purpose of working, investment, research, study, family unification, or repatriation. Requires a guarantor/sponsor." },
-          { name: "Student Visa", desc: "Specifically for foreigners who will pursue formal education at educational institutions in Indonesia." }
+          { code: "B211A", name: "Tourism, Family, Social, Cultural, Government, Sports", detail: "Valid for 60 days. Extendable." },
+          { code: "B211B", name: "Business, Prospective Foreign Worker on Trial", detail: "Valid for 60 days. Extendable." },
+          { code: "B211C", name: "Journalism and Filmmaking", detail: "Valid for 60 days. Requires related ministry recommendation." }
         ]
       },
-      requirements: {
-        title: "General Requirements",
+      "multiple-entry": {
+        title: "Multiple Entry Visit Visa",
+        desc: "Granted to Foreigners for several visits, valid for a maximum of 1 (one) to 5 (five) years.",
         items: [
-          "A valid national passport with a minimum validity of 6 (six) months.",
-          "A guarantee letter from the Guarantor (except for certain tourist visas).",
-          "Proof of living expenses for the applicant and/or family while in Indonesia (bank statement with a minimum balance of US$ 2,000).",
-          "A return ticket or onward ticket to continue the journey to another country.",
-          "Recent color passport photo.",
-          "Other supporting documents according to the purpose of the visit (e.g., employment contract for VITAS)."
+          { code: "D212", name: "Business, Family, Government", detail: "Max 60 days per visit. Cannot be extended in status." }
         ]
       },
-      fees: {
-        title: "Visa Fees",
-        desc: "Non-Tax State Revenue (PNBP) fees depend on the type of visa applied for:",
+      "voa": {
+        title: "Visa on Arrival (VoA)",
+        desc: "Granted to eligible foreign nationals upon arrival at designated Immigration Checkpoints (TPI).",
         items: [
-          { name: "Visa on Arrival (VoA)", price: "Rp 500,000" },
-          { name: "Single Entry Visit Visa", price: "US$ 50 (or Rp 1,500,000 for certain e-Visas)" },
-          { name: "Multiple Entry Visit Visa (1 Year)", price: "Rp 3,000,000" },
-          { name: "Limited Stay Visa (VITAS)", price: "Starting from US$ 150" }
+          { code: "B213", name: "Tourism, Business, Government Visits", detail: "Valid for 30 days. Can be extended 1 (once) for another 30 days." }
         ]
       },
-      apply: {
-        title: "How to Apply for e-Visa",
-        steps: [
-          "Visit the official e-Visa portal of the Directorate General of Immigration at molina.imigrasi.go.id",
-          "Create a registered account for the guarantor or the foreign national.",
-          "Select the visa type that matches your purpose of visit.",
-          "Fill out the application form and upload the required documents in the requested format (PDF/JPG).",
-          "Make the PNBP payment using a credit card (Visa/Mastercard network) or perception bank (Simponi).",
-          "If approved, the e-Visa will be sent directly to your registered email address."
+      "vitas": {
+        title: "Limited Stay Visa (VITAS)",
+        desc: "Granted to Foreigners intending to stay in Indonesia for a limited period for various purposes.",
+        items: [
+          { code: "C312", name: "Foreign Worker (Working)", detail: "Requires Recommendation/RPTKA from Ministry of Manpower." },
+          { code: "C313", name: "Foreign Investment (PMA) / Investor (1 Year)", detail: "Requires Recommendation from BKPM." },
+          { code: "C314", name: "Foreign Investment (PMA) / Investor (2 Years)", detail: "Requires Recommendation from BKPM." },
+          { code: "C316", name: "Education / Student", detail: "Requires Recommendation from Ministry of Education." },
+          { code: "C317", name: "Family Unification", detail: "Joining Indonesian spouse or parents holding ITAS/ITAP." }
         ]
       },
-      extension: {
-        title: "Visa & Stay Permit Extension",
-        desc: "Most visas, such as VoA and Visit Visas, can be extended. Extensions can be done online through the Molina website or by visiting the nearest Immigration Office before the visa expires. Overstaying will incur a penalty of Rp 1,000,000 per day."
+      "persyaratan": {
+        title: "General Document Requirements",
+        desc: "Basic documents that generally must be prepared before applying for an Indonesian visa:",
+        itemsList: [
+          "Valid National Passport with a minimum validity of 6 (six) months.",
+          "Guarantee letter from a Guarantor, except for independent tourism purposes.",
+          "Proof of sufficient living expenses (bank statement with a minimum balance of USD 2,000).",
+          "Return ticket or onward ticket to continue the journey.",
+          "Recent color passport photo (4x6) with a red/white background."
+        ]
+      },
+      "proses": {
+        title: "Application Process & Visa Fees",
+        desc: "Currently, Indonesian visa applications must be made online through the official portal of the Directorate General of Immigration.",
+        infoBox: "Official Application Portal: molina.imigrasi.go.id",
+        itemsList: [
+          "Visa on Arrival (VoA): Rp 500,000 / USD 35",
+          "Single Entry Visit Visa (B211A/B/C): USD 50",
+          "Multiple Entry Visit Visa (1 Year): Rp 3,000,000",
+          "Limited Stay Visa (VITAS): Starting from USD 150 (depending on type & validity)"
+        ]
       }
     }
   }
@@ -141,19 +163,47 @@ export default function LayananVisa() {
   
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('about');
-  
+  const [activeSection, setActiveSection] = useState(t.sections[0].id);
+
+  // FAB States
   const [isCsOpen, setIsCsOpen] = useState(false);
   const [isIvaraOpen, setIsIvaraOpen] = useState(false);
   const [messages, setMessages] = useState([{ sender: 'ivara', text: lang === 'ID' ? 'Halo! Ada yang bisa dibantu mengenai Visa?' : 'Hello! Need help with Visas?' }]);
   const [inputMessage, setInputMessage] = useState('');
 
+  // Navbar scroll & Intersection Observer untuk mendeteksi bagian mana yang sedang dibaca
   useEffect(() => { 
-    window.scrollTo(0, 0); 
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+      
+      // Deteksi section yang sedang aktif (Scroll Spy)
+      const sections = t.sections.map(s => document.getElementById(s.id));
+      let currentSection = t.sections[0].id;
+      
+      for (const section of sections) {
+        if (section) {
+          const sectionTop = section.getBoundingClientRect().top;
+          if (sectionTop <= 150) { // Offset navbar
+            currentSection = section.id;
+          }
+        }
+      }
+      setActiveSection(currentSection);
+    };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [t.sections]);
+
+  // Fungsi klik navigasi ke bagian section
+  const scrollToSection = (id: string) => {
+    setActiveSection(id);
+    const element = document.getElementById(id);
+    if (element) {
+      const y = element.getBoundingClientRect().top + window.scrollY - 100; // Offset navbar 100px
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -161,15 +211,6 @@ export default function LayananVisa() {
     setMessages(prev => [...prev, { sender: 'user', text: inputMessage }]);
     setInputMessage('');
   };
-
-  const menuItems = [
-    { id: 'about', icon: <HelpCircle className="w-5 h-5" />, label: t.sidebar.about },
-    { id: 'categories', icon: <Map className="w-5 h-5" />, label: t.sidebar.categories },
-    { id: 'requirements', icon: <FileText className="w-5 h-5" />, label: t.sidebar.requirements },
-    { id: 'fees', icon: <CreditCard className="w-5 h-5" />, label: t.sidebar.fees },
-    { id: 'apply', icon: <CheckCircle2 className="w-5 h-5" />, label: t.sidebar.apply },
-    { id: 'extension', icon: <Clock className="w-5 h-5" />, label: t.sidebar.extension }
-  ];
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans relative overflow-hidden">
@@ -192,10 +233,12 @@ export default function LayananVisa() {
             <Link to="/" className="text-white hover:text-[#eab308] transition-transform">{ui.home}</Link>
           </div>
           <div className="flex items-center space-x-4">
+            {/* PERBAIKAN SEARCH IKON BLUR */}
             <div className="relative flex items-center group">
               <Search className="w-4 h-4 text-gray-400 absolute left-4 z-10 pointer-events-none group-focus-within:text-yellow-400 transition-colors" />
               <input type="text" placeholder={ui.search} className="relative pl-10 pr-4 py-2 rounded-full bg-white/10 border border-white/20 text-white focus:outline-none focus:bg-white/20 focus:ring-1 focus:ring-yellow-500 w-[160px] focus:w-[200px] transition-all duration-300 text-sm" />
             </div>
+
             <div className="relative">
               <button onClick={() => setIsLangOpen(!isLangOpen)} className="flex items-center space-x-1.5 bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-2 rounded-full transition-all duration-300">
                 <Languages className="w-4 h-4 text-yellow-400" /><span className="text-sm font-bold text-white">{lang}</span><ChevronDown className={`w-4 h-4 text-white transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} />
@@ -211,7 +254,6 @@ export default function LayananVisa() {
 
       {/* HERO SECTION */}
       <div className="relative bg-[#0f172a] pt-28 pb-10 px-6 lg:px-12 xl:px-24">
-        {/* Gambar Latar Nuansa Bandara / Traveling WNA */}
         <div className="absolute inset-0 overflow-hidden"><img src="https://images.unsplash.com/photo-1542204165-65bf26472b9b?q=80&w=2074" className="w-full h-full object-cover opacity-20" /></div>
         <div className="relative z-10 animate-fade-in-up">
           <Link to="/" className="inline-flex items-center text-gray-300 hover:text-white mb-6 font-medium bg-white/10 px-4 py-1.5 rounded-full backdrop-blur-sm transition-colors"><ChevronLeft className="w-5 h-5 mr-1" /> {lang === 'ID' ? 'Kembali' : 'Back'}</Link>
@@ -221,125 +263,97 @@ export default function LayananVisa() {
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full flex-1">
-        <div className="flex flex-col lg:flex-row gap-8 items-start animate-fade-in-up delay-100">
+        <div className="flex flex-col lg:flex-row gap-10 items-start animate-fade-in-up delay-100 relative">
           
-          {/* PANEL KIRI: SIDEBAR MENU (Sticky) */}
-          <div className="w-full lg:w-1/3 lg:sticky lg:top-28 z-20">
-            <div className="bg-white p-3 rounded-3xl shadow-xl border border-gray-100">
-              <div className="flex flex-col space-y-1">
-                {menuItems.map((menu) => (
-                  <button 
-                    key={menu.id} 
-                    onClick={() => setActiveSection(menu.id)} 
-                    className={`w-full text-left px-5 py-4 rounded-2xl flex items-center space-x-4 transition-all duration-300 ${activeSection === menu.id ? 'bg-blue-600 text-white shadow-md' : 'bg-transparent text-gray-600 hover:bg-blue-50 hover:text-blue-600'}`}
-                  >
-                    <span className={`${activeSection === menu.id ? 'text-white' : 'text-blue-500'}`}>{menu.icon}</span>
-                    <span className="font-bold text-sm">{menu.label}</span>
-                  </button>
-                ))}
-              </div>
+          {/* PANEL KIRI: DAFTAR ISI (Sticky Scroll Navigation) */}
+          <div className="w-full lg:w-[320px] bg-white p-6 rounded-3xl shadow-xl border border-gray-100 lg:sticky lg:top-28 z-20 flex-shrink-0">
+            <div className="flex items-center space-x-3 mb-2">
+              <div className="bg-blue-100 p-2 rounded-xl text-blue-600"><Info className="w-5 h-5" /></div>
+              <h3 className="font-extrabold text-lg text-[#1e293b]">{t.ui.catTitle}</h3>
+            </div>
+            <p className="text-gray-500 text-xs mb-6 ml-1 leading-relaxed">{t.ui.catDesc}</p>
+            
+            <div className="flex flex-col space-y-1 relative before:absolute before:inset-y-2 before:left-2.5 before:w-0.5 before:bg-gray-100">
+              {t.sections.map((section) => (
+                <button 
+                  key={section.id} 
+                  onClick={() => scrollToSection(section.id)} 
+                  className={`relative text-left px-4 py-3 ml-6 rounded-xl flex items-center transition-all duration-300 ${activeSection === section.id ? 'bg-blue-50 text-blue-700 font-extrabold' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-blue-600'}`}
+                >
+                  {/* Indikator Titik */}
+                  <span className={`absolute -left-4 w-3 h-3 rounded-full border-2 bg-white transition-all duration-300 ${activeSection === section.id ? 'border-blue-600 scale-125' : 'border-gray-300'}`}></span>
+                  <span className="text-sm leading-snug">{section.label}</span>
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* PANEL KANAN: KONTEN VISA BERDASARKAN MENU */}
-          <div className="w-full lg:w-2/3 bg-white p-6 md:p-10 rounded-3xl shadow-xl border border-gray-100 min-h-[500px]">
+          {/* PANEL KANAN: KONTEN MEMANJANG (LONG SCROLL) */}
+          <div className="w-full bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 space-y-16">
             
-            {/* TENTANG VISA */}
-            {activeSection === 'about' && (
-              <div className="animate-fade-in space-y-6">
-                <h2 className="text-3xl font-extrabold text-[#1e293b] border-b pb-4">{t.content.about.title}</h2>
-                <p className="text-gray-600 leading-relaxed text-lg font-medium text-justify">{t.content.about.desc}</p>
-                <div className="mt-8 p-6 bg-blue-50 rounded-2xl border border-blue-100">
-                  <p className="text-blue-800 font-bold text-center">e-Visa Website: <a href="https://molina.imigrasi.go.id" target="_blank" rel="noreferrer" className="text-blue-600 underline">molina.imigrasi.go.id</a></p>
-                </div>
-              </div>
-            )}
+            {t.sections.map((section) => {
+              const secData = (t.content as any)[section.id];
+              if (!secData) return null;
 
-            {/* KATEGORI VISA */}
-            {activeSection === 'categories' && (
-              <div className="animate-fade-in space-y-6">
-                <h2 className="text-3xl font-extrabold text-[#1e293b] border-b pb-4">{t.content.categories.title}</h2>
-                <div className="space-y-4">
-                  {t.content.categories.items.map((item, idx) => (
-                    <div key={idx} className="p-5 border border-gray-200 rounded-2xl hover:border-blue-400 hover:shadow-md transition-all">
-                      <h3 className="font-extrabold text-lg text-blue-700 mb-2">{item.name}</h3>
-                      <p className="text-gray-600 leading-relaxed text-sm font-medium">{item.desc}</p>
+              return (
+                <div key={section.id} id={section.id} className="scroll-mt-32">
+                  <h2 className="text-2xl md:text-3xl font-extrabold text-[#1e293b] border-b-2 border-gray-100 pb-4 mb-6 relative">
+                    {secData.title}
+                    <span className="absolute bottom-0 left-0 w-16 h-0.5 bg-yellow-500 translate-y-0.5"></span>
+                  </h2>
+                  <p className="text-gray-600 leading-relaxed font-medium mb-8 text-justify">{secData.desc}</p>
+
+                  {/* Jika memiliki sub-items kotak (seperti Index B211A, B211B, dll) */}
+                  {secData.items && (
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {secData.items.map((item: any, idx: number) => (
+                        <div key={idx} className="p-5 border border-gray-200 rounded-2xl hover:border-blue-300 hover:shadow-md transition-all group bg-white">
+                          <div className="flex items-center space-x-3 mb-3">
+                            <span className="bg-blue-600 text-white font-extrabold text-sm px-3 py-1 rounded-lg shadow-sm">{item.code}</span>
+                          </div>
+                          <h4 className="font-extrabold text-gray-900 mb-2">{item.name}</h4>
+                          <p className="text-sm text-gray-500 leading-relaxed">{item.detail}</p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
-            )}
+                  )}
 
-            {/* SYARAT & DOKUMEN */}
-            {activeSection === 'requirements' && (
-              <div className="animate-fade-in space-y-6">
-                <h2 className="text-3xl font-extrabold text-[#1e293b] border-b pb-4">{t.content.requirements.title}</h2>
-                <ul className="space-y-4">
-                  {t.content.requirements.items.map((req, idx) => (
-                    <li key={idx} className="flex items-start space-x-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                      <CheckCircle2 className="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700 font-medium leading-relaxed">{req}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* BIAYA */}
-            {activeSection === 'fees' && (
-              <div className="animate-fade-in space-y-6">
-                <h2 className="text-3xl font-extrabold text-[#1e293b] border-b pb-4">{t.content.fees.title}</h2>
-                <p className="text-gray-600 font-medium">{t.content.fees.desc}</p>
-                <div className="grid gap-4 mt-4">
-                  {t.content.fees.items.map((fee, idx) => (
-                    <div key={idx} className="flex justify-between items-center p-5 bg-gradient-to-r from-blue-50 to-transparent border border-blue-100 rounded-2xl">
-                      <span className="font-bold text-gray-700">{fee.name}</span>
-                      <span className="font-extrabold text-lg text-blue-700 bg-white px-4 py-1.5 rounded-full shadow-sm">{fee.price}</span>
+                  {/* Jika memiliki daftar (seperti Persyaratan / Proses) */}
+                  {secData.itemsList && (
+                    <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                      <ul className="space-y-4">
+                        {secData.itemsList.map((li: string, idx: number) => (
+                          <li key={idx} className="flex items-start space-x-3">
+                            <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                            <span className="text-gray-700 font-medium leading-relaxed">{li}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                  ))}
-                </div>
-              </div>
-            )}
+                  )}
 
-            {/* CARA MENGAJUKAN */}
-            {activeSection === 'apply' && (
-              <div className="animate-fade-in space-y-6">
-                <h2 className="text-3xl font-extrabold text-[#1e293b] border-b pb-4">{t.content.apply.title}</h2>
-                <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-blue-200 before:to-transparent mt-8">
-                  {t.content.apply.steps.map((step, idx) => (
-                    <div key={idx} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                      <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-blue-600 text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-md z-10">
-                        {idx + 1}
-                      </div>
-                      <div className="w-[calc(100%-3rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-2xl border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow">
-                        <p className="text-gray-700 font-medium text-sm">{step}</p>
-                      </div>
+                  {/* Info Box Khusus (seperti portal Molina) */}
+                  {secData.infoBox && (
+                    <div className="mt-6 p-5 bg-blue-50 rounded-xl border border-blue-100 flex items-center space-x-4">
+                      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-blue-600 shadow-sm flex-shrink-0"><Globe className="w-6 h-6" /></div>
+                      <p className="text-blue-800 font-extrabold">{secData.infoBox}</p>
                     </div>
-                  ))}
+                  )}
                 </div>
-              </div>
-            )}
-
-            {/* PERPANJANGAN VISA */}
-            {activeSection === 'extension' && (
-              <div className="animate-fade-in space-y-6">
-                <h2 className="text-3xl font-extrabold text-[#1e293b] border-b pb-4">{t.content.extension.title}</h2>
-                <div className="p-6 bg-red-50 border-l-4 border-red-500 rounded-r-2xl text-red-900 font-medium leading-relaxed">
-                  <p>{t.content.extension.desc}</p>
-                </div>
-              </div>
-            )}
-
+              )
+            })}
           </div>
+
         </div>
       </main>
 
       {/* FOOTER */}
       <Footer />
 
-      {/* FAB: Bantuan & Chat */}
+      {/* FAB: Bantuan & Chat (DENGAN WEB LAPOR TAMBAHAN) */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-4">
-        {/* Call Center */}
+        
+        {/* Help Center Panel */}
         <div className={`transform origin-bottom-right transition-all duration-400 ease-out ${isCsOpen ? 'scale-100 opacity-100 visible mb-2' : 'scale-75 opacity-0 invisible h-0'}`}>
           <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-5 w-72">
             <div className="flex justify-between items-center mb-4 border-b border-gray-100 pb-3">
@@ -347,22 +361,17 @@ export default function LayananVisa() {
               <button onClick={() => setIsCsOpen(false)} className="text-gray-400 hover:text-red-500 bg-gray-50 rounded-full p-1 transition-colors"><X className="w-4 h-4" /></button>
             </div>
             <div className="space-y-3 text-sm">
-              {/* Call Center */}
               <a href="tel:02155790871" className="flex items-center space-x-4 p-3 rounded-2xl hover:bg-blue-50 text-gray-700 transition-colors group">
                 <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors"><Phone className="w-4 h-4" /></div>
                 <div><p className="font-extrabold text-xs text-gray-900">Call Center</p><p className="text-xs text-gray-500 font-medium">(021) 5579 0871</p></div>
               </a>
-              
-              {/* WhatsApp */}
               <a href="https://wa.me/628114119000" className="flex items-center space-x-4 p-3 rounded-2xl hover:bg-green-50 text-gray-700 transition-colors group">
                 <div className="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center group-hover:bg-green-500 group-hover:text-white transition-colors"><MessageSquare className="w-4 h-4" /></div>
                 <div><p className="font-extrabold text-xs text-gray-900">WhatsApp</p><p className="text-xs text-gray-500 font-medium">0811 411 9000</p></div>
               </a>
-              
-              {/* Web Lapor */}
               <a href="https://www.lapor.go.id/" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 p-3 rounded-2xl hover:bg-orange-50 text-gray-700 transition-colors group">
                 <div className="w-10 h-10 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-colors"><Globe className="w-4 h-4" /></div>
-                <div><p className="font-extrabold text-xs text-gray-900">Web Lapor</p><p className="text-xs text-gray-500 font-medium">Sampaikan pengaduan</p></div>
+                <div><p className="font-extrabold text-xs text-gray-900">LAPOR</p><p className="text-xs text-gray-500 font-medium">Sampaikan pengaduan</p></div>
               </a>
             </div>
           </div>
@@ -387,7 +396,7 @@ export default function LayananVisa() {
           </div>
         </div>
 
-        {/* Buttons */}
+        {/* FAB Buttons */}
         <div className="flex items-center space-x-4">
           <button onClick={() => {setIsCsOpen(!isCsOpen); setIsIvaraOpen(false);}} className={`w-14 h-14 rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl active:scale-90 transition-all duration-300 z-50 ${isCsOpen ? 'bg-red-500 text-white rotate-90' : 'bg-yellow-400 text-[#1e293b] hover:-translate-y-1'}`}>{isCsOpen ? <X className="w-6 h-6" /> : <Phone className="w-6 h-6" />}</button>
           <button onClick={() => {setIsIvaraOpen(!isIvaraOpen); setIsCsOpen(false);}} className={`w-16 h-16 rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl active:scale-90 transition-all duration-300 z-50 relative ${isIvaraOpen ? 'bg-red-500 text-white rotate-90' : 'bg-green-500 text-white hover:-translate-y-1'}`}>{isIvaraOpen ? <X className="w-7 h-7" /> : <MessageSquare className="w-7 h-7" />}{!isIvaraOpen && <span className="absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-bounce"></span>}</button>
