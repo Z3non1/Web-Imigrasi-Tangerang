@@ -5,7 +5,13 @@ import { LanguageContext } from '../App';
 
 // 1. DATABASE MINI UNTUK PENCARIAN (FRONTEND ONLY)
 const searchData = [
-  { id: 'p1', type: 'layanan', titleID: 'Pembuatan Paspor Baru', titleEN: 'New Passport Application', path: '/layanan-wni/paspor', keywords: ['paspor', 'bikin paspor', 'passport', 'wni', 'syarat paspor'] },
+  { 
+    id: 'p1', type: 'layanan', 
+    titleID: 'Pembuatan Paspor Baru', 
+    titleEN: 'New Passport Application', 
+    titleZH: '新护照申请', // <--- Tambahan Mandarin
+    path: '/layanan-wni/paspor', keywords: ['paspor', 'passport', '护照'] 
+  },
   { id: 'p2', type: 'layanan', titleID: 'Penggantian Paspor Hilang/Rusak', titleEN: 'Lost/Damaged Passport Replacement', path: '/layanan-wni/paspor', keywords: ['hilang', 'rusak', 'denda paspor'] },
   { id: 'p3', type: 'layanan', titleID: 'Kartu Perjalanan Pebisnis APEC', titleEN: 'APEC Business Travel Card', path: '/layanan-wni/apec', keywords: ['apec', 'abtc', 'pebisnis', 'kartu apec'] },
   { id: 'p4', type: 'layanan', titleID: 'Daftar Visa Indonesia', titleEN: 'Indonesian Visa Index', path: '/layanan-wna/visa', keywords: ['visa', 'b211a', 'indeks visa', 'jenis visa'] },
