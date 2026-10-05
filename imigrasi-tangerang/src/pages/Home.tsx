@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { LanguageContext } from '../App';
 import Footer from '../Footer';
 import { useLocation } from 'react-router-dom';
+import SearchBar from '../components/SearchBar';
 
 import { 
   Search, Phone, ChevronRight, MapPin, ArrowUpRight, Shield, 
@@ -183,10 +184,7 @@ export default function Home() {
 
           </div>
           <div className="flex items-center space-x-4">
-            <div className="relative flex items-center group">
-              <Search className="w-4 h-4 text-gray-400 absolute left-4 z-10 pointer-events-none group-focus-within:text-yellow-400 transition-colors" />
-              <input type="text" placeholder={lang === 'ID' ? 'Cari...' : 'Search...'} className="relative pl-10 pr-4 py-2 rounded-full bg-white/10 border border-white/20 text-white focus:outline-none focus:bg-white/20 focus:ring-1 focus:ring-yellow-500 w-[160px] focus:w-[200px] transition-all duration-300 text-sm" />
-            </div>
+            <SearchBar isMobile={false} />
             <div className="relative">
               <button onClick={() => setIsLangOpen(!isLangOpen)} className="flex items-center space-x-1.5 bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-2 rounded-full transition-all duration-300">
                 <Languages className="w-4 h-4 text-yellow-400" /><span className="text-sm font-bold text-white">{lang}</span><ChevronDown className={`w-4 h-4 text-white transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} />
@@ -217,11 +215,7 @@ export default function Home() {
           
           <div className="flex-1 overflow-y-auto p-6 space-y-8">
             {/* Mobile Search */}
-            <div className="relative flex items-center">
-              <Search className="w-4 h-4 text-gray-400 absolute left-4 z-10 pointer-events-none" />
-              <input type="text" placeholder={lang === 'ID' ? 'Cari...' : 'Search...'} className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-yellow-500 text-sm" />
-            </div>
-
+            <SearchBar isMobile={true} />
             {/* Mobile Links */}
             <div className="flex flex-col space-y-5">
               <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-white hover:text-yellow-400 font-bold text-sm tracking-wide">{lang === 'ID' ? 'Beranda' : 'Home'}</Link>
