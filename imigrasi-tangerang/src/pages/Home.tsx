@@ -11,7 +11,8 @@ import {
   MessageSquare, Camera, Hash, Users, Globe, Plane, User, 
   Headphones, Bus, ClipboardCheck, ShieldAlert, FileText, X, Bot, 
   ExternalLink, Send, Book, Flag, RefreshCw, CheckCircle2, AlertCircle, CreditCard,
-  Languages, ChevronDown, ChevronLeft, Info, Menu
+  Languages, ChevronDown, ChevronLeft, Info, Menu,
+  Play
 } from 'lucide-react';
 
 // KAMUS TRANSLASI (Sama seperti sebelumnya)
@@ -44,7 +45,8 @@ const translations = {
       ]
     },
     news: { title: "Berita & Publikasi Kegiatan", more: "Baca Selengkapnya" },
-    footer: { follow: "Ikuti Kami", rights: "Direktorat Jenderal Imigrasi. Hak Cipta Dilindungi." }
+    footer: { follow: "Ikuti Kami", rights: "Direktorat Jenderal Imigrasi. Hak Cipta Dilindungi." },
+    social: { title: "Media Sosial", open: "Buka", tabs: ["Instagram", "Twitter", "Facebook", "Tiktok"] }
   },
   EN: {
     nav: { home: "Home", info: "Public Info", news: "News", about: "About Us", faq: "FAQ", search: "Search..." },
@@ -74,7 +76,8 @@ const translations = {
       ]
     },
     news: { title: "News & Publications", more: "Read More" },
-    footer: { follow: "Follow Us", rights: "Directorate General of Immigration. All Rights Reserved." }
+    footer: { follow: "Follow Us", rights: "Directorate General of Immigration. All Rights Reserved." },
+    social: { title: "Social Media", open: "Open", tabs: ["Instagram", "Twitter", "Facebook", "Tiktok"] }
   },
   ZH: {
     nav: { home: "首页", info: "公共信息", news: "新闻", about: "关于我们", faq: "常见问题", search: "搜索..." },
@@ -104,13 +107,15 @@ const translations = {
       ]
     },
     news: { title: "新闻与活动发布", more: "阅读更多" },
-    footer: { follow: "关注我们", rights: "移民总局。保留所有权利。" }
+    footer: { follow: "关注我们", rights: "移民总局。保留所有权利。" },
+    social: { title: "社交媒体", open: "打开", tabs: ["Instagram", "Twitter", "Facebook", "Tiktok"] } 
   }
 };
 
 export default function Home() {
   const { lang, setLang } = useContext(LanguageContext);
   const t = translations[lang as 'ID' | 'EN' | 'ZH'] || translations ['ID'];
+  const [activeSocialTab, setActiveSocialTab] = useState('Instagram');
   
   // STATE ANIMASI & INTERAKSI
   const [isScrolled, setIsScrolled] = useState(false);
@@ -127,6 +132,14 @@ export default function Home() {
   const [activeCaptcha, setActiveCaptcha] = useState('8 A p v R');
   const [checkStatus, setCheckStatus] = useState<'idle' | 'success' | 'error_not_found' | 'error_captcha'>('idle');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Data dummy untuk tampilan postingan sosial media
+const socialPosts = [
+  { id: 1, img: "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=400&q=80", title: "GOES TO SCHOOL", date: "29 September 2026" },
+  { id: 2, img: "https://images.unsplash.com/photo-1555626906-fcf10d6851b4?w=400&q=80", title: "HARI INI URUS HARI INI BERES", date: "28 September 2026" },
+  { id: 3, img: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&q=80", title: "Sempat Hilang Saat Akan Diperiksa", date: "28 September 2026" },
+  { id: 4, img: "https://images.unsplash.com/photo-1541872528775-69ab9c50fc7b?w=400&q=80", title: "Pengumuman TUTUP LAYANAN", date: "25 September 2026" }
+];
 
   // Efek Scroll untuk Navbar Glassmorphism
   useEffect(() => { 
@@ -328,6 +341,81 @@ export default function Home() {
           </div>
         </div>
       </main>
+      
+{/* --- SECTION MEDIA SOSIAL (TEMA IMIGRASI TANGERANG) --- */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          
+          {/* Header Section dengan Gaya Imigrasi */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+            <div>
+              <h2 className="text-3xl font-extrabold text-[#0b162c] tracking-tight">{t.social.title}</h2>
+              {/* Garis aksen kuning khas tema imigrasi */}
+              <div className="w-20 h-1.5 bg-yellow-500 mt-3 rounded-full"></div>
+            </div>
+            
+            {/* Tombol Dinamis Bergaya Modern */}
+            <a 
+              href={
+                activeSocialTab === 'Instagram' ? 'https://www.instagram.com/imigrasitangerang' :
+                activeSocialTab === 'Twitter' ? 'https://x.com/kanim_tangerang' :
+                activeSocialTab === 'Facebook' ? 'https://www.facebook.com/imigrasitangerang' :
+                activeSocialTab === 'Tiktok' ? 'https://www.tiktok.com/@imigrasitangerang' : '#'
+              }
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-flex items-center px-6 py-3 bg-[#0b162c] text-white rounded-xl text-sm font-bold hover:bg-yellow-500 hover:text-[#0b162c] transition-colors group shadow-md"
+            >
+              {t.social.open} {activeSocialTab} 
+              <ArrowUpRight className="w-4 h-4 ml-2 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
+            </a>
+          </div>
+
+          {/* Navigasi Tabs (Gaya Pill/Kapsul Modern) */}
+          <div className="flex space-x-3 mb-10 overflow-x-auto pb-2 scrollbar-hide">
+            {t.social.tabs.map((tab: string) => (
+              <button
+                key={tab}
+                onClick={() => setActiveSocialTab(tab)}
+                className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all whitespace-nowrap border-2 ${
+                  activeSocialTab === tab
+                    ? 'bg-[#0b162c] text-yellow-400 border-[#0b162c] shadow-md'
+                    : 'bg-transparent text-gray-500 border-gray-200 hover:border-yellow-500 hover:text-[#0b162c]'
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+
+          {/* Grid Postingan Video/Gambar */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {socialPosts.map(post => (
+              <div key={post.id} className="group relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer shadow-lg border border-gray-100 bg-gray-900">
+                
+                {/* Gambar Thumbnail */}
+                <img src={post.img} alt={post.title} className="absolute inset-0 w-full h-full object-cover opacity-85 transition-transform duration-700 group-hover:scale-110" />
+                
+                {/* Ikon Play di Kanan Atas */}
+                <div className="absolute top-4 right-4 bg-black/40 backdrop-blur-sm p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <Play className="w-5 h-5 text-white fill-white" />
+                </div>
+                
+                {/* Gradien Mewah di Bawah */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0b162c]/95 via-[#0b162c]/40 to-transparent"></div>
+                
+                {/* Konten Teks (Judul & Tanggal) */}
+                <div className="absolute bottom-0 left-0 right-0 p-5 transform transition-transform duration-300 group-hover:-translate-y-2">
+                  <p className="text-white font-extrabold text-base leading-tight drop-shadow-md mb-2">{post.title}</p>
+                  <div className="flex items-center text-yellow-400">
+                    <span className="text-[11px] font-bold tracking-wider uppercase">{post.date}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* FAB: Animasi Pop Mulus */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-4">

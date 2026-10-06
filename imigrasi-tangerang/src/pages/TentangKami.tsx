@@ -1,177 +1,366 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { LanguageContext } from '../App';
-import Footer from '../components/Footer';
-import { useLocation } from 'react-router-dom';
-import SearchBar from '../components/SearchBar';
+import React, { useContext, useState } from 'react';
 import Navbar from '../components/Navbar';
-
-import { 
-  Search, Phone, Shield, Globe, ChevronLeft, ChevronDown, 
-  Languages, X, Bot, MessageSquare, Target, Send, CheckCircle2, FileText, Info, Menu
-} from 'lucide-react';
+import Footer from '../components/Footer';
+import { LanguageContext } from '../App';
+import { ChevronRight, ArrowLeft, CheckCircle, Map, Building2, Users, ChevronDown, ChevronUp, ChevronLeft } from 'lucide-react';
 
 const translations = {
   ID: {
-    nav: { home: "Beranda", info: "Informasi Publik", news: "Berita", about: "Tentang Kami", faq: "FAQ", search: "Cari..." },
     hero: { pre: "Profil Instansi", title: "Sejarah Kantor", back: "Kembali" },
-    sec1: { sub: "Kilas Balik Instansi", title: "Sejarah & Selayang Pandang", p1: "TANGERANG - Berawal dari Pos Imigrasi kecil yang menginduk pada Kantor Imigrasi Jakarta Barat...", p2: "Kini, dengan predikat Kelas I Khusus Non TPI, Kantor Imigrasi Tangerang memegang peranan krusial sebagai garda terdepan penjaga pintu gerbang negara." },
-    sec4: { title: "Visi Instansi", visi: '"Terwujudnya Pelayanan Keimigrasian dan Penegakan Hukum yang Modern, Transparan, Humanis."' },
-    sec5: { title: "Struktur Organisasi", items: [{id: 1, title: "Sub Bagian Tata Usaha", desc: "Melaksanakan urusan ketatausahaan, kepegawaian, keuangan kantor."}, {id: 2, title: "Seksi Lalu Lintas Keimigrasian", desc: "Melayani permohonan paspor RI dan perlintasan wilayah."}] },
+    history: {
+      sub: "Kilas Balik Instansi", title: "Sejarah Kantor & Selayang Pandang",
+      p1: "Berawal dari Pos Imigrasi kecil yang menginduk pada Kantor Imigrasi Jakarta Barat, kini Kantor Imigrasi Kelas I Khusus Non TPI Tangerang memegang peranan krusial sebagai garda terdepan penjaga pintu gerbang negara di wilayah Banten.",
+      timeline: [
+        { year: "1982", desc: "Berdiri sebagai Pos Imigrasi Tangerang." },
+        { year: "1990", desc: "Ditingkatkan statusnya menjadi Kantor Imigrasi Kelas II." },
+        { year: "2015", desc: "Peningkatan status menjadi Kelas I Khusus Non TPI Tangerang." },
+        { year: "2026", desc: "Terus berinovasi memberikan pelayanan ramah HAM dan digital." }
+      ]
+    },
+    wilayah: {
+      title: "Wilayah Tempat Kedudukan",
+      desc: "Meliputi 3 (tiga) wilayah administratif di Provinsi Banten.",
+      areas: ["Kota Tangerang", "Kabupaten Tangerang", "Kota Tangerang Selatan"]
+    },
+    tupoksi: {
+      title: "Kedudukan, Tugas Pokok dan Fungsi",
+      items: [
+        { title: "Kedudukan", desc: "Merupakan Unit Pelaksana Teknis (UPT) di bawah Direktorat Jenderal Imigrasi, Kementerian Hukum dan HAM." },
+        { title: "Tugas Pokok", desc: "Melaksanakan sebagian tugas pokok dan fungsi Kementerian Hukum dan HAM di bidang Keimigrasian di wilayah kerjanya." },
+        { title: "Fungsi", desc: "Pelaksanaan tugas keimigrasian di bidang pelayanan, penegakan hukum, keamanan negara, dan fasilitator pembangunan." }
+      ]
+    },
+    visimisi: {
+      title: "Visi, Misi dan Tata Nilai",
+      visi: '"Terwujudnya Pelayanan Keimigrasian dan Penegakan Hukum yang Modern, Transparan, Humanis, dan Berintegritas guna Menjaga Kedaulatan Negara serta Mendorong Pertumbuhan Ekonomi Nasional Menuju Indonesia Emas 2045."',
+      misiTitle: "Misi Instansi",
+      misi: [
+        "Memberikan pelayanan keimigrasian yang prima dan ramah HAM.",
+        "Meningkatkan pengawasan dan penegakan hukum keimigrasian secara tegas.",
+        "Mengembangkan inovasi digital dalam setiap lini pelayanan.",
+        "Mewujudkan SDM yang profesional, akuntabel, dan berintegritas tinggi."
+      ]
+    },
+    struktur: {
+      title: "Struktur Organisasi",
+      kepala: "Kepala Kantor Imigrasi",
+      items: [
+        { title: "Bagian Tata Usaha", desc: "Melaksanakan urusan ketatausahaan, kepegawaian, keuangan, dan rumah tangga kantor." },
+        { title: "Bidang Lalu Lintas Keimigrasian", desc: "Melayani permohonan paspor RI dan perlintasan wilayah." },
+        { title: "Bidang Izin Tinggal Keimigrasian", desc: "Melayani permohonan ITK, ITAS, dan ITAP bagi WNA." },
+        { title: "Bidang Intelijen dan Penindakan", desc: "Melakukan pengawasan, intelijen, dan penindakan pelanggaran keimigrasian." },
+        { title: "Bidang Teknologi Informasi", desc: "Mengelola sistem informasi, komunikasi, dan hubungan masyarakat." }
+      ]
+    }
   },
   EN: {
-    nav: { home: "Home", info: "Public Info", news: "News", about: "About Us", faq: "FAQ", search: "Search..." },
     hero: { pre: "Agency Profile", title: "Office History", back: "Back" },
-    sec1: { sub: "Agency Flashback", title: "History & Overview", p1: "TANGERANG - Starting from a small Immigration Post under the West Jakarta Immigration Office...", p2: "Now, holding the Special Class I Non-TPI status, the Tangerang Immigration Office plays a crucial role as the frontline guardian of the nation's gates." },
-    sec4: { title: "Agency Vision", visi: '"Realizing Modern, Transparent, and Humane Immigration Services and Law Enforcement."' },
-    sec5: { title: "Organizational Structure", items: [{id: 1, title: "Administration Sub-Section", desc: "Handles administrative, staffing, and financial affairs."}, {id: 2, title: "Immigration Traffic Section", desc: "Serves RI passport applications and border crossings."}] },
+    history: {
+      sub: "Agency Flashback", title: "Office History & Overview",
+      p1: "Starting from a small Immigration Post under the West Jakarta Immigration Office, the Tangerang Special Class I Non-TPI Immigration Office now plays a crucial role as the frontline guardian of the nation's gates in the Banten region.",
+      timeline: [
+        { year: "1982", desc: "Established as Tangerang Immigration Post." },
+        { year: "1990", desc: "Upgraded to Class II Immigration Office." },
+        { year: "2015", desc: "Upgraded to Special Class I Non-TPI Tangerang." },
+        { year: "2026", desc: "Continuing to innovate in human rights-friendly and digital services." }
+      ]
+    },
+    wilayah: {
+      title: "Jurisdictional Area",
+      desc: "Covering 3 (three) administrative regions in Banten Province.",
+      areas: ["Tangerang City", "Tangerang Regency", "South Tangerang City"]
+    },
+    tupoksi: {
+      title: "Position, Main Duties and Functions",
+      items: [
+        { title: "Position", desc: "A Technical Implementing Unit under the Directorate General of Immigration, Ministry of Law and Human Rights." },
+        { title: "Main Duties", desc: "Carrying out some of the main duties and functions in the field of Immigration within its working area." },
+        { title: "Functions", desc: "Implementation of immigration duties in services, law enforcement, state security, and development facilitation." }
+      ]
+    },
+    visimisi: {
+      title: "Vision, Mission and Core Values",
+      visi: '"Realizing Modern, Transparent, Humane, and Integral Immigration Services and Law Enforcement to Safeguard State Sovereignty and Boost National Economic Growth towards Golden Indonesia 2045."',
+      misiTitle: "Agency Mission",
+      misi: [
+        "Providing excellent and human rights-friendly immigration services.",
+        "Firmly improving immigration supervision and law enforcement.",
+        "Developing digital innovation in every service line.",
+        "Creating professional, accountable, and highly integral human resources."
+      ]
+    },
+    struktur: {
+      title: "Organizational Structure",
+      kepala: "Head of Immigration Office",
+      items: [
+        { title: "Administration Division", desc: "Handles administrative, personnel, financial, and household affairs." },
+        { title: "Immigration Traffic Division", desc: "Serves RI passport applications and border crossings." },
+        { title: "Stay Permit Division", desc: "Serves ITK, ITAS, and ITAP applications for foreigners." },
+        { title: "Intelligence and Enforcement Division", desc: "Conducts surveillance, intelligence, and enforcement of immigration violations." },
+        { title: "Information Technology Division", desc: "Manages information systems, communications, and public relations." }
+      ]
+    }
   },
   ZH: {
-    nav: { home: "首页", info: "公共信息", news: "新闻", about: "关于我们", faq: "常见问题", search: "搜索..." },
     hero: { pre: "机构简介", title: "办公室历史", back: "返回" },
-    sec1: { sub: "机构回顾", title: "历史与概况", p1: "坦格朗 - 始于隶属于雅加达西部移民局的一个小型移民哨所...", p2: "如今，凭借非TPI一类特别移民局的称号，坦格朗移民局作为国家大门的前线守卫者，发挥着至关重要的作用。" },
-    sec4: { title: "机构愿景", visi: '"实现现代化、透明、人性化的移民服务与执法。"' },
-    sec5: { title: "组织架构", items: [{id: 1, title: "行政股", desc: "负责办公室的行政、人事和财务事务。"}, {id: 2, title: "出入境交通科", desc: "负责办理印尼护照申请及边境通行事务。"}] },
+    history: {
+      sub: "机构回顾", title: "历史与概况",
+      p1: "坦格朗非TPI一类特别移民局始于隶属于雅加达西部移民局的一个小型移民哨所，如今作为万丹地区国家大门的前线守卫者，发挥着至关重要的作用。",
+      timeline: [
+        { year: "1982", desc: "成立坦格朗移民哨所。" },
+        { year: "1990", desc: "升级为二类移民局。" },
+        { year: "2015", desc: "升级为坦格朗非TPI一类特别移民局。" },
+        { year: "2026", desc: "在人权友好型和数字化服务方面不断创新。" }
+      ]
+    },
+    wilayah: {
+      title: "管辖区域",
+      desc: "涵盖万丹省的 3（三）个行政区域。",
+      areas: ["坦格朗市", "坦格朗县", "南坦格朗市"]
+    },
+    tupoksi: {
+      title: "地位、主要职责与功能",
+      items: [
+        { title: "地位", desc: "法律和人权部移民总局下属的技术执行单位。" },
+        { title: "主要职责", desc: "在其工作区域内履行法律和人权部在移民领域的部分主要职责和功能。" },
+        { title: "功能", desc: "在服务、执法、国家安全和促进发展方面执行移民任务。" }
+      ]
+    },
+    visimisi: {
+      title: "愿景、使命与核心价值观",
+      visi: '"实现现代化、透明、人性化和廉洁的移民服务与执法，以维护国家主权并促进国家经济增长，迈向2045年黄金印尼。"',
+      misiTitle: "机构使命",
+      misi: [
+        "提供卓越且尊重人权的移民服务。",
+        "坚决加强移民监督与执法。",
+        "在每条服务线上发展数字化创新。",
+        "打造专业、尽责、高度廉洁的人力资源。"
+      ]
+    },
+    struktur: {
+      title: "组织架构",
+      kepala: "移民局局长",
+      items: [
+        { title: "行政处", desc: "负责行政、人事、财务和后勤事务。" },
+        { title: "出入境交通处", desc: "办理印尼护照申请及边境通行事务。" },
+        { title: "居留许可处", desc: "为外国人办理 ITK、ITAS 和 ITAP 申请。" },
+        { title: "情报与执法处", desc: "开展对移民违规行为的监督、情报收集和执法。" },
+        { title: "信息技术处", desc: "管理信息系统、通信和公共关系。" }
+      ]
+    }
   }
 };
 
 export default function TentangKami() {
-  const { lang, setLang } = useContext(LanguageContext);
+  const { lang } = useContext(LanguageContext);
   const t = translations[lang as 'ID' | 'EN' | 'ZH'] || translations['ID'];
-  
-  // STATE ANIMASI & INTERAKSI
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isLangOpen, setIsLangOpen] = useState(false);
-  const [expandedTugas, setExpandedTugas] = useState<number | null>(1);
-  const [isCsOpen, setIsCsOpen] = useState(false);
-  const [isIvaraOpen, setIsIvaraOpen] = useState(false);
-  const [messages, setMessages] = useState([{ sender: 'ivara', text: lang === 'ID' ? 'Halo! Saya IVARA. Ada yang bisa dibantu?' : 'Hello! I am IVARA. How can I help?' }]);
-  const [inputMessage, setInputMessage] = useState('');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
-
-  // Efek Scroll untuk Navbar Glassmorphism
-  useEffect(() => { 
-    window.scrollTo(0, 0); 
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!inputMessage.trim()) return;
-    setMessages(prev => [...prev, { sender: 'user', text: inputMessage }]);
-    setInputMessage('');
-  };
+  const [openAccordion, setOpenAccordion] = useState<number | null>(0);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col font-sans relative overflow-hidden">
-      
-      {/* NAVBAR LENGKAP DENGAN ANIMASI MULUS */}
-      <Navbar />
-      {/* HERO SECTION DENGAN ANIMASI */}
-      <div className="relative bg-gradient-to-r from-yellow-100 to-yellow-300 h-[350px] flex items-center px-10 pt-16">
-        <div className="absolute top-24 left-6 z-20"><Link to="/" className="text-[#1e3a8a] bg-white/50 px-4 py-2 rounded-full flex items-center hover:bg-white/70 transition-colors font-bold shadow-sm"><ChevronLeft className="w-5 h-5 mr-1" /> {t.hero.back}</Link></div>
-        <div className="animate-fade-in-up md:pl-16">
-          <p className="text-sm font-bold text-yellow-800 uppercase tracking-widest mb-1">{t.hero.pre}</p>
-          <h1 className="text-4xl lg:text-6xl font-extrabold text-[#1e3a8a] drop-shadow-sm tracking-tight">{t.hero.title}</h1>
+    <div className="min-h-screen bg-gray-50 font-sans">
+      <Navbar/>
+
+      {/* --- CSS ANIMASI KUSTOM --- */}
+      <style>{`
+        @keyframes fade-in-up {
+          0% { opacity: 0; transform: translateY(30px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slow-pan {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.08); }
+          100% { transform: scale(1); }
+        }
+        .animate-fade-in-up { animation: fade-in-up 1s ease-out forwards; }
+        .animate-slow-pan { animation: slow-pan 25s ease-in-out infinite; }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+      `}</style>
+
+      {/* --- HERO SECTION (Desain Gradasi Biru Animatif) --- */}
+      <div className="relative w-full h-[350px] md:h-[450px] overflow-hidden flex flex-col justify-center bg-[#0b162c]">
+        
+        {/* Background Image dengan Animasi Slow Zoom/Pan */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=1600&q=80" 
+            alt="Background Imigrasi" 
+            className="w-full h-full object-cover animate-slow-pan opacity-50"
+          />
+          {/* Overlay Gradasi Biru yang memudar ke warna abu-abu (gray-50) di bawah */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0b162c]/95 via-[#1a3673]/80 to-gray-50"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 w-full pt-12 md:pt-16">
+          
+          {/* Tombol Kembali (Animasi Muncul Pertama) */}
+          <div className="opacity-0 animate-fade-in-up">
+            <a 
+              href="/" 
+              className="inline-flex items-center px-5 py-2.5 mb-8 rounded-full border border-white/40 bg-white/10 hover:bg-white/30 backdrop-blur-md transition-all text-white font-medium text-sm group shadow-lg"
+            >
+              <ChevronLeft className="w-4 h-4 mr-1.5 stroke-[3] group-hover:-translate-x-1 transition-transform" />
+              {t.hero.back}
+            </a>
+          </div>
+
+          {/* Judul Halaman (Animasi Muncul Kedua) */}
+          <div className="opacity-0 animate-fade-in-up delay-200">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight drop-shadow-lg mb-6">
+              {t.hero.title}
+            </h1>
+            {/* Garis Aksen Estetik */}
+            <div className="w-24 h-1.5 bg-yellow-400 rounded-full shadow-md"></div>
+          </div>
+          
         </div>
       </div>
-
-      <main className="max-w-7xl mx-auto px-6 py-12 space-y-24 animate-fade-in-up delay-100 mb-20">
+      {/* --- END HERO SECTION --- */}
+      
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 space-y-24">
         
-        <section className="grid lg:grid-cols-2 gap-12 items-center">
+        {/* SECTION 1: SEJARAH & TIMELINE */}
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div>
-            <span className="text-sm font-bold text-blue-600 uppercase mb-2 block">{t.sec1.sub}</span>
-            <h2 className="text-4xl font-extrabold text-[#1e293b] mb-6 leading-tight">{t.sec1.title}</h2>
-            <div className="space-y-4 text-gray-600 text-sm md:text-base leading-relaxed text-justify"><p>{t.sec1.p1}</p><p>{t.sec1.p2}</p></div>
-          </div>
-          <div className="rounded-3xl overflow-hidden shadow-2xl group">
-            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200" className="w-full h-[400px] object-cover transform group-hover:scale-105 transition-transform duration-700" alt="Gedung Imigrasi" />
-          </div>
-        </section>
-
-        <section className="bg-gradient-to-br from-[#1e1b4b] to-[#2e1065] text-white p-10 md:p-16 rounded-[2.5rem] relative overflow-hidden shadow-2xl hover:shadow-3xl transition-shadow group">
-          <Target className="absolute opacity-5 -right-10 -bottom-10 w-72 h-72 transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-700" />
-          <span className="text-yellow-400 font-extrabold tracking-widest uppercase mb-6 block">{t.sec4.title}</span>
-          <blockquote className="text-3xl md:text-5xl font-extrabold leading-snug relative z-10 drop-shadow-md">{t.sec4.visi}</blockquote>
-        </section>
-
-        <section className="animate-fade-in-up delay-200">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-center text-[#1e293b] mb-12">{t.sec5.title}</h2>
-          <div className="max-w-4xl mx-auto space-y-4">
-            {t.sec5.items.map((tugas) => (
-              <div key={tugas.id} className={`border rounded-2xl transition-all duration-300 overflow-hidden ${expandedTugas === tugas.id ? 'border-blue-400 ring-4 ring-blue-50 shadow-lg' : 'border-gray-200 hover:border-blue-300 hover:shadow-md'}`}>
-                <button onClick={() => setExpandedTugas(expandedTugas === tugas.id ? null : tugas.id)} className="w-full text-left px-6 py-5 flex items-center justify-between focus:outline-none bg-white">
-                  <span className={`font-extrabold text-base transition-colors ${expandedTugas === tugas.id ? 'text-blue-700' : 'text-[#1e293b]'}`}>{tugas.title}</span>
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 ${expandedTugas === tugas.id ? 'bg-blue-100 text-blue-700' : 'bg-gray-50 text-gray-400'}`}>
-                    <ChevronDown className={`w-5 h-5 transition-transform duration-500 ${expandedTugas === tugas.id ? 'rotate-180' : ''}`} />
-                  </div>
-                </button>
-                <div className={`transition-all duration-400 ease-in-out origin-top ${expandedTugas === tugas.id ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                  <div className="p-6 pt-2 bg-white border-t border-gray-100">
-                    <p className="text-sm md:text-base text-gray-600 leading-relaxed font-medium">{tugas.desc}</p>
-                  </div>
+            <span className="text-sm font-bold text-yellow-600 uppercase tracking-widest">{t.history.sub}</span>
+            <h2 className="text-3xl font-extrabold text-[#0b162c] mt-2 mb-6">{t.history.title}</h2>
+            <p className="text-gray-600 leading-relaxed mb-8">{t.history.p1}</p>
+            
+            {/* Timeline */}
+            <div className="space-y-6 border-l-2 border-yellow-400 ml-3 pl-6">
+              {t.history.timeline.map((item, idx) => (
+                <div key={idx} className="relative">
+                  <div className="absolute -left-[33px] top-1 w-4 h-4 bg-yellow-400 rounded-full border-4 border-gray-50"></div>
+                  <h4 className="font-bold text-[#0b162c] text-lg">{item.year}</h4>
+                  <p className="text-sm text-gray-600 mt-1">{item.desc}</p>
                 </div>
+              ))}
+            </div>
+          </div>
+          <div className="rounded-2xl overflow-hidden shadow-xl h-full min-h-[400px] relative">
+            {/* Menggunakan placeholder gambar gedung */}
+            <img src="https://images.unsplash.com/photo-1541872528775-69ab9c50fc7b?w=800&q=80" alt="Gedung Imigrasi" className="absolute inset-0 w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0b162c]/80 to-transparent"></div>
+            <div className="absolute bottom-6 left-6 right-6">
+              <h3 className="text-white font-bold text-xl">Kantor Imigrasi Kelas I Khusus Non TPI Tangerang</h3>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 2: WILAYAH KERJA */}
+        <section>
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-extrabold text-[#0b162c] mb-3">{t.wilayah.title}</h2>
+            <p className="text-gray-500">{t.wilayah.desc}</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {t.wilayah.areas.map((area, idx) => (
+              <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center space-x-4">
+                <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-blue-600">
+                  <Map className="w-6 h-6"/>
+                </div>
+                <h4 className="font-bold text-gray-800">{area}</h4>
               </div>
             ))}
           </div>
         </section>
-      </main>
 
-      {/* FAB: Animasi Pop Mulus */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-4">
-        <div className={`transform origin-bottom-right transition-all duration-400 ease-out ${isCsOpen ? 'scale-100 opacity-100 visible mb-2' : 'scale-75 opacity-0 invisible h-0'}`}>
-          <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-5 w-72">
-            <div className="flex justify-between items-center mb-4 border-b border-gray-100 pb-3">
-              <h4 className="font-extrabold text-sm text-[#1e293b]">{lang === 'ID' ? 'Layanan Bantuan' : 'Help Center'}</h4>
-              <button onClick={() => setIsCsOpen(false)} className="text-gray-400 hover:text-red-500 bg-gray-50 rounded-full p-1 transition-colors"><X className="w-4 h-4" /></button>
-            </div>
-            <div className="space-y-3 text-sm">
-              {/* Call Center */}
-              <a href="tel:02155790871" className="flex items-center space-x-4 p-3 rounded-2xl hover:bg-blue-50 text-gray-700 transition-colors group">
-                <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors"><Phone className="w-4 h-4" /></div>
-                <div><p className="font-extrabold text-xs text-gray-900">Call Center</p><p className="text-xs text-gray-500 font-medium">(021) 5579 0871</p></div>
-              </a>
-              
-              {/* WhatsApp */}
-              <a href="https://wa.me/628114119000" className="flex items-center space-x-4 p-3 rounded-2xl hover:bg-green-50 text-gray-700 transition-colors group">
-                <div className="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center group-hover:bg-green-500 group-hover:text-white transition-colors"><MessageSquare className="w-4 h-4" /></div>
-                <div><p className="font-extrabold text-xs text-gray-900">WhatsApp</p><p className="text-xs text-gray-500 font-medium">0811 411 9000</p></div>
-              </a>
-              
-              {/* Web Lapor */}
-              <a href="https://www.lapor.go.id/" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 p-3 rounded-2xl hover:bg-orange-50 text-gray-700 transition-colors group">
-                <div className="w-10 h-10 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-colors"><Globe className="w-4 h-4" /></div>
-                <div><p className="font-extrabold text-xs text-gray-900">LAPOR</p><p className="text-xs text-gray-500 font-medium">Sampaikan pengaduan</p></div>
-              </a>
-            </div>
+        {/* SECTION 3: TUPOKSI */}
+        <section>
+          <div className="mb-10 border-b border-gray-200 pb-4">
+            <h2 className="text-2xl font-extrabold text-[#0b162c]">{t.tupoksi.title}</h2>
           </div>
-        </div>
-        <div className={`transform origin-bottom-right transition-all duration-400 ease-out ${isIvaraOpen ? 'scale-100 opacity-100 visible mb-2' : 'scale-75 opacity-0 invisible h-0'}`}>
-          <div className="w-80 md:w-96 bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col h-[500px]">
-            <div className="bg-gradient-to-r from-[#1e293b] to-[#0f172a] text-white px-5 py-4 flex justify-between items-center shadow-md z-10">
-              <div className="flex items-center space-x-3"><div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center shadow-inner"><Bot className="w-6 h-6 text-white" /></div><div><h3 className="font-extrabold text-sm">IVARA Assistant</h3><p className="text-[10px] text-green-400 flex items-center font-bold"><span className="w-2 h-2 bg-green-400 rounded-full inline-block mr-1.5 animate-pulse"></span> Online</p></div></div>
-              <button onClick={() => setIsIvaraOpen(false)} className="text-gray-400 hover:text-white bg-white/10 rounded-full p-1.5 transition-colors"><X className="w-4 h-4" /></button>
-            </div>
-            <div className="flex-1 p-5 overflow-y-auto space-y-4 bg-gray-50 text-sm">
-              {messages.map((msg, index) => (
-                <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}><div className={`max-w-[85%] px-5 py-3 rounded-2xl shadow-sm font-medium leading-relaxed ${msg.sender === 'user' ? 'bg-blue-600 text-white rounded-br-sm' : 'bg-white border border-gray-100 rounded-bl-sm text-gray-700'}`}>{msg.text}</div></div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {t.tupoksi.items.map((item, idx) => (
+              <div key={idx} className="bg-white p-8 rounded-2xl shadow-sm border-t-4 border-yellow-500 relative">
+                <div className="absolute -top-5 left-6 w-10 h-10 bg-[#0b162c] text-white font-bold rounded-full flex items-center justify-center border-4 border-white">
+                  {idx + 1}
+                </div>
+                <h3 className="text-xl font-bold text-[#0b162c] mt-4 mb-3">{item.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* SECTION 4: VISI MISI */}
+        <section>
+          <h2 className="text-2xl font-extrabold text-[#0b162c] mb-8">{t.visimisi.title}</h2>
+          {/* Kotak Biru Gelap Visi */}
+          <div className="bg-[#0b162c] text-white p-10 rounded-3xl shadow-2xl mb-8 relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-8 opacity-10"><Building2 className="w-32 h-32"/></div>
+            <h3 className="text-sm font-bold text-yellow-400 tracking-widest uppercase mb-4">Visi Instansi</h3>
+            <p className="text-2xl md:text-3xl font-extrabold leading-tight italic relative z-10">{t.visimisi.visi}</p>
+          </div>
+          {/* Grid Misi */}
+          <div>
+            <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center">
+              <CheckCircle className="w-5 h-5 text-yellow-500 mr-2"/> {t.visimisi.misiTitle}
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {t.visimisi.misi.map((m, idx) => (
+                <div key={idx} className="flex items-start p-4 bg-white rounded-xl border border-gray-100 shadow-sm">
+                  <div className="min-w-[24px] mt-0.5 text-blue-600 font-bold">{idx + 1}.</div>
+                  <p className="text-gray-700 text-sm">{m}</p>
+                </div>
               ))}
             </div>
-            <form onSubmit={handleSendMessage} className="p-4 bg-white flex items-center space-x-3 border-t border-gray-100">
-              <input type="text" value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} placeholder={lang === 'ID' ? "Tanya sesuatu..." : "Ask something..."} className="flex-1 px-5 py-3 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all font-medium"/>
-              <button type="submit" className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 active:scale-90 transition-transform shadow-md flex-shrink-0"><Send className="w-5 h-5 ml-1" /></button>
-            </form>
           </div>
-        </div>
-        <div className="flex items-center space-x-4">
-          <button onClick={() => {setIsCsOpen(!isCsOpen); setIsIvaraOpen(false);}} className={`w-14 h-14 rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl active:scale-90 transition-all duration-300 z-50 ${isCsOpen ? 'bg-red-500 text-white rotate-90' : 'bg-yellow-400 text-[#1e293b] hover:-translate-y-1'}`}>{isCsOpen ? <X className="w-6 h-6" /> : <Phone className="w-6 h-6" />}</button>
-          <button onClick={() => {setIsIvaraOpen(!isIvaraOpen); setIsCsOpen(false);}} className={`w-16 h-16 rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl active:scale-90 transition-all duration-300 z-50 relative ${isIvaraOpen ? 'bg-red-500 text-white rotate-90' : 'bg-green-500 text-white hover:-translate-y-1'}`}>{isIvaraOpen ? <X className="w-7 h-7" /> : <MessageSquare className="w-7 h-7" />}{!isIvaraOpen && <span className="absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-bounce"></span>}</button>
-        </div>
+        </section>
+
+        {/* SECTION 5: STRUKTUR ORGANISASI */}
+        <section className="pb-16">
+          <div className="mb-10 border-b border-gray-200 pb-4">
+            <h2 className="text-2xl font-extrabold text-[#0b162c]">{t.struktur.title}</h2>
+          </div>
+          
+          {/* Bagan Organisasi Sederhana */}
+          <div className="flex flex-col items-center mb-12">
+            <div className="bg-[#0b162c] text-white px-8 py-4 rounded-xl shadow-lg font-bold text-center z-10">
+              {t.struktur.kepala}
+            </div>
+            <div className="w-0.5 h-8 bg-gray-300"></div>
+            <div className="w-full max-w-4xl border-t-2 border-gray-300 relative">
+              <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-300 rounded-full"></div>
+            </div>
+            <div className="flex justify-between w-full max-w-4xl px-4 mt-8 hidden md:flex">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="flex flex-col items-center relative -mt-8">
+                  <div className="w-0.5 h-8 bg-gray-300"></div>
+                  <div className="bg-white border-2 border-yellow-500 px-4 py-3 rounded-lg text-xs font-bold text-center w-32 shadow-sm text-gray-700">
+                    {t.struktur.items[i-1].title}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Accordion Detail Struktur */}
+          <div className="space-y-3 max-w-4xl mx-auto">
+            {t.struktur.items.map((item, idx) => (
+              <div key={idx} className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                <button 
+                  onClick={() => setOpenAccordion(openAccordion === idx ? null : idx)}
+                  className="w-full flex items-center justify-between p-5 text-left hover:bg-gray-50 transition-colors"
+                >
+                  <div className="flex items-center space-x-4">
+                    <Users className="w-5 h-5 text-blue-600"/>
+                    <span className="font-bold text-[#0b162c]">{item.title}</span>
+                  </div>
+                  {openAccordion === idx ? <ChevronUp className="w-5 h-5 text-gray-400"/> : <ChevronDown className="w-5 h-5 text-gray-400"/>}
+                </button>
+                {openAccordion === idx && (
+                  <div className="p-5 pt-0 bg-gray-50 border-t border-gray-100 text-gray-600 text-sm leading-relaxed">
+                    {item.desc}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+
       </div>
-      <Footer />
+      <Footer/>
     </div>
   );
 }
