@@ -160,12 +160,88 @@ const apecData = {
         info: ["It is highly recommended to immediately update your ABTC data upon receiving a new passport to prevent boarding denial at the airport."]
       }
     }
+  },
+  ZH: {
+    hero: { title: "APEC 商务旅行卡 (ABTC)", sub: "国际商务便利服务" },
+    ui: { 
+      catTitle: "申请类型", 
+      catDesc: "选择您的 ABTC 申请类型以查看详细要求。",
+      detailBadge: "完整指南"
+    },
+    categories: ["新申请", "换发申请", "数据更新申请"],
+    sections: { 
+      eligibility: "ABTC 申请资格条件", 
+      benefits: "ABTC 的优势", 
+      prohibitions: "禁止事项", 
+      cost: "费用标准",
+      allowed: "允许进行的活动",
+      obligations: "义务",
+      req: "申请材料要求",
+      validity: "有效期",
+      info: "其他信息"
+    },
+    content: {
+      "新申请": {
+        eligibility: ["持有印尼护照的印度尼西亚公民 (WNI)。", "经常在 APEC 地区进行商务旅行的商界人士（企业家、投资者或公司高管）。", "受指派参与 APEC 活动的政府官员。"],
+        benefits: ["免签前往 19 个全面参与的 APEC 成员经济体进行商务旅行。", "无需重复向目的地国家的大使馆或领事馆申请签证。", "在成员国国际机场使用 APEC 专用通道 (APEC Lane)，加快出入境通关手续。"],
+        prohibitions: ["严禁在目的地国家使用 ABTC 从事获取薪资的工作。", "严禁使用 ABTC 便利进行永久居留（常住）。", "严禁违反各国规定的停留期限 (Stay Condition)。"],
+        cost: ["APEC 商务旅行卡 (ABTC) 国家非税收入 (PNBP) 费用：Rp 2,500,000"],
+        allowed: ["在 APEC 成员国内举行商务和投资会议。", "参加贸易展览、研讨会或商务会议。", "开展跨国商业合作考察。"],
+        obligations: ["遵守所访问的 APEC 目的地国家的法律法规。", "保持护照处于有效且良好的状态。"],
+        req: [
+          "公司申请信（由董事/负责人签字）。",
+          "企业协会（如印尼商会 KADIN、HIPMI、APINDO 等）或相关政府机构的推荐信。",
+          "有效的身份证 (KTP)。",
+          "有效期至少两 (2) 年以上的普通/电子护照。",
+          "有效且原件的警察局无犯罪记录证明 (SKCK)。",
+          "最近 3 个月的公司/个人银行对账单（显示最低余额符合规定，例如 Rp 500,000,000）。",
+          "派遣信（针对政府官员）。"
+        ],
+        validity: ["ABTC 的最长有效期为五 (5) 年。", "或者与护照有效期相同（以较早到期者为准）。"],
+        info: ["清关批准 (Clearance) 流程取决于 19 个 APEC 成员经济体各自的审核，因此耗时会有所不同（通常需要 2-6 个月）。", "若更换护照，ABTC 也必须申请换发，因为卡上的护照号码必须与实体护照一致。"]
+      },
+      "换发申请": {
+        eligibility: ["卡片即将到期的 ABTC 持有人。", "更换了护照的 ABTC 持有人（因护照到期、遗失或损毁）。", "ABTC 卡片遗失或损毁的持有人。"],
+        benefits: ["与新申请相同，但成员国的清关 (Clearance) 审批通常可以从现有或更新的档案中直接继续。"],
+        prohibitions: ["与新申请相同。"],
+        cost: ["ABTC 换发 PNBP 费用（因到期或更换护照）：Rp 2,500,000"],
+        allowed: ["与新申请相同。"],
+        obligations: ["若 ABTC 卡片遗失，须立即向警方和移民局报案。"],
+        req: [
+          "公司换发申请信。",
+          "有效的身份证。",
+          "新护照（若更换原因为换护照）。",
+          "旧 ABTC 卡（交还给工作人员）。",
+          "警察局遗失证明（若 ABTC 卡遗失）。",
+          "协会推荐信（若 5 年有效期已满且希望完全延长）。"
+        ],
+        validity: ["根据新护照的有效期进行调整，若因遗失/损毁换发且未换护照，则继承原 ABTC 的剩余有效期。"],
+        info: ["因更换护照而办理换发是必须的，以便在通过目的地国家移民局时，ABTC 系统中的护照号码与实体护照保持同步。"]
+      },
+      "数据更新申请": {
+        eligibility: ["已更换印尼护照且需要在 ABTC 系统中更新护照号码的 ABTC 持有人。", "已获得其他 APEC 成员国额外清关批准并希望重新制卡的 ABTC 持有人。"],
+        benefits: ["通过同步实体护照号码与 ABTC 系统，确保旅程顺利无阻。", "如有新的清关批准，可在您的 APEC 卡背面添加新的目的地国家。"],
+        prohibitions: ["与新申请相同。"],
+        cost: ["根据适用的重印/数据更新 PNBP 关税标准执行。"],
+        allowed: ["与新申请相同。"],
+        obligations: ["始终确保用于旅行的护照号码与 ABTC 系统中登记的号码完全一致。"],
+        req: [
+          "公司数据更新申请信。",
+          "有效身份证复印件。",
+          "旧护照复印件。",
+          "新护照复印件（如有换发护照）。",
+          "原有效 ABTC 卡原件（需收回并更换新卡）。"
+        ],
+        validity: ["数据更新不会延长有效期。有效期将延续旧 ABTC 卡的剩余时间（自首次签发之日起最长 5 年）。"],
+        info: ["建议您在拿到新护照后立即进行数据更新，以防止在机场被拒绝登机。"]
+      }
+    }
   }
 };
 
 export default function LayananApec() {
   const { lang, setLang } = useContext(LanguageContext);
-  const t = apecData[lang as 'ID' | 'EN'];
+  const t = apecData[lang as 'ID' | 'EN' | 'ZH'] || apecData['ID'];
   const ui = lang === 'ID' ? { home: "Beranda", search: "Cari..." } : { home: "Home", search: "Search..." };
   
   const [isScrolled, setIsScrolled] = useState(false);

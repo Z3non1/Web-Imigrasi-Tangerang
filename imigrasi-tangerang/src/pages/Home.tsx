@@ -75,12 +75,42 @@ const translations = {
     },
     news: { title: "News & Publications", more: "Read More" },
     footer: { follow: "Follow Us", rights: "Directorate General of Immigration. All Rights Reserved." }
+  },
+  ZH: {
+    nav: { home: "首页", info: "公共信息", news: "新闻", about: "关于我们", faq: "常见问题", search: "搜索..." },
+    hero: { welcome: "欢迎来到", title: "坦格朗移民局", subtitle: "敏捷 • 响应 • 友好" },
+    widget: { 
+      title: "公共服务", desc: "在这里找到您需要的服务",
+      wni: "印尼公民服务", wniSub: "印尼护照，APEC 商务旅行", wni1: "印尼护照", wni1Desc: "新申请及换发", wni2: "APEC 商务旅行卡",
+      wna: "外国国民服务", wnaSub: "签证申请，落地签，居留许可", wna1: "印尼签证清单", wna1Desc: "在线签证申请服务", wna2: "落地签及免签国家名单", wna3: "移民居留许可"
+    },
+    cek: {
+      title: "查询申请状态", subtitle: "移民服务", labelNum: "输入申请编号", placeholderNum: "示例: 123456",
+      labelCap: "验证验证码", placeholderCap: "输入验证码...", btn: "查询状态",
+      success: "您的护照已准备就绪。请到取件柜台领取。请携带您的身份证原件。",
+      errNum: "未找到申请。请检查您的申请编号。",
+      errCap: "验证码不正确。请重试。", note: "*仅适用于在坦格朗移民局提交的服务。"
+    },
+    services: {
+      title: "移民服务", btn1: "印尼护照服务信息", btn2: "外国人移民服务信息",
+      items: [
+        { title: "移动签证服务", desc: "有关在线签证申请程序的完整信息。" },
+        { title: "APOA 报告服务", desc: "担保人和住宿所有者的报告服务。" },
+        { title: "LAPOR 应用程序", desc: "提交公众诉求和投诉的在线渠道。" },
+        { title: "Ezy Passport 服务", desc: "有关 Ezy Passport 移动办理服务的信息。" },
+        { title: "居留许可服务", desc: "提供在线移民居留许可的在线应用程序。" },
+        { title: "举报系统 (WBS)", desc: "法律和人权部内的违规举报服务。" },
+        { title: "e-SRPI 服务", desc: "澳大利亚签证的政府推荐信。" }
+      ]
+    },
+    news: { title: "新闻与活动发布", more: "阅读更多" },
+    footer: { follow: "关注我们", rights: "移民总局。保留所有权利。" }
   }
 };
 
 export default function Home() {
   const { lang, setLang } = useContext(LanguageContext);
-  const t = translations[lang as 'ID' | 'EN'];
+  const t = translations[lang as 'ID' | 'EN' | 'ZH'] || translations ['ID'];
   
   // STATE ANIMASI & INTERAKSI
   const [isScrolled, setIsScrolled] = useState(false);

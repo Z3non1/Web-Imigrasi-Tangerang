@@ -6,18 +6,31 @@ import {
 } from 'lucide-react';
 
 const translations = {
-  ID: { nav: { news: "Berita" }, ui: { back: "Kembali ke Indeks Berita", share: "Bagikan Artikel:", related: "Berita Terkait" },
+  ID: { 
+    nav: { news: "Berita" }, 
+    ui: { back: "Kembali ke Indeks Berita", share: "Bagikan Artikel:", related: "Berita Terkait" },
     data: {
       1: { title: "Pemberitahuan Ketersediaan Blangko Paspor Elektronik", content: "Kantor Imigrasi Kelas I Khusus Non TPI Tangerang mengumumkan bahwa blangko paspor elektronik polikarbonat kini telah tersedia kembali...", cat: "Pengumuman" },
       2: { title: "Operasi Gabungan Jagratara: Kanim Tangerang Periksa Kepatuhan Izin", content: "Tim Pengawasan Orang Asing (TIMPORA) melaksanakan operasi gabungan Jagratara di kawasan industri...", cat: "Intelijen" },
       3: { title: "Optimalisasi Layanan Ramah HAM di ULP Mall Tangerang", content: "Dalam upaya meningkatkan pelayanan publik, Kantor Imigrasi meresmikan jalur khusus bagi lansia, ibu hamil, dan disabilitas...", cat: "Layanan" }
     }
   },
-  EN: { nav: { news: "News" }, ui: { back: "Back to News Index", share: "Share Article:", related: "Related News" },
+  EN: { 
+    nav: { news: "News" }, 
+    ui: { back: "Back to News Index", share: "Share Article:", related: "Related News" },
     data: {
       1: { title: "Notice of Electronic Passport Booklet Availability", content: "The Tangerang Non-TPI Special Class I Immigration Office announces that polycarbonate electronic passport booklets are now back in stock...", cat: "Announcement" },
       2: { title: "Jagratara Joint Operation: Tangerang Office Checks Permit Compliance", content: "The Foreigner Surveillance Team (TIMPORA) conducted the Jagratara joint operation in industrial areas...", cat: "Intelligence" },
       3: { title: "Optimization of Human Rights Friendly Services at Mall Passport Unit", content: "In an effort to improve public services, the Immigration Office inaugurated a special lane for the elderly, pregnant women, and people with disabilities...", cat: "Services" }
+    }
+  },
+  ZH: { 
+    nav: { news: "新闻" }, 
+    ui: { back: "返回新闻索引", share: "分享文章：", related: "相关新闻" },
+    data: {
+      1: { title: "电子护照本可用性通知", content: "坦格朗非TPI一类特别移民局宣布，聚碳酸酯电子护照本现已重新有货...", cat: "公告" },
+      2: { title: "Jagratara 联合行动：坦格朗移民局检查居留许可合规情况", content: "外国人监控小组 (TIMPORA) 在工业区开展了 Jagratara 联合行动...", cat: "情报" },
+      3: { title: "优化购物中心护照办理单位的人权友好型服务", content: "为了改善公共服务，移民局为老年人、孕妇和残疾人开通了专用通道...", cat: "服务" }
     }
   }
 };
@@ -26,7 +39,7 @@ export default function DetailBerita() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { lang } = useContext(LanguageContext);
-  const t = translations[lang as 'ID' | 'EN'];
+  const t = translations[lang as 'ID' | 'EN' | 'ZH'] || translations['ID'];
   
   useEffect(() => { window.scrollTo(0, 0); }, [id]);
 

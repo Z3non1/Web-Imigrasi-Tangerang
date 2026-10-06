@@ -252,12 +252,180 @@ const izinTinggalData = {
         "Dasar Hukum": ["Permenkumham No. 22 Year 2023 on Visas and Stay Permits.", "Ministry of Finance Regulation No. 9/PMK.02/2022."]
       }
     }
+  },
+  ZH: {
+    hero: { title: "移民居留许可", sub: "外国国民出入境与居留便利服务" },
+    ui: { 
+      catTitle: "规定与条款", 
+      catDesc: "请在下方选择居留许可服务类型，以查看完整的信息、要求和办理流程。",
+      detailBadge: "服务详情"
+    },
+    categories: [
+      "Perpanjangan ITK", 
+      "Perpanjangan ITAS", 
+      "Perpanjangan ITAP", 
+      "Alih Status ITK-ITAS", 
+      "Alih Status ITAS-ITAP", 
+      "Pemberian ITAP Tanpa Alih Status", 
+      "Pelaporan ITAP"
+    ],
+    content: {
+      "Perpanjangan ITK": {
+        "Informasi Umum": [
+          "访问居留许可 (ITK) 颁发给持访问签证入境印尼领土的外国人。",
+          "ITK 延期最多可连续办理四 (4) 次，每次延期期限最长为三十 (30) 天。",
+          "居留许可延期申请由外国人或担保人向管辖外国人居住地的移民局局长提出。"
+        ],
+        "Persyaratan Dokumen": [
+          "填写申请表格（可在移民局下载或领取）。",
+          "有效且仍在有效期内的国籍护照（原件及复印件）。",
+          "担保人的担保信（需贴印花税），以旅游为目的访印尼的外国人除外。",
+          "担保人身份证 (KTP) 复印件。",
+          "前往其他国家的返程机票或续程机票。"
+        ],
+        "Proses Permohonan": [
+          "1. 接收并审核申请文件。",
+          "2. 按照 PNBP 费率缴纳移民规费。",
+          "3. 拍照并留取指纹（如需）。",
+          "4. 面谈（如需）。",
+          "5. 移民局局长审批。",
+          "6. 签发 ITK 延期。"
+        ],
+        "Waktu Proses dan Penyelesaian": [
+          "确认缴纳 PNBP 规费后，ITK 延期申请办结时间为三 (3) 个工作日。"
+        ],
+        "Biaya": [
+          "ITK 延期 30 天有效期：Rp 500,000",
+          "ITK 延期 60 天有效期：Rp 750,000"
+        ]
+      },
+      "Perpanjangan ITAS": {
+        "Informasi Umum": [
+          "有限期居留许可 (ITAS) 颁发给持有限期居留签证 (VITAS) 入境或从 ITK 转换身份的外国人。",
+          "ITAS 延期由移民局局长批准，每次延期最长为一 (1) 年或两 (2) 年。"
+        ],
+        "Persyaratan Dokumen": [
+          "担保人/赞助商的申请信。",
+          "担保人的担保函及担保人身份证 (KTP) 复印件。",
+          "有效且仍在有效期内的国籍护照。",
+          "根据目的的证明文件（例如：针对外籍劳工的劳工部 IMTA、学生证明或家庭团聚结婚证）。"
+        ],
+        "Proses Permohonan": [
+          "1. 申请人通过移民局居留许可服务窗口提交申请。",
+          "2. 审核文件完整性。",
+          "3. 缴纳 PNBP 规费。",
+          "4. 采集生物识别数据（照片和指纹）。",
+          "5. 审批流程并签发电子有限期居留许可 (e-ITAS)。"
+        ],
+        "Waktu Proses dan Penyelesaian": [
+          "采集照片和指纹后，ITAS 延期办结时间最多为三 (3) 个工作日。"
+        ],
+        "Biaya": [
+          "最长 6 个月有效期 ITAS：Rp 1,000,000",
+          "最长 1 年有效期 ITAS：Rp 1,500,000",
+          "最长 2 年有效期 ITAS：Rp 2,000,000"
+        ]
+      },
+      "Perpanjangan ITAP": {
+        "Informasi Umum": [
+          "永久居留许可 (ITAP) 期限为五 (5) 年，可申请无限期延长。",
+          "ITAP 延期申请应在 ITAP 到期前至少 3 个月内以及到期前的最后一个工作日内提出。"
+        ],
+        "Persyaratan Dokumen": [
+          "填写申请表。",
+          "有效且仍在有效期内的国籍护照。",
+          "需延期的旧 ITAP。",
+          "主管部门出具的居住证明信。",
+          "担保人身份证及户口本复印件（如有担保人）。",
+          "符合居留目的的其他相关证明文件。"
+        ],
+        "Proses Permohonan": [
+          "1. 提交申请文件。",
+          "2. 采集生物识别数据。",
+          "3. 缴纳 ITAP 延期费用。",
+          "4. 通过人权部万丹区域办事处由移民总局进行文件核查与审批。",
+          "5. 签发 ITK/ITAP 延期。"
+        ],
+        "Biaya": [
+          "无限期 ITAP 延期：Rp 10,000,000"
+        ]
+      },
+      "Alih Status ITK-ITAS": {
+        "Informasi Umum": [
+          "持访问居留许可 (ITK) 的外国人可将其居留许可变更为有限期居留许可 (ITAS)。",
+          "ITK 转 ITAS 申请须在 ITK 到期前至少三十 (30) 天内提出。"
+        ],
+        "Persyaratan Dokumen": [
+          "有效且仍在有效期内的国籍护照。",
+          "注册凭证及担保人担保信。",
+          "符合居留目的的专项要求文件（例如：相关部委推荐信、结婚证等）。"
+        ],
+        "Proses Permohonan": [
+          "1. 申请人在线或直接在移民局注册申请。",
+          "2. 文件审核并签发 PNBP 付款通知单。",
+          "3. 采集生物识别。",
+          "4. 移民局局长批准并签发 e-ITAS。"
+        ]
+      },
+      "Alih Status ITAS-ITAP": {
+        "Informasi Umum": [
+          "ITAS 持有人在印尼连续居住满三 (3) 年后可申请转换为 ITAP。",
+          "对于家庭团聚类 ITAS（印尼公民配偶），在婚姻关系存续满两 (2) 年后即可申请转换。"
+        ],
+        "Persyaratan Dokumen": [
+          "担保人申请信。",
+          "有效且仍在有效期内的国籍护照和 ITAS。",
+          "民政局出具的居住地证明信 (SKTT)。",
+          "无犯罪记录证明 (SKCK)。",
+          "结婚证（适用于与印尼公民家庭团聚者）或劳工/投资文件。"
+        ],
+        "Biaya": [
+          "ITAS 转 ITAP（5年）费用：Rp 5,000,000",
+          "两年期再次入境许可 (IMK)：Rp 1,750,000"
+        ]
+      },
+      "Pemberian ITAP Tanpa Alih Status": {
+        "Informasi Umum": [
+          "在符合法律法规的特定条件下（例如双重国籍儿童或前印尼公民），外国人可直接获得 ITAP，无需先经过从 ITAS 转换身份的阶段。"
+        ],
+        "Persyaratan Dokumen": [
+          "国籍护照。",
+          "交还印尼移民文件的证明（针对前印尼公民）或出生证明（针对双重国籍儿童）。"
+        ]
+      },
+      "Pelaporan ITAP": {
+        "Informasi Umum": [
+          "持有无限期永久居留许可的外国人必须每 5 年向管辖其居住地的移民局局长报告一次。"
+        ],
+        "Persyaratan Dokumen": [
+          "通用要求：有效且仍在有效期内的国籍护照及永久居留许可 (ITAP)。",
+          "专项要求：公司/工作合法性证明、最新银行对账单或证明在印尼定居意图的其他相关文件。"
+        ],
+        "Proses Permohonan": [
+          "1. 接收永久居留许可报告登记。",
+          "2. 现场拍照。",
+          "3. 移民局局长审批。",
+          "4. 签发附有新报告日期的永久居留许可。"
+        ],
+        "Waktu Proses dan Penyelesaian": [
+          "移民局局长将在最多 3 个工作日内将申请转交移民总局。",
+          "虚拟永久居留许可将以电子方式发送给外国人/担保人。"
+        ],
+        "Biaya": [
+          "免费 (Rp 0)。"
+        ],
+        "Dasar Hukum": [
+          "1. 印尼法律与人权部 2023 年第 22 号关于签证和居留许可的条例。",
+          "2. 印尼财政部 2022 年第 9/PMK.02/2022 号关于移民服务非税国家收入 (PNBP) 种类与关税的条例。"
+        ]
+      }
+    }
   }
 };
 
 export default function LayananIzinTinggal() {
   const { lang, setLang } = useContext(LanguageContext);
-  const t = izinTinggalData[lang as 'ID' | 'EN'];
+  const t = izinTinggalData[lang as 'ID' | 'EN' | 'ZH'] || izinTinggalData['ID'];
   const ui = lang === 'ID' ? { home: "Beranda", search: "Cari..." } : { home: "Home", search: "Search..." };
   
   const [isScrolled, setIsScrolled] = useState(false);

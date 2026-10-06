@@ -32,12 +32,23 @@ const translations = {
       { id: 2, title: "Jagratara Joint Operation: Tangerang Office Checks Permit Compliance", date: "Aug 12, 2026", cat: "Intelligence", desc: "Foreigner Surveillance Team (TIMPORA) conducts inspections in industrial areas." },
       { id: 3, title: "Optimization of Human Rights Friendly Services at Mall Passport Unit", date: "Aug 10, 2026", cat: "Services", desc: "Inauguration of a special lane for the elderly and disabled." }
     ]
+  },
+  ZH: {
+    nav: { home: "首页", info: "公共信息", news: "新闻", about: "关于我们", faq: "常见问题", search: "搜索..." },
+    hero: { title: "新闻与动态", sub: "本机构的最新信息与活动合集。", back: "返回" },
+    filter: { all: "所有新闻", press: "新闻稿", service: "服务", intel: "情报" },
+    card: { read: "阅读更多" },
+    data: [
+      { id: 1, title: "聚碳酸酯电子护照本恢复供应通知", date: "2026年8月13日", cat: "新闻稿", desc: "移民局宣布聚碳酸酯护照本重新到货。" },
+      { id: 2, title: "Jagratara 联合行动：坦格朗移民局检查居留许可合规情况", date: "2026年8月12日", cat: "情报", desc: "外国人监控小组 (TIMPORA) 在工业区进行突击检查。" },
+      { id: 3, title: "优化购物中心护照办理单位的人权友好型服务", date: "2026年8月10日", cat: "服务", desc: "为老年人和残疾人开设了专用护照办理通道。" }
+    ]
   }
 };
 
 export default function Berita() {
   const { lang, setLang } = useContext(LanguageContext);
-  const t = translations[lang as 'ID' | 'EN'];
+  const t = translations[lang as 'ID' | 'EN' | 'ZH'] || translations['ID'];
   
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);

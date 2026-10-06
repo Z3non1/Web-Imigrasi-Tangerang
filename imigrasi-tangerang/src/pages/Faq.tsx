@@ -34,12 +34,24 @@ const translations = {
       { id: 4, tag: "VISA ON ARRIVAL", q: "How to extend Visa on Arrival (VoA)?", a: "VoA extension can be done maximum 7 days before the expiry date at the immigration office." },
       { id: 5, tag: "STAY PERMIT", q: "Difference between ITAS and ITAP?", a: "ITAS is a limited stay permit (1-2 years), ITAP is a permanent stay permit (5 years)." }
     ]
+  },
+  ZH: {
+    nav: { home: "首页", info: "公共信息", news: "新闻", about: "关于我们", faq: "常见问题", search: "搜索..." },
+    hero: { title: "常见问题 (FAQ)", back: "返回" },
+    content: { header: "官方信息分类", sub: "显示官方机构常见问题", categories: ["所有问题", "印尼护照", "签证与入境", "居留许可", "其他"] },
+    data: [
+      { id: 1, tag: "印尼护照", q: "申请新护照需要什么材料？", a: "必须携带身份证 (KTP)、户口本 (KK) 以及出生证明/毕业证的原件及复印件。请通过 M-Paspor 应用程序进行注册。" },
+      { id: 2, tag: "服务期限", q: "护照办理需要多长时间？", a: "普通护照在付款后需要 3-4 个工作日。加急服务可在当天完成。" },
+      { id: 3, tag: "M-PASPOR", q: "如何进行在线预约？", a: "在 PlayStore 或 AppStore 下载 M-Paspor 应用程序，注册账号并选择到访时间。" },
+      { id: 4, tag: "落地签证 (VOA)", q: "如何延期落地签证 (VoA)？", a: "落地签延期必须在有效期满前最多 7 天内在移民局办理。" },
+      { id: 5, tag: "居留许可", q: "ITAS 和 ITAP 有什么区别？", a: "ITAS 颁发给短期居留（1-2年），ITAP 颁发给长期永久居留（5年）。" }
+    ]
   }
 };
 
 export default function Faq() {
   const { lang, setLang } = useContext(LanguageContext);
-  const t = translations[lang as 'ID' | 'EN'];
+  const t = translations[lang as 'ID' | 'EN' | 'ZH'] || translations['ID'];
   
   // STATE ANIMASI & INTERAKSI
   const [isScrolled, setIsScrolled] = useState(false);

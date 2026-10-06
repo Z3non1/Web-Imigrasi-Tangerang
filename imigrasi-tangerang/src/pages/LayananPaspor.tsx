@@ -19,7 +19,6 @@ const passportData = {
       catDesc: "Pilih kriteria yang sesuai dengan Anda untuk melihat detail persyaratan.",
       detailBadge: "Panduan Lengkap"
     },
-    // DATA UNTUK PERMOHONAN BARU
     new: {
       categories: ["Masyarakat Umum", "Anak Dibawah 17 Tahun", "Anak Dwikenegaraan", "Calon Pekerja Migran Indonesia", "Haji Umroh", "Anak Yang Lahir Diluar Negeri"],
       sections: { info: "Informasi Umum", req: "Persyaratan", proc: "Prosedur", auth: "Mekanisme Pengesahan", cost: "Biaya" },
@@ -47,7 +46,6 @@ const passportData = {
         }
       }
     },
-    // DATA UNTUK PENGGANTIAN PASPOR
     replace: {
       categories: ["Pengubahan Data Paspor", "Penggantian Paspor di Luar Negeri", "Paspor Akan Habis Masa Berlaku", "Paspor Rusak", "Paspor Hilang"],
       sections: { info: "Informasi Umum", req: "Persyaratan", proc: "Prosedur", auth: "Mekanisme Penerbitan", cost: "Biaya" },
@@ -131,12 +129,61 @@ const passportData = {
         }
       }
     }
+  },
+  ZH: {
+    hero: { title: "印度尼西亚共和国护照", sub: "请选择申请类型：" },
+    tabs: { new: "新护照申请", replace: "护照换发/补发" },
+    ui: { 
+      catTitle: "申请人类别", 
+      catDesc: "选择符合您的条件以查看详细要求。",
+      detailBadge: "完整指南"
+    },
+    new: {
+      categories: ["普通公众", "17岁以下儿童", "双重国籍儿童", "印尼外劳候选人", "朝觐/副朝", "海外出生儿童"],
+      sections: { info: "基本信息", req: "申请材料", proc: "办理流程", auth: "审批机制", cost: "费用标准" },
+      content: {
+        "General Public": {
+          info: ["普通护照申请可由印尼公民在印尼境内或境外提交。", "普通护照包括电子护照（e-paspor）和非电子护照。"],
+          req: ["有效的身份证 (KTP) 或海外移居证明。", "户口本 (KK)。", "出生证明、结婚证、户籍结婚证或毕业证书。", "外籍人士获得印尼国籍的入籍证明（如有）。", "改名证明文件（如有更改姓名）。"],
+          proc: ["通过 App Store 或 Google Play 下载 M-Paspor 应用程序进行注册。", "在申请柜台填报申请应用数据并附上所需材料。", "等待移民官员审核材料完整性。", "获取申请回执和付款码。", "若材料不全，取回被退回的申请文件。"],
+          auth: ["核对材料完整性与合法性", "缴纳护照费用", "采集照片和指纹", "面谈", "核实", "裁决"],
+          cost: ["普通非电子护照（5年有效期）：Rp 350,000", "普通电子护照（5年有效期）：Rp 650,000", "当日加急取证服务：Rp 1,000,000"]
+        },
+        "Default": {
+          info: ["根据最新移民条例，特定信息将根据所选类别进行调整。"],
+          req: ["有效身份证。", "户口本 (KK)。", "根据申请人类别所需的证明文件。"],
+          proc: ["通过 M-Paspor 进行排队预约。", "在移民局办公室提交文件。", "生物信息采集与面谈。"],
+          auth: ["文件审核", "缴费", "拍照与留指纹", "面谈", "核实"],
+          cost: ["普通非电子护照：Rp 350,000", "普通电子护照：Rp 650,000", "加急服务：Rp 1,000,000"]
+        }
+      }
+    },
+    replace: {
+      categories: ["护照数据变更", "海外护照换发", "护照即将过期", "护照损毁", "护照遗失"],
+      sections: { info: "基本信息", req: "申请材料", proc: "办理流程", auth: "签发机制", cost: "费用标准" },
+      content: {
+        "Data Alteration": {
+          info: ["护照持有人个人身份数据的变更可向移民局局长或移民官员提出申请。", "变更内容包括姓名、出生地/出生日期或性别。"],
+          req: ["旧护照。", "有效身份证 (KTP) 及户口本 (KK)。", "由政府机关出具作为变更依据的文件，如法院裁决书、出生证明、结婚证等。"],
+          proc: ["提交申请。", "获得移民局局长或移民官员的批准。", "获得移民总局局长的批准。", "新护照颁发。"],
+          auth: ["将材料原件及复印件以及完整填写的 Perdim 11 表格提交给柜台人员。", "工作人员将处理护照数据变更。", "移民官员将批准数据变更。", "批准后工作人员将打印新护照。", "制作完成的新护照将发放给您。"],
+          cost: ["此项服务需缴纳护照更换费（根据所选的普通或电子护照 PNBP 关税标准）。"]
+        },
+        "Default": {
+          info: ["护照更换手续取决于更换原因（即将到期、遗失或损毁）。"],
+          req: ["有效身份证。", "户口本 (KK)。", "旧护照（若遗失需提供警察局报案证明）。"],
+          proc: ["通过 M-Paspor 注册预约，或针对 BAP（调查笔录）案件直接前往现场。", "提交文件、进行生物采集和面谈。"],
+          auth: ["文件审核", "缴费", "生物采集", "面谈"],
+          cost: ["普通非电子护照：Rp 350,000", "普通电子护照：Rp 650,000", "护照遗失罚金：Rp 1,000,000", "护照损毁罚金：Rp 500,000"]
+        }
+      }
+    }
   }
 };
 
 export default function LayananPaspor() {
   const { lang, setLang } = useContext(LanguageContext);
-  const t = passportData[lang as 'ID' | 'EN'];
+  const t = passportData[lang as 'ID' | 'EN' | 'ZH'] || passportData['ID'];
   const ui = lang === 'ID' ? { home: "Beranda", search: "Cari..." } : { home: "Home", search: "Search..." };
   
   const [isScrolled, setIsScrolled] = useState(false);

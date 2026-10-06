@@ -25,12 +25,19 @@ const translations = {
     sec1: { sub: "Agency Flashback", title: "History & Overview", p1: "TANGERANG - Starting from a small Immigration Post under the West Jakarta Immigration Office...", p2: "Now, holding the Special Class I Non-TPI status, the Tangerang Immigration Office plays a crucial role as the frontline guardian of the nation's gates." },
     sec4: { title: "Agency Vision", visi: '"Realizing Modern, Transparent, and Humane Immigration Services and Law Enforcement."' },
     sec5: { title: "Organizational Structure", items: [{id: 1, title: "Administration Sub-Section", desc: "Handles administrative, staffing, and financial affairs."}, {id: 2, title: "Immigration Traffic Section", desc: "Serves RI passport applications and border crossings."}] },
+  },
+  ZH: {
+    nav: { home: "首页", info: "公共信息", news: "新闻", about: "关于我们", faq: "常见问题", search: "搜索..." },
+    hero: { pre: "机构简介", title: "办公室历史", back: "返回" },
+    sec1: { sub: "机构回顾", title: "历史与概况", p1: "坦格朗 - 始于隶属于雅加达西部移民局的一个小型移民哨所...", p2: "如今，凭借非TPI一类特别移民局的称号，坦格朗移民局作为国家大门的前线守卫者，发挥着至关重要的作用。" },
+    sec4: { title: "机构愿景", visi: '"实现现代化、透明、人性化的移民服务与执法。"' },
+    sec5: { title: "组织架构", items: [{id: 1, title: "行政股", desc: "负责办公室的行政、人事和财务事务。"}, {id: 2, title: "出入境交通科", desc: "负责办理印尼护照申请及边境通行事务。"}] },
   }
 };
 
 export default function TentangKami() {
   const { lang, setLang } = useContext(LanguageContext);
-  const t = translations[lang as 'ID' | 'EN'];
+  const t = translations[lang as 'ID' | 'EN' | 'ZH'] || translations['ID'];
   
   // STATE ANIMASI & INTERAKSI
   const [isScrolled, setIsScrolled] = useState(false);

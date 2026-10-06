@@ -164,12 +164,89 @@ const subjekData = {
         }
       }
     }
+  },
+  ZH: {
+    hero: { title: "落地签、免签及受限签证（Calling Visa）国家与地区名单", sub: "外国国民出入境便利服务" },
+    ui: { 
+      catTitle: "规定与条款", 
+      catDesc: "请在下方选择名单类别，以查看具体的国家/地区或出入境口岸详情。",
+      detailBadge: "完整名单"
+    },
+    categories: [
+      "免签访问国家名单 (BVK)", 
+      "受限签证国家名单 (Calling Visa)", 
+      "电子落地签 (E-VoA) 入境口岸", 
+      "落地签证 (VoA) 国家名单"
+    ],
+    content: {
+      "免签访问国家名单 (BVK)": {
+        sections: { negara: "国家、特别行政区政府以及特定实体名单" },
+        data: {
+          negara: [
+            "文莱达鲁萨兰国", "马来西亚", "泰国", "越南", "菲律宾", "柬埔寨", 
+            "新加坡", "缅甸", "老挝", "东帝汶", "苏里南", "哥伦比亚", 
+            "中国香港", "土耳其", "巴西", "秘鲁", "哈萨克斯坦", "中国澳门", "白俄罗斯", 
+            "通过特定移民检查站入境的新加坡永久居民外国公民。"
+          ]
+        }
+      },
+      "受限签证国家名单 (Calling Visa)": {
+        sections: { negara: "国家、特别行政区政府以及特定实体名单" },
+        data: {
+          negara: ["阿富汗", "以色列", "朝鲜", "利比里亚", "尼日利亚", "索马里"]
+        }
+      },
+      "电子落地签 (E-VoA) 入境口岸": {
+        sections: { 
+          bandara: "机场移民检查站",
+          plbn: "边境检查站 (PLBN)",
+          pelabuhan: "海港移民检查站"
+        },
+        data: {
+          bandara: [
+            "雅加达哈利姆·珀达纳库苏马 (Halim Perdanakusuma, DKI Jakarta)", "廖内群岛韩纳丁 (Hang Nadim, Kepulauan Riau)", "东爪哇朱安达 (Juanda, Jawa Timur)", 
+            "北苏门答腊瓜拉瑙穆 (Kualanamu, Sumatera Utara)", "西苏门答腊米南卡保 (Minangkabau, Sumatera Barat)", "巴厘岛伍拉·赖 (Ngurah Rai, Bali)", 
+            "雅加达苏加诺-哈塔 (Soekarno Hatta, DKI Jakarta)", "东加里曼丹苏尔坦·阿吉·穆罕默德·苏莱曼 (Sultan Aji Muhammad Sulaiman)", 
+            "南苏拉威西苏尔坦·哈萨努丁 (Sultan Hasanuddin, Sulawesi Selatan)", "亚齐苏尔坦·伊斯坎达·穆达 (Sultan Iskandar Muda, Aceh)", 
+            "日惹特区日惹机场 (Yogyakarta)", "西努沙登加拉宰努丁·阿卜杜勒·马吉德 (Zainuddin Abdul Madjid)"
+          ],
+          plbn: [
+            "西加里曼丹阿鲁克 (Aruk, Kalimantan Barat)", "西加里曼丹恩蒂孔 (Entikong, Kalimantan Barat)", "东努沙登加拉莫塔因 (Mota'ain, Nusa Tenggara Timur)", 
+            "东努沙登加拉莫塔马辛 (Motamasin, Nusa Tenggara Timur)", "巴布亚斯考 (Skouw, Papua)", "西加里曼丹楠加巴道 (Nangabadau)"
+          ],
+          pelabuhan: [
+            "北马鲁古阿赫迈德·亚尼 (Achmad Yani, Maluku Utara)", "巴布亚阿玛马帕雷 (Amamapare, Papua)", "廖内群岛巴淡中心 (Batam Centre, Kepulauan Riau)", 
+            "巴厘岛贝诺亚 (Benoa, Bali)", "廖内省杜迈 (Dumai, Riau)", "雅加达安高海滨玛丽娜 (Marina Ancol, DKI Jakarta)", "廖内群岛农萨航海码头 (Nongsa Terminal Bahari)", 
+            "廖内群岛卡里蒙丹戎巴莱 (Tanjung Balai Karimun)", "雅加达丹戎普里克 (Tanjung Priok, DKI Jakarta)", 
+            "廖内群岛民丹岛拉古伊班达尔本坦太拉尼港 (Bandar Bintan Telani Lagoi)", "廖内群岛西特拉特里图纳斯 (Citra Tri Tunas)"
+          ]
+        }
+      },
+      "落地签证 (VoA) 国家名单": {
+        sections: { negara: "国家、特别行政区政府以及特定实体名单" },
+        data: {
+          negara: [
+            "南非", "阿尔巴尼亚", "美国", "安道尔", "沙特阿拉伯", "阿根廷", "亚美尼亚", "澳大利亚", 
+            "奥地利", "阿塞拜疆", "巴林", "荷兰", "比利时", "白俄罗斯", "波斯尼亚和黑塞哥维那", "巴西", 
+            "文莱达鲁萨兰国", "保加利亚", "捷克", "智利", "丹麦", "厄瓜多尔", "爱沙尼亚", "菲律宾", "芬兰", 
+            "危地马拉", "中国香港", "匈牙利", "印度", "英国", "爱尔兰", "冰岛", "意大利", "日本", 
+            "德国", "柬埔寨", "加拿大", "哈萨克斯坦", "肯尼亚", "哥伦比亚", "韩国", "克罗地亚", "科威特", 
+            "老挝", "拉脱维亚", "列支敦士登", "立陶宛", "卢森堡", "中国澳门", "马来西亚", "马尔代夫", "马耳他", 
+            "摩洛哥", "墨西哥", "埃及", "摩纳哥", "缅甸", "挪威", "阿曼", "巴勒斯坦", "巴布亚新几内亚", 
+            "法国", "秘鲁", "波兰", "葡萄牙", "卡塔尔", "罗马尼亚", "俄罗斯", "卢旺达", "新西兰", 
+            "塞尔维亚", "塞舌尔", "新加坡", "塞浦路斯", "斯洛伐克", "斯洛文尼亚", "西班牙", "苏里南", "瑞典", 
+            "瑞士", "中国台湾", "泰国", "东帝汶", "中国", "突尼斯", "土耳其", "阿拉伯联合酋长国", 
+            "乌兹别克斯坦", "乌克兰", "梵蒂冈", "委内瑞拉", "越南", "约旦", "希腊"
+          ]
+        }
+      }
+    }
   }
 };
 
 export default function LayananVoaBvk() {
   const { lang, setLang } = useContext(LanguageContext);
-  const t = subjekData[lang as 'ID' | 'EN'];
+  const t = subjekData[lang as 'ID' | 'EN' | 'ZH'] || subjekData['ID'];
   const ui = lang === 'ID' ? { home: "Beranda", search: "Cari..." } : { home: "Home", search: "Search..." };
   
   const [isScrolled, setIsScrolled] = useState(false);

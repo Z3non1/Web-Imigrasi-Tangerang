@@ -32,12 +32,23 @@ const translations = {
       { title: "Work Unit Budget Plan", files: ["STRATEGIC PLAN 2025", "HEAD OF OFFICE PERFORMANCE", "WORK PLAN 2024"] },
       { title: "Standard Operating Procedures", files: ["STAR CHANNEL APP SOP", "COMPLAINT MANAGEMENT TEAM DECREE 2025"] }
     ]
+  },
+  ZH: {
+    nav: { home: "首页", info: "公共信息", news: "新闻", about: "关于我们", faq: "常见问题", search: "搜索..." },
+    hero: { title: "公共信息", back: "返回" },
+    content: { searchPlace: "搜索文件", empty: "无附件", viewBtn: "查看附件", attach: "附件文件" },
+    footer: { rights: "移民总局。保留所有权利。" },
+    data: [
+      { title: "预算执行清单", files: ["2025年坦格朗特别移民局绩效问责报告 (LKJIP)", "2024年绩效问责报告"] },
+      { title: "工作单位预算计划", files: ["2025年坦格朗移民局战略规划", "局长绩效协议 (PK)", "2024年工作计划"] },
+      { title: "标准操作程序 (SOP)", files: ["STAR CHANNEL 应用程序标准操作程序", "2025年投诉管理团队法令"] }
+    ]
   }
 };
 
 export default function InformasiPublik() {
   const { lang, setLang } = useContext(LanguageContext);
-  const t = translations[lang as 'ID' | 'EN'];
+  const t = translations[lang as 'ID' | 'EN' | 'ZH'] || translations['ID'];
   
   // STATE ANIMASI & INTERAKSI
   const [isScrolled, setIsScrolled] = useState(false);

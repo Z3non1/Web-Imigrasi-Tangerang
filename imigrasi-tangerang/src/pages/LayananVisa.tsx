@@ -156,13 +156,88 @@ const visaData = {
         ]
       }
     }
+  },
+  ZH: {
+    hero: { title: "印尼签证清单", sub: "外国国民的出入境便利服务" },
+    ui: { 
+      catTitle: "目录", 
+      catDesc: "点击下面的菜单可直接跳转到您需要的特定信息部分。"
+    },
+    sections: [
+      { id: "single-entry", label: "单次入境访问签证" },
+      { id: "multiple-entry", label: "多次入境访问签证" },
+      { id: "voa", label: "落地签证 (VoA)" },
+      { id: "vitas", label: "有限期居留签证 (VITAS)" },
+      { id: "persyaratan", label: "一般文件要求" },
+      { id: "proses", label: "申请流程与费用" }
+    ],
+    content: {
+      "single-entry": {
+        title: "单次入境访问签证",
+        desc: "发给前往印尼领土进行访问且停留时间不超过60（六十）天的外国人。",
+        items: [
+          { code: "B211A", name: "旅游、探亲、社会、文化、政府、体育", detail: "有效期60天。可延期。" },
+          { code: "B211B", name: "商务、外籍劳工试用", detail: "有效期60天。可延期。" },
+          { code: "B211C", name: "新闻报道和电影制作", detail: "有效期60天。需相关部委推荐信。" }
+        ]
+      },
+      "multiple-entry": {
+        title: "多次入境访问签证",
+        desc: "发给前往印尼领土进行多次访问的外国人，有效期最长为1（一）至5（五）年。",
+        items: [
+          { code: "D212", name: "商务、探亲、政府", detail: "每次访问最长60天。无法改变居留状态。" }
+        ]
+      },
+      "voa": {
+        title: "落地签证 (Visa on Arrival / VoA)",
+        desc: "发给抵达指定出入境检查站（TPI）的符合条件的外国国民。",
+        items: [
+          { code: "B213", name: "旅游、商务、政府访问", detail: "有效期30天。可延期1（一）次，为期30天。" }
+        ]
+      },
+      "vitas": {
+        title: "有限期居留签证 (VITAS)",
+        desc: "发给打算在印尼停留有限时间以用于各种目的的外国人。",
+        items: [
+          { code: "C312", name: "外籍劳工（工作）", detail: "需要人力资源部的推荐信/RPTKA。" },
+          { code: "C313", name: "外国投资 (PMA) / 投资者（1年）", detail: "需要投资协调委员会 (BKPM) 的推荐信。" },
+          { code: "C314", name: "外国投资 (PMA) / 投资者（2年）", detail: "需要投资协调委员会 (BKPM) 的推荐信。" },
+          { code: "C316", name: "教育 / 学生", detail: "需要教育部的推荐信。" },
+          { code: "C317", name: "家庭团聚", detail: "随同印尼配偶或持有ITAS/ITAP的父母。" }
+        ]
+      },
+      "persyaratan": {
+        title: "一般文件要求",
+        desc: "申请印尼签证前通常必须准备的基本文件：",
+        itemsList: [
+          "有效的国家护照，有效期至少6（六）个月。",
+          "担保人的担保信（独立旅游目的除外）。",
+          "在印尼境内有足够生活费用的证明（银行对账单，余额至少2,000美元）。",
+          "返程机票或前往其他国家的续程机票。",
+          "最近的红/白底4x6彩色护照照片。"
+        ]
+      },
+      "proses": {
+        title: "申请流程与签证费用",
+        desc: "目前，印尼签证申请必须通过移民总局官方门户网站在线提交。",
+        infoBox: "官方申请门户网站: molina.imigrasi.go.id",
+        itemsList: [
+          "落地签证 (VoA): Rp 500,000 / 35美元",
+          "单次入境访问签证 (B211A/B/C): 50美元",
+          "多次入境访问签证 (1年): Rp 3,000,000",
+          "有限期居留签证 (VITAS): 150美元起 (取决于类型和有效期)"
+        ]
+      }
+    }
   }
 };
 
 export default function LayananVisa() {
   const { lang, setLang } = useContext(LanguageContext);
-  const t = visaData[lang as 'ID' | 'EN'];
-  const ui = lang === 'ID' ? { home: "Beranda", search: "Cari..." } : { home: "Home", search: "Search..." };
+  const t = visaData[lang as 'ID' | 'EN' | 'ZH'] || visaData['ID'];
+  const ui = lang === 'ID' ? { home: "Beranda", search: "Cari..." } 
+           : lang === 'EN' ? { home: "Home", search: "Search..." }
+           : { home: "首页", search: "搜索..." };
   
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
@@ -171,7 +246,12 @@ export default function LayananVisa() {
   // FAB States
   const [isCsOpen, setIsCsOpen] = useState(false);
   const [isIvaraOpen, setIsIvaraOpen] = useState(false);
-  const [messages, setMessages] = useState([{ sender: 'ivara', text: lang === 'ID' ? 'Halo! Ada yang bisa dibantu mengenai Visa?' : 'Hello! Need help with Visas?' }]);
+  const [messages, setMessages] = useState([{ 
+    sender: 'ivara', 
+    text: lang === 'ID' ? 'Halo! Ada yang bisa dibantu mengenai Visa?' 
+        : lang === 'EN' ? 'Hello! Need help with Visas?' 
+        : '您好！请问有关于签证的问题需要帮助吗？' // Pesan Mandarin
+  }]);
   const [inputMessage, setInputMessage] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
