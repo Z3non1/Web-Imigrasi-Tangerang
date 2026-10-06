@@ -239,7 +239,7 @@ export default function TentangKami() {
           </div>
           <div className="rounded-2xl overflow-hidden shadow-xl h-full min-h-[400px] relative">
             {/* Menggunakan placeholder gambar gedung */}
-            <img src="https://images.unsplash.com/photo-1541872528775-69ab9c50fc7b?w=800&q=80" alt="Gedung Imigrasi" className="absolute inset-0 w-full h-full object-cover" />
+            <img src="src/assets/kantor_imigrasi_gedung.jpg" alt="Gedung Imigrasi" className="absolute inset-0 w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0b162c]/80 to-transparent"></div>
             <div className="absolute bottom-6 left-6 right-6">
               <h3 className="text-white font-bold text-xl">Kantor Imigrasi Kelas I Khusus Non TPI Tangerang</h3>

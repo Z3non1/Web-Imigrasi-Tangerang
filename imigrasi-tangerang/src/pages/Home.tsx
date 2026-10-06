@@ -260,7 +260,7 @@ const socialPosts = [
           <div className="w-20 md:w-24 h-1.5 bg-yellow-500 mb-6 md:mb-8 rounded-full"></div>
           <div className="rounded-3xl shadow-xl overflow-hidden group">
           {/* Gambar disesuaikan tingginya: h-56 untuk HP, h-72 untuk Desktop */}
-          <img src="https://images.unsplash.com/photo-1559589689-577aabd1ce4c?q=80&w=2070" className="w-full h-56 md:h-72 object-cover transform transition-transform duration-700 group-hover:scale-105" alt="Cek Status" />
+          <img src="src/assets/generate_pasport.jpg" className="w-full h-56 md:h-72 object-cover transform transition-transform duration-700 group-hover:scale-105" alt="Cek Status" />
         </div>
       </div>
 
