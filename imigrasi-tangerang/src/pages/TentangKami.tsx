@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LanguageContext } from '../App';
-import Footer from '../Footer';
+import Footer from '../components/Footer';
 import { useLocation } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import Navbar from '../components/Navbar';
