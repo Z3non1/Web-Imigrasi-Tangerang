@@ -133,13 +133,34 @@ export default function Home() {
   const [checkStatus, setCheckStatus] = useState<'idle' | 'success' | 'error_not_found' | 'error_captcha'>('idle');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Data dummy untuk tampilan postingan sosial media
-const socialPosts = [
-  { id: 1, img: "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=400&q=80", title: "GOES TO SCHOOL", date: "29 September 2026" },
-  { id: 2, img: "https://images.unsplash.com/photo-1555626906-fcf10d6851b4?w=400&q=80", title: "HARI INI URUS HARI INI BERES", date: "28 September 2026" },
-  { id: 3, img: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&q=80", title: "Sempat Hilang Saat Akan Diperiksa", date: "28 September 2026" },
-  { id: 4, img: "https://images.unsplash.com/photo-1541872528775-69ab9c50fc7b?w=400&q=80", title: "Pengumuman TUTUP LAYANAN", date: "25 September 2026" }
-];
+// Data postingan sosial media (Bisa kamu ganti gambarnya dengan menaruh file di folder public/images/)
+  // Data postingan yang dipisah per masing-masing media sosial (masing-masing 4 kotak)
+  const socialMediaData: Record<string, { id: string, img: string, title: string, date: string, link: string }[]> = {
+    Instagram: [
+      { id: 'ig1', img: "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=400&q=80", title: "GOES TO SCHOOL", date: "29 September 2026", link: "https://www.instagram.com/imigrasitangerang/" },
+      { id: 'ig2', img: "https://images.unsplash.com/photo-1555626906-fcf10d6851b4?w=400&q=80", title: "HARI INI URUS HARI INI BERES", date: "28 September 2026", link: "https://www.instagram.com/imigrasitangerang/" },
+      { id: 'ig3', img: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&q=80", title: "Sempat Hilang Saat Akan Diperiksa", date: "28 September 2026", link: "https://www.instagram.com/imigrasitangerang/" },
+      { id: 'ig4', img: "https://images.unsplash.com/photo-1541872528775-69ab9c50fc7b?w=400&q=80", title: "Pengumuman TUTUP LAYANAN", date: "25 September 2026", link: "https://www.instagram.com/imigrasitangerang/" }
+    ],
+    Twitter: [
+      { id: 'tw1', img: "https://images.unsplash.com/photo-1593642532744-d377ab507dc8?w=400&q=80", title: "Layanan Paspor Simpatik Akhir Pekan", date: "02 Oktober 2026", link: "https://x.com/kanim_tangerang" },
+      { id: 'tw2', img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&q=80", title: "Rapat Koordinasi TIMPORA", date: "01 Oktober 2026", link: "https://x.com/kanim_tangerang" },
+      { id: 'tw3', img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80", title: "Tips Menghindari Penipuan Visa", date: "30 September 2026", link: "https://x.com/kanim_tangerang" },
+      { id: 'tw4', img: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?w=400&q=80", title: "Kunjungan Kerja Kakanwil", date: "27 September 2026", link: "https://x.com/kanim_tangerang" }
+    ],
+    Facebook: [
+      { id: 'fb1', img: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=400&q=80", title: "Sosialisasi Keimigrasian di Kampus", date: "03 Oktober 2026", link: "https://www.facebook.com/imigrasitangerang" },
+      { id: 'fb2', img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&q=80", title: "Layanan Eazy Passport Perumahan", date: "01 Oktober 2026", link: "https://www.facebook.com/imigrasitangerang" },
+      { id: 'fb3', img: "https://images.unsplash.com/photo-1556761175-5973dc0f32b7?w=400&q=80", title: "Penghargaan Pelayanan Publik Terbaik", date: "29 September 2026", link: "https://www.facebook.com/imigrasitangerang" },
+      { id: 'fb4', img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&q=80", title: "Sinergi dengan Pemda Tangerang", date: "26 September 2026", link: "https://www.facebook.com/imigrasitangerang" }
+    ],
+    Tiktok: [
+      { id: 'tk1', img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&q=80", title: "Cara Daftar M-Paspor Anti Ribet", date: "04 Oktober 2026", link: "https://www.tiktok.com/@imigrasitangerang" },
+      { id: 'tk2', img: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=400&q=80", title: "A Day in Life: Petugas Imigrasi", date: "02 Oktober 2026", link: "https://www.tiktok.com/@imigrasitangerang" },
+      { id: 'tk3', img: "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=400&q=80", title: "Mitos vs Fakta Visa on Arrival", date: "30 September 2026", link: "https://www.tiktok.com/@imigrasitangerang" },
+      { id: 'tk4', img: "https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=400&q=80", title: "Tanya Jawab Seputar Paspor Rusak", date: "25 September 2026", link: "https://www.tiktok.com/@imigrasitangerang" }
+    ]
+  };
 
   // Efek Scroll untuk Navbar Glassmorphism
   useEffect(() => { 
@@ -175,9 +196,6 @@ const socialPosts = [
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans relative overflow-hidden">
-      
-      {/* NAVBAR: Mulus dengan Glassmorphism saat di-scroll */}
-      {/* NAVBAR LENGKAP DENGAN MOBILE SIDEBAR */}
       <Navbar/>
 
       {/* HERO SECTION: Efek Zoom pelan */}
@@ -350,11 +368,9 @@ const socialPosts = [
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div>
               <h2 className="text-3xl font-extrabold text-[#0b162c] tracking-tight">{t.social.title}</h2>
-              {/* Garis aksen kuning khas tema imigrasi */}
               <div className="w-20 h-1.5 bg-yellow-500 mt-3 rounded-full"></div>
             </div>
             
-            {/* Tombol Dinamis Bergaya Modern */}
             <a 
               href={
                 activeSocialTab === 'Instagram' ? 'https://www.instagram.com/imigrasitangerang' :
@@ -371,7 +387,7 @@ const socialPosts = [
             </a>
           </div>
 
-          {/* Navigasi Tabs (Gaya Pill/Kapsul Modern) */}
+          {/* Navigasi Tabs */}
           <div className="flex space-x-3 mb-10 overflow-x-auto pb-2 scrollbar-hide">
             {t.social.tabs.map((tab: string) => (
               <button
@@ -388,34 +404,38 @@ const socialPosts = [
             ))}
           </div>
 
-          {/* Grid Postingan Video/Gambar */}
+          {/* Grid Postingan Video/Gambar (Dinamis Sesuai Tab Aktif) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {socialPosts.map(post => (
-              <div key={post.id} className="group relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer shadow-lg border border-gray-100 bg-gray-900">
-                
-                {/* Gambar Thumbnail */}
+            {/* Kita memanggil data spesifik berdasarkan activeSocialTab */}
+            {socialMediaData[activeSocialTab]?.map(post => (
+              <a 
+                key={post.id} 
+                href={post.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer shadow-lg border border-gray-100 bg-gray-900 block"
+              >
                 <img src={post.img} alt={post.title} className="absolute inset-0 w-full h-full object-cover opacity-85 transition-transform duration-700 group-hover:scale-110" />
                 
-                {/* Ikon Play di Kanan Atas */}
                 <div className="absolute top-4 right-4 bg-black/40 backdrop-blur-sm p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <Play className="w-5 h-5 text-white fill-white" />
                 </div>
                 
-                {/* Gradien Mewah di Bawah */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0b162c]/95 via-[#0b162c]/40 to-transparent"></div>
                 
-                {/* Konten Teks (Judul & Tanggal) */}
                 <div className="absolute bottom-0 left-0 right-0 p-5 transform transition-transform duration-300 group-hover:-translate-y-2">
                   <p className="text-white font-extrabold text-base leading-tight drop-shadow-md mb-2">{post.title}</p>
                   <div className="flex items-center text-yellow-400">
                     <span className="text-[11px] font-bold tracking-wider uppercase">{post.date}</span>
                   </div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
+
         </div>
       </section>
+      {/* --- END SECTION MEDIA SOSIAL --- */}
 
       {/* FAB: Animasi Pop Mulus */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-4">
