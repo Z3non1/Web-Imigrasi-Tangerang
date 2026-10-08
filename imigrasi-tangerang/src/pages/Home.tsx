@@ -136,10 +136,10 @@ export default function Home() {
 // Data dengan tambahan properti 'embedUrl'
   const socialMediaData: Record<string, { id: string, img: string, title: string, date: string, embedUrl: string }[]> = {
     Instagram: [
-      { id: 'ig1', img: "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=400&q=80", title: "13 WN TIONGKOK DITANGKAP", date: "6 Oktober 2026", embedUrl: "https://www.instagram.com/p/DeJcsCfztxn/embed/" },
-      { id: 'ig2', img: "https://images.unsplash.com/photo-1555626906-fcf10d6851b4?w=400&q=80", title: "LAYANAN PASPORIA CFD BSD", date: "4 Oktober 2026", embedUrl: "https://www.instagram.com/p/DeD6tKovOqt/embed/" },
-      { id: 'ig3', img: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&q=80", title: "IMIGRASI TANGERANG BRAVO", date: "3 Oktober 2026", embedUrl: "https://www.instagram.com/p/Dd_mqv-Pljx/embed" },
-      { id: 'ig4', img: "https://images.unsplash.com/photo-1541872528775-69ab9c50fc7b?w=400&q=80", title: "BANGGA BERBATIK", date: "3 Oktober 2026", embedUrl: "https://www.instagram.com/p/Dd_ZYqxyYHi/embed" }
+      { id: 'ig1', img: "src/assets/paspor_hilang.jpeg", title: "JANGAN SAMPAI HILANG PASPOR", date: "6 Oktober 2026", embedUrl: "https://www.instagram.com/p/DeMIWPwvSXV/embed/" },
+      { id: 'ig2', img: "src/assets/pasporia_cfd_bsd.jpeg", title: "LAYANAN PASPORIA CFD BSD", date: "4 Oktober 2026", embedUrl: "https://www.instagram.com/p/DeD6tKovOqt/embed/" },
+      { id: 'ig3', img: "src/assets/wn_vietnam.jpeg", title: "IMIGRASI TANGERANG BRAVO", date: "3 Oktober 2026", embedUrl: "https://www.instagram.com/p/Dd_mqv-Pljx/embed" },
+      { id: 'ig4', img: "src/assets/bangga_berbatik.jpeg", title: "BANGGA BERBATIK", date: "3 Oktober 2026", embedUrl: "https://www.instagram.com/p/Dd_ZYqxyYHi/embed" }
     ],
     Twitter: [
       { id: 'tw1', img: "https://images.unsplash.com/photo-1593642532744-d377ab507dc8?w=400&q=80", title: "Layanan Paspor Simpatik", date: "02 Oktober 2026", embedUrl: "https://twitframe.com/show?url=https://twitter.com/kanim_tangerang/status/123456789" },
