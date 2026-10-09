@@ -5,6 +5,9 @@ import Footer from '../components/Footer';
 import { useLocation } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import Navbar from '../components/Navbar';
+import { NEWS } from '../data/Berita';
+import CekAntrean from '../components/CekAntrean'; 
+import { Clock, Zap } from 'lucide-react'; // Tambahan ikon untuk desain section
 
 import { 
   Search, Phone, ChevronRight, MapPin, ArrowUpRight, Shield, 
@@ -316,6 +319,68 @@ export default function Home() {
         </div>
       </div>
 
+      {/* --- SECTION CEK ANTREAN PINTAR --- */}
+      <section className="py-20 bg-gradient-to-b from-white to-blue-50 relative overflow-hidden">
+        {/* Aksen Background Estetik */}
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-yellow-100 rounded-full blur-3xl opacity-50"></div>
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+            
+            {/* Kolom Kiri: Copywriting & Fitur */}
+            <div className="w-full lg:w-1/2 space-y-8 animate-fade-in-up">
+              <div>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#0b162c] tracking-tight leading-tight">
+                  Pantau Antrean Anda <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">Dari Mana Saja.</span>
+                </h2>
+                <div className="w-24 h-1.5 bg-yellow-500 mt-6 rounded-full"></div>
+              </div>
+
+              <p className="text-gray-600 leading-relaxed text-sm md:text-base">
+                Tidak perlu lagi menunggu berjam-jam di ruang tunggu. Cukup masukkan nomor tiket antrean Anda, dan sistem cerdas kami akan menghitung estimasi waktu yang tepat kapan Anda harus tiba di Kantor Imigrasi Kelas I Khusus Non TPI Tangerang.
+              </p>
+
+              <div className="space-y-5 pt-4">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 rounded-full bg-white shadow-sm border border-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
+                    <Clock className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#0b162c] text-lg">Hemat Waktu Anda</h4>
+                    <p className="text-sm text-gray-500 mt-1">Datang ke kantor tepat saat nomor antrean Anda hampir dipanggil di loket pelayanan.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 rounded-full bg-white shadow-sm border border-green-100 flex items-center justify-center flex-shrink-0 mt-1">
+                    <Zap className="w-6 h-6 text-green-500" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#0b162c] text-lg">Update Real-Time</h4>
+                    <p className="text-sm text-gray-500 mt-1">Sistem tersinkronisasi langsung dengan mesin antrean di ruang pelayanan paspor dan visa.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Kolom Kanan: Komponen CekAntrean */}
+            <div className="w-full lg:w-1/2 animate-fade-in-up delay-200">
+              <div className="relative">
+                {/* Efek Cahaya Glow di belakang komponen agar terlihat melayang */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-yellow-400 transform scale-[1.02] blur-2xl opacity-20 rounded-3xl"></div>
+                
+                {/* Memanggil komponen CekAntrean yang kamu buat tadi */}
+                <div className="relative z-10">
+                  <CekAntrean />
+                </div>
+                
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
         {/* LAYANAN GRID: Efek Hover Lembut */}
         <div className="mb-28 animate-fade-in-up delay-300">
           <div className="flex justify-center md:justify-start mb-12">
@@ -346,12 +411,12 @@ export default function Home() {
             <Link to="/berita" className="text-blue-600 font-bold text-sm flex items-center hover:text-blue-800 transition-colors group">{t.news.more} <ArrowUpRight className="w-5 h-5 ml-1 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /></Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1,2,3].map((id) => (
-              <Link to={`/berita/${id}`} key={id}>
+            {[...NEWS].sort((a, b) => +new Date(b.date) - +new Date(a.date)).slice(0, 3).map((news) => (
+              <Link to={`/berita/${news.id}`} key={news.id}>
                 <div className="bg-white rounded-3xl shadow-md border border-gray-100 overflow-hidden group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
-                  <div className="overflow-hidden"><img src={`https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?q=80&w=800&sig=${id + 10}`} className="w-full h-52 object-cover transform group-hover:scale-110 transition-transform duration-700"/></div>
+                  <div className="overflow-hidden"><img src={news.img} alt={news.title} className="w-full h-52 object-cover transform group-hover:scale-110 transition-transform duration-700"/></div>
                   <div className="p-8 flex-1 flex flex-col justify-between">
-                    <h3 className="font-extrabold text-gray-900 mb-4 text-lg leading-snug group-hover:text-blue-600 transition-colors">{lang==='ID' ? "Pemberitahuan Ketersediaan Blangko Paspor Terbaru" : "Latest Notice of Passport Booklet Availability"}</h3>
+                    <h3 className="font-extrabold text-gray-900 mb-4 text-lg leading-snug group-hover:text-blue-600 transition-colors">{news.title}</h3>
                     <span className="text-blue-600 font-bold text-sm flex items-center">{t.news.more} <ChevronRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" /></span>
                   </div>
                 </div>
