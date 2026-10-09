@@ -6,7 +6,8 @@ import { useLocation } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import Navbar from '../components/Navbar';
 import { NEWS } from '../data/Berita';
-import CekAntrean from '../components/CekAntrean'; 
+import DaftarAntrean from '../components/DaftarAntrean';
+import CekAntrean from '../components/CekAntrean';
 import { Clock, Zap } from 'lucide-react'; // Tambahan ikon untuk desain section
 
 import { 
@@ -319,68 +320,58 @@ export default function Home() {
         </div>
       </div>
 
-      {/* --- SECTION CEK ANTREAN PINTAR --- */}
+      {/* --- SECTION PUSAT LAYANAN ANTREAN MANDIRI --- */}
       <section className="py-20 bg-gradient-to-b from-white to-blue-50 relative overflow-hidden">
         {/* Aksen Background Estetik */}
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-yellow-100 rounded-full blur-3xl opacity-50"></div>
 
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+          
+          {/* Header Section (Tengah) */}
+          <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
+            <div className="inline-flex items-center space-x-2 bg-yellow-100 text-yellow-800 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-4 border border-yellow-200">
+              <span className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></span>
+              <span>Layanan Inovasi Baru</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#0b162c] tracking-tight leading-tight mb-6">
+              Pusat Layanan <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">Antrean Mandiri</span>
+            </h2>
+            <p className="text-gray-600 leading-relaxed text-sm md:text-base">
+              Ambil nomor antrean secara online untuk layanan prioritas dan pantau estimasi waktu kedatangan Anda secara real-time. Bebas antre panjang, lebih hemat waktu!
+            </p>
+          </div>
+
+          {/* Grid 2 Kolom untuk Pendaftaran & Pengecekan */}
+          <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
             
-            {/* Kolom Kiri: Copywriting & Fitur */}
-            <div className="w-full lg:w-1/2 space-y-8 animate-fade-in-up">
-              <div>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#0b162c] tracking-tight leading-tight">
-                  Pantau Antrean Anda <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">Dari Mana Saja.</span>
-                </h2>
-                <div className="w-24 h-1.5 bg-yellow-500 mt-6 rounded-full"></div>
-              </div>
-
-              <p className="text-gray-600 leading-relaxed text-sm md:text-base">
-                Tidak perlu lagi menunggu berjam-jam di ruang tunggu. Cukup masukkan nomor tiket antrean Anda, dan sistem cerdas kami akan menghitung estimasi waktu yang tepat kapan Anda harus tiba di Kantor Imigrasi Kelas I Khusus Non TPI Tangerang.
-              </p>
-
-              <div className="space-y-5 pt-4">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-white shadow-sm border border-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
-                    <Clock className="w-6 h-6 text-blue-600" />
+            {/* Kolom Kiri: Pendaftaran */}
+            <div className="w-full lg:w-1/2 animate-fade-in-up delay-100">
+               <div className="relative">
+                  {/* Efek Glow Kuning/Orange */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-400 transform scale-[1.02] blur-2xl opacity-20 rounded-3xl"></div>
+                  <div className="relative z-10">
+                    <DaftarAntrean />
                   </div>
-                  <div>
-                    <h4 className="font-bold text-[#0b162c] text-lg">Hemat Waktu Anda</h4>
-                    <p className="text-sm text-gray-500 mt-1">Datang ke kantor tepat saat nomor antrean Anda hampir dipanggil di loket pelayanan.</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-white shadow-sm border border-green-100 flex items-center justify-center flex-shrink-0 mt-1">
-                    <Zap className="w-6 h-6 text-green-500" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-[#0b162c] text-lg">Update Real-Time</h4>
-                    <p className="text-sm text-gray-500 mt-1">Sistem tersinkronisasi langsung dengan mesin antrean di ruang pelayanan paspor dan visa.</p>
-                  </div>
-                </div>
-              </div>
+               </div>
             </div>
 
-            {/* Kolom Kanan: Komponen CekAntrean */}
+            {/* Kolom Kanan: Pengecekan */}
             <div className="w-full lg:w-1/2 animate-fade-in-up delay-200">
               <div className="relative">
-                {/* Efek Cahaya Glow di belakang komponen agar terlihat melayang */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-yellow-400 transform scale-[1.02] blur-2xl opacity-20 rounded-3xl"></div>
-                
-                {/* Memanggil komponen CekAntrean yang kamu buat tadi */}
-                <div className="relative z-10">
-                  <CekAntrean />
-                </div>
-                
+                  {/* Efek Glow Biru/Teal */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-teal-400 transform scale-[1.02] blur-2xl opacity-20 rounded-3xl"></div>
+                  <div className="relative z-10">
+                    <CekAntrean />
+                  </div>
               </div>
             </div>
 
           </div>
         </div>
       </section>
-
+      {/* --- END SECTION ANTREAN --- */}
+      
         {/* LAYANAN GRID: Efek Hover Lembut */}
         <div className="mb-28 animate-fade-in-up delay-300">
           <div className="flex justify-center md:justify-start mb-12">
