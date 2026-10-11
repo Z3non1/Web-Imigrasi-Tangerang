@@ -6,8 +6,7 @@ import { useLocation } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import Navbar from '../components/Navbar';
 import { NEWS } from '../data/Berita';
-import DaftarAntrean from '../components/DaftarAntrean';
-import CekAntrean from '../components/CekAntrean';
+import SistemBAP from '../components/SistemBAP';
 import { Clock, Zap } from 'lucide-react'; // Tambahan ikon untuk desain section
 
 import { 
@@ -320,58 +319,20 @@ export default function Home() {
         </div>
       </div>
 
-      {/* --- SECTION PUSAT LAYANAN ANTREAN MANDIRI --- */}
-      <section className="py-20 bg-gradient-to-b from-white to-blue-50 relative overflow-hidden">
-        {/* Aksen Background Estetik */}
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
-        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-yellow-100 rounded-full blur-3xl opacity-50"></div>
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          
-          {/* Header Section (Tengah) */}
-          <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
-            <div className="inline-flex items-center space-x-2 bg-yellow-100 text-yellow-800 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-4 border border-yellow-200">
-              <span className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></span>
-              <span>Layanan Inovasi Baru</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#0b162c] tracking-tight leading-tight mb-6">
-              Pusat Layanan <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">Antrean Mandiri</span>
-            </h2>
-            <p className="text-gray-600 leading-relaxed text-sm md:text-base">
-              Ambil nomor antrean secara online untuk layanan prioritas dan pantau estimasi waktu kedatangan Anda secara real-time. Bebas antre panjang, lebih hemat waktu!
-            </p>
-          </div>
-
-          {/* Grid 2 Kolom untuk Pendaftaran & Pengecekan */}
-          <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
-            
-            {/* Kolom Kiri: Pendaftaran */}
-            <div className="w-full lg:w-1/2 animate-fade-in-up delay-100">
-               <div className="relative">
-                  {/* Efek Glow Kuning/Orange */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-400 transform scale-[1.02] blur-2xl opacity-20 rounded-3xl"></div>
-                  <div className="relative z-10">
-                    <DaftarAntrean />
-                  </div>
-               </div>
-            </div>
-
-            {/* Kolom Kanan: Pengecekan */}
-            <div className="w-full lg:w-1/2 animate-fade-in-up delay-200">
-              <div className="relative">
-                  {/* Efek Glow Biru/Teal */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-teal-400 transform scale-[1.02] blur-2xl opacity-20 rounded-3xl"></div>
-                  <div className="relative z-10">
-                    <CekAntrean />
-                  </div>
-              </div>
-            </div>
-
-          </div>
+      {/* --- SECTION SISTEM BAP --- */}
+      <section className="py-20 bg-gradient-to-b from-blue-50 to-white relative">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+           
+           <div className="text-center max-w-2xl mx-auto mb-10">
+              <h2 className="text-3xl font-extrabold text-[#0b162c] mb-4">Layanan BAP Paspor Online</h2>
+              <p className="text-gray-600">Sistem pendaftaran otomatis untuk pemeriksaan paspor hilang, rusak, dan perubahan data tanpa harus berebut kuota di kantor.</p>
+           </div>
+           
+           <SistemBAP />
+           
         </div>
       </section>
-      {/* --- END SECTION ANTREAN --- */}
-      
+
         {/* LAYANAN GRID: Efek Hover Lembut */}
         <div className="mb-28 animate-fade-in-up delay-300">
           <div className="flex justify-center md:justify-start mb-12">
