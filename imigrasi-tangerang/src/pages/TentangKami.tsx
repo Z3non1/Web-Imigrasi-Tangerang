@@ -1,366 +1,354 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { LanguageContext } from '../App';
-import { ChevronRight, ArrowLeft, CheckCircle, Map, Building2, Users, ChevronDown, ChevronUp, ChevronLeft } from 'lucide-react';
+import {
+  ChevronLeft, ArrowUp, Shield, Landmark, Award, Star, Building2, Scale, MapPin, Scan, ExternalLink,
+  FileCheck2, Gavel, TrendingUp, CheckCircle2, Users2, Network, ScrollText, Target, Quote, ShieldCheck,
+  Briefcase, Cpu, Search as SearchIcon, FolderOpen, History, GitBranch, MousePointerClick
+} from 'lucide-react';
 
-const translations = {
-  ID: {
-    hero: { pre: "Profil Instansi", title: "Sejarah Kantor", back: "Kembali" },
-    history: {
-      sub: "Kilas Balik Instansi", title: "Sejarah Kantor & Selayang Pandang",
-      p1: "Berawal dari Pos Imigrasi kecil yang menginduk pada Kantor Imigrasi Jakarta Barat, kini Kantor Imigrasi Kelas I Khusus Non TPI Tangerang memegang peranan krusial sebagai garda terdepan penjaga pintu gerbang negara di wilayah Banten.",
-      timeline: [
-        { year: "1982", desc: "Berdiri sebagai Pos Imigrasi Tangerang." },
-        { year: "1990", desc: "Ditingkatkan statusnya menjadi Kantor Imigrasi Kelas II." },
-        { year: "2015", desc: "Peningkatan status menjadi Kelas I Khusus Non TPI Tangerang." },
-        { year: "2026", desc: "Terus berinovasi memberikan pelayanan ramah HAM dan digital." }
-      ]
-    },
-    wilayah: {
-      title: "Wilayah Tempat Kedudukan",
-      desc: "Meliputi 3 (tiga) wilayah administratif di Provinsi Banten.",
-      areas: ["Kota Tangerang", "Kabupaten Tangerang", "Kota Tangerang Selatan"]
-    },
-    tupoksi: {
-      title: "Kedudukan, Tugas Pokok dan Fungsi",
-      items: [
-        { title: "Kedudukan", desc: "Merupakan Unit Pelaksana Teknis (UPT) di bawah Direktorat Jenderal Imigrasi, Kementerian Hukum dan HAM." },
-        { title: "Tugas Pokok", desc: "Melaksanakan sebagian tugas pokok dan fungsi Kementerian Hukum dan HAM di bidang Keimigrasian di wilayah kerjanya." },
-        { title: "Fungsi", desc: "Pelaksanaan tugas keimigrasian di bidang pelayanan, penegakan hukum, keamanan negara, dan fasilitator pembangunan." }
-      ]
-    },
-    visimisi: {
-      title: "Visi, Misi dan Tata Nilai",
-      visi: '"Terwujudnya Pelayanan Keimigrasian dan Penegakan Hukum yang Modern, Transparan, Humanis, dan Berintegritas guna Menjaga Kedaulatan Negara serta Mendorong Pertumbuhan Ekonomi Nasional Menuju Indonesia Emas 2045."',
-      misiTitle: "Misi Instansi",
-      misi: [
-        "Memberikan pelayanan keimigrasian yang prima dan ramah HAM.",
-        "Meningkatkan pengawasan dan penegakan hukum keimigrasian secara tegas.",
-        "Mengembangkan inovasi digital dalam setiap lini pelayanan.",
-        "Mewujudkan SDM yang profesional, akuntabel, dan berintegritas tinggi."
-      ]
-    },
-    struktur: {
-      title: "Struktur Organisasi",
-      kepala: "Kepala Kantor Imigrasi",
-      items: [
-        { title: "Bagian Tata Usaha", desc: "Melaksanakan urusan ketatausahaan, kepegawaian, keuangan, dan rumah tangga kantor." },
-        { title: "Bidang Lalu Lintas Keimigrasian", desc: "Melayani permohonan paspor RI dan perlintasan wilayah." },
-        { title: "Bidang Izin Tinggal Keimigrasian", desc: "Melayani permohonan ITK, ITAS, dan ITAP bagi WNA." },
-        { title: "Bidang Intelijen dan Penindakan", desc: "Melakukan pengawasan, intelijen, dan penindakan pelanggaran keimigrasian." },
-        { title: "Bidang Teknologi Informasi", desc: "Mengelola sistem informasi, komunikasi, dan hubungan masyarakat." }
-      ]
-    }
-  },
-  EN: {
-    hero: { pre: "Agency Profile", title: "Office History", back: "Back" },
-    history: {
-      sub: "Agency Flashback", title: "Office History & Overview",
-      p1: "Starting from a small Immigration Post under the West Jakarta Immigration Office, the Tangerang Special Class I Non-TPI Immigration Office now plays a crucial role as the frontline guardian of the nation's gates in the Banten region.",
-      timeline: [
-        { year: "1982", desc: "Established as Tangerang Immigration Post." },
-        { year: "1990", desc: "Upgraded to Class II Immigration Office." },
-        { year: "2015", desc: "Upgraded to Special Class I Non-TPI Tangerang." },
-        { year: "2026", desc: "Continuing to innovate in human rights-friendly and digital services." }
-      ]
-    },
-    wilayah: {
-      title: "Jurisdictional Area",
-      desc: "Covering 3 (three) administrative regions in Banten Province.",
-      areas: ["Tangerang City", "Tangerang Regency", "South Tangerang City"]
-    },
-    tupoksi: {
-      title: "Position, Main Duties and Functions",
-      items: [
-        { title: "Position", desc: "A Technical Implementing Unit under the Directorate General of Immigration, Ministry of Law and Human Rights." },
-        { title: "Main Duties", desc: "Carrying out some of the main duties and functions in the field of Immigration within its working area." },
-        { title: "Functions", desc: "Implementation of immigration duties in services, law enforcement, state security, and development facilitation." }
-      ]
-    },
-    visimisi: {
-      title: "Vision, Mission and Core Values",
-      visi: '"Realizing Modern, Transparent, Humane, and Integral Immigration Services and Law Enforcement to Safeguard State Sovereignty and Boost National Economic Growth towards Golden Indonesia 2045."',
-      misiTitle: "Agency Mission",
-      misi: [
-        "Providing excellent and human rights-friendly immigration services.",
-        "Firmly improving immigration supervision and law enforcement.",
-        "Developing digital innovation in every service line.",
-        "Creating professional, accountable, and highly integral human resources."
-      ]
-    },
-    struktur: {
-      title: "Organizational Structure",
-      kepala: "Head of Immigration Office",
-      items: [
-        { title: "Administration Division", desc: "Handles administrative, personnel, financial, and household affairs." },
-        { title: "Immigration Traffic Division", desc: "Serves RI passport applications and border crossings." },
-        { title: "Stay Permit Division", desc: "Serves ITK, ITAS, and ITAP applications for foreigners." },
-        { title: "Intelligence and Enforcement Division", desc: "Conducts surveillance, intelligence, and enforcement of immigration violations." },
-        { title: "Information Technology Division", desc: "Manages information systems, communications, and public relations." }
-      ]
-    }
-  },
-  ZH: {
-    hero: { pre: "机构简介", title: "办公室历史", back: "返回" },
-    history: {
-      sub: "机构回顾", title: "历史与概况",
-      p1: "坦格朗非TPI一类特别移民局始于隶属于雅加达西部移民局的一个小型移民哨所，如今作为万丹地区国家大门的前线守卫者，发挥着至关重要的作用。",
-      timeline: [
-        { year: "1982", desc: "成立坦格朗移民哨所。" },
-        { year: "1990", desc: "升级为二类移民局。" },
-        { year: "2015", desc: "升级为坦格朗非TPI一类特别移民局。" },
-        { year: "2026", desc: "在人权友好型和数字化服务方面不断创新。" }
-      ]
-    },
-    wilayah: {
-      title: "管辖区域",
-      desc: "涵盖万丹省的 3（三）个行政区域。",
-      areas: ["坦格朗市", "坦格朗县", "南坦格朗市"]
-    },
-    tupoksi: {
-      title: "地位、主要职责与功能",
-      items: [
-        { title: "地位", desc: "法律和人权部移民总局下属的技术执行单位。" },
-        { title: "主要职责", desc: "在其工作区域内履行法律和人权部在移民领域的部分主要职责和功能。" },
-        { title: "功能", desc: "在服务、执法、国家安全和促进发展方面执行移民任务。" }
-      ]
-    },
-    visimisi: {
-      title: "愿景、使命与核心价值观",
-      visi: '"实现现代化、透明、人性化和廉洁的移民服务与执法，以维护国家主权并促进国家经济增长，迈向2045年黄金印尼。"',
-      misiTitle: "机构使命",
-      misi: [
-        "提供卓越且尊重人权的移民服务。",
-        "坚决加强移民监督与执法。",
-        "在每条服务线上发展数字化创新。",
-        "打造专业、尽责、高度廉洁的人力资源。"
-      ]
-    },
-    struktur: {
-      title: "组织架构",
-      kepala: "移民局局长",
-      items: [
-        { title: "行政处", desc: "负责行政、人事、财务和后勤事务。" },
-        { title: "出入境交通处", desc: "办理印尼护照申请及边境通行事务。" },
-        { title: "居留许可处", desc: "为外国人办理 ITK、ITAS 和 ITAP 申请。" },
-        { title: "情报与执法处", desc: "开展对移民违规行为的监督、情报收集和执法。" },
-        { title: "信息技术处", desc: "管理信息系统、通信和公共关系。" }
-      ]
-    }
-  }
+/* ============ DATA ============
+   Judul bagian tersedia ID/EN/ZH. Isi uraian memakai bahasa Indonesia.
+   Mohon dicek ulang dengan dokumen resmi kantor (tahun, angka, uraian tugas). */
+const H = {
+  ID: { back: 'Kembali', title: 'Sejarah Kantor', sub: 'Pusat informasi berkala, rilis media, pengumuman operasional kuota antrean, dan transparansi kegiatan Kantor Imigrasi Kelas I Khusus Non TPI Tangerang.', s1: 'Sejarah Kantor & Selayang Pandang', s3: 'Kedudukan, Tugas Pokok dan Fungsi', s4: 'Visi, Misi dan Tata Nilai', s5: 'Struktur Organisasi', nav: ['Sejarah', 'Wilayah', 'Tupoksi', 'Visi & Misi', 'Struktur'], hint: 'Klik unit untuk melihat uraian tugas', top: 'Ke atas' },
+  EN: { back: 'Back', title: 'Office History', sub: 'Periodic information, media releases, queue quota announcements, and activity transparency of the Tangerang Special Class I Non-TPI Immigration Office.', s1: 'Office History & Overview', s3: 'Position, Main Duties and Functions', s4: 'Vision, Mission and Core Values', s5: 'Organizational Structure', nav: ['History', 'Region', 'Duties', 'Vision', 'Structure'], hint: 'Click a unit to see its duties', top: 'Back to top' },
+  ZH: { back: '返回', title: '办公室历史', sub: '坦格朗特别一级非TPI移民局的定期信息、媒体发布、排队名额公告及活动透明度。', s1: '历史与概况', s3: '地位、主要职责与功能', s4: '愿景、使命与核心价值观', s5: '组织架构', nav: ['历史', '辖区', '职能', '愿景', '架构'], hint: '点击单位查看职责', top: '回到顶部' },
 };
+const SECS = ['sejarah', 'wilayah', 'tupoksi', 'visi', 'struktur'];
+
+const TIMELINE = [
+  ['98', '1998', 'Pembentukan Kantor Imigrasi Tangerang', 'Resmi dibentuk sebagai Satuan Kerja Tingkat II di bawah Departemen Kehakiman RI guna memfasilitasi kebutuhan administrasi penduduk dan pengurusan dokumen perjalanan warga Tangerang.'],
+  ['06', '2006', 'Peningkatan Status Menjadi Kanim Kelas I', 'Dinaikkan status kelembagaannya menjadi Kantor Imigrasi Kelas I Tangerang, merespons pertumbuhan pesat sentra industri manufaktur, zona ekonomi, dan ekspansi pemukiman.'],
+  ['17', '2017', 'Penetapan Satker Non TPI & Desentralisasi ULP', 'Penetapan klasifikasi sebagai Satker Non Tempat Pemeriksaan Imigrasi (Non TPI) dengan fokus pada pelayanan domestik dan pengawasan teritorial, disertai pembukaan Unit Layanan Paspor (ULP) modern.'],
+  ['21', '2021', 'Predikat Wilayah Bebas dari Korupsi (WBK)', 'Menerima predikat Wilayah Bebas dari Korupsi (WBK) dari KemenPAN-RB atas terobosan birokrasi bersih, implementasi antrean M-Paspor terpadu, dan transparansi alur pelayanan publik.'],
+  ['24', '2024', 'Peningkatan Status Kelembagaan: Kelas I Khusus Non TPI', 'Secara resmi ditingkatkan menjadi Kantor Imigrasi Kelas I Khusus Non TPI Tangerang di bawah Kementerian Imigrasi dan Pemasyarakatan, menegaskan peran strategis kantor dalam tata kelola keimigrasian di Banten.'],
+];
+const WILAYAH = [
+  { tag: 'KOTA', name: 'Kota Tangerang', kec: 13, luas: 184.24, desc: 'Melayani pusat administrasi pemerintahan kota, pemukiman padat penduduk, dan koridor industri manufaktur Tangerang.' },
+  { tag: 'KOTA', name: 'Kota Tangerang Selatan', kec: 7, luas: 147.19, desc: 'Melayani sentra pendidikan (BSD, Bintaro, Alam Sutera), komunitas ekspatriat internasional, dan kawasan niaga modern.' },
+  { tag: 'KABUPATEN', name: 'Kabupaten Tangerang', kec: 29, luas: 959.61, desc: 'Mencakup kawasan industri manufaktur berskala besar (Cikupa, Balaraja), pemukiman baru, serta jaringan logistik dan perdagangan.' },
+];
+const ULP = [
+  { name: 'ULP MPP Kota Tangerang', place: 'Gedung Transit Soekarno-Hatta', desc: 'Memfasilitasi layanan paspor reguler dan percepatan satu hari bagi pemohon urban dan pekerja area bandara.', q: 'Mal Pelayanan Publik Kota Tangerang' },
+  { name: 'Gerai MPP Kota Tangsel', place: 'Mall Pelayanan Publik Cilenggang', desc: 'Layanan satu atap kolaboratif dengan Pemerintah Kota Tangerang Selatan guna permohonan paspor baru dan penggantian paspor WNI.', q: 'Mall Pelayanan Publik Cilenggang Tangerang Selatan' },
+  { name: 'Gerai Tangcity Mall', place: 'Lantai 2, Cikokol, Kota Tangerang', desc: 'Unit Layanan Paspor ramah keluarga yang beroperasi di pusat perbelanjaan guna memberikan kemudahan akses di akhir pekan dan hari libur.', q: 'Tangcity Mall Cikokol' },
+];
+const PILARS = [
+  { n: '01', icon: <FileCheck2 className="w-5 h-5" />, t: 'Pelayanan Keimigrasian', d: 'Pemberian fasilitas dokumen perjalanan bagi warga negara Indonesia (Paspor Biasa & Elektronik) serta perizinan tinggal (ITK, ITAS, Visa Kunjungan) bagi warga negara asing secara tepat waktu, akurat, dan berorientasi pada kepuasan pemohon.', b: ['Penerbitan E-Passport & Polikarbonat', 'Pelayanan Izin Tinggal Terbatas', 'Layanan Ramah HAM & Prioritas'] },
+  { n: '02', icon: <Gavel className="w-5 h-5" />, t: 'Penegakan Hukum & Keamanan', d: 'Pengawasan ketat terhadap perlintasan, keberadaan, dan aktivitas orang asing di wilayah yurisdiksi, disertai tindakan administratif keimigrasian (TAK) hingga proses pro-justitia.', b: ['Operasi Intelijen Keimigrasian Jagratara', 'Sekretariat Bersama Timpora Kota/Kab', 'Penegakan Deportasi & Pencegahan WNA'] },
+  { n: '03', icon: <TrendingUp className="w-5 h-5" />, t: 'Fasilitator Pembangunan Ekonomi', d: 'Mendukung penuh iklim investasi nasional (PMA) dan kunjungan wisatawan mancanegara melalui skema perizinan tinggal, serta mobilitas talenta global yang mudah dan terukur.', b: ['Pendampingan Investor Asing (PMA)', 'Akselerasi Layanan Visa Tinggal Terbatas', 'Integrasi Kemudahan Izin Kerja TKA'] },
+];
+const MISI = [
+  ['01', 'Pelayanan Berorientasi Kepuasan Masyarakat', 'Memberikan kepastian durasi waktu penerbitan dokumen, kepatuhan tarif resmi PNBP tanpa pungutan liar, serta fasilitas fisik ramah HAM.'],
+  ['02', 'Sistem Pengawasan & Intelijen Terintegrasi', 'Memperkuat jaringan intelijen keimigrasian, optimalisasi koordinasi Timpora, serta pemanfaatan platform pelaporan digital untuk deteksi dini tindak kriminal transnasional.'],
+  ['03', 'Pengembangan Kapasitas & Integritas SDM', 'Membina aparatur sipil keimigrasian yang adaptif, profesional, beretika tinggi, dan menguasai kompetensi teknologi untuk mewujudkan citra birokrasi berbudaya bersih.'],
+  ['04', 'Tata Kelola Birokrasi Akuntabel', 'Memperkokoh penerapan Sistem Akuntabilitas Kinerja Instansi Pemerintah (SAKIP), manajemen mutu, dan konsistensi sikap zero tolerance terhadap segala bentuk gratifikasi.'],
+];
+const SASARAN = [['Akses Layanan Cepat & Mudah', <Scan className="w-4 h-4" />], ['Sistem Produktif & Berkelanjutan', <Network className="w-4 h-4" />], ['SDM Profesional & Berdaya Saing', <Users2 className="w-4 h-4" />], ['Pengelolaan Kinerja Adaptif', <Target className="w-4 h-4" />]] as [string, React.ReactNode][];
+type Row = { id: string; t: string; tag: string; d: string };
+const ROWS: Row[] = [
+  { id: 'kepala', t: 'Kepala Kantor Imigrasi Kelas I Khusus Non TPI Tangerang', tag: 'Eselon II.b', d: 'Memimpin pelaksanaan tugas pokok dan fungsi keimigrasian di seluruh yurisdiksi Tangerang Raya serta menetapkan kebijakan manajerial kantor.' },
+  { id: 'tu', t: 'Bagian / Subbagian Tata Usaha', tag: 'Fasilitatif', d: 'Melaksanakan urusan kepegawaian, keuangan, surat-menyurat dinas, protokol pimpinan, serta pengelolaan aset kantor.' },
+  { id: 'lantaskim', t: 'Bidang / Seksi Dokumen Perjalanan (Lantaskim)', tag: 'Substantif WNI', d: 'Melakukan penerimaan berkas, identifikasi biometrik, verifikasi berkas, pencetakan, dan penyerahan Paspor RI bagi Warga Negara Indonesia.' },
+  { id: 'intaltuskim', t: 'Bidang / Seksi Izin Tinggal & Status Keimigrasian (Intaltuskim)', tag: 'Substantif WNA', d: 'Memberikan pertimbangan, penerimaan dokumen, serta penerbitan Izin Tinggal Kunjungan, Terbatas (ITAS), dan Tetap (ITAP) bagi warga negara asing.' },
+  { id: 'inteldakim', t: 'Bidang / Seksi Intelijen & Penindakan Keimigrasian (Inteldakim)', tag: 'Penegakan Hukum', d: 'Menjalankan pengawasan orang asing, penindakan pelanggaran keimigrasian, penyidikan, administrasi deportasi, serta pengelolaan ruang detensi sementara.' },
+  { id: 'tikim', t: 'Bidang / Seksi Teknologi Informasi & Komunikasi Keimigrasian (TIKIM)', tag: 'TI & Humas', d: 'Menyelenggarakan layanan infrastruktur IT, keterbukaan informasi publik (PPID), rilis media massa, serta pengelolaan pengaduan masyarakat.' },
+];
+
+/* ============ KOMPONEN KECIL (di luar halaman agar tidak dibuat ulang saat scroll) ============ */
+function CountUp({ to, dec = 0 }: { to: number; dec?: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [v, setV] = useState(0);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    let raf = 0;
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return; io.disconnect();
+      const t0 = performance.now();
+      const tick = (t: number) => { const p = Math.min((t - t0) / 1200, 1); setV(to * (1 - Math.pow(1 - p, 3))); if (p < 1) raf = requestAnimationFrame(tick); };
+      raf = requestAnimationFrame(tick);
+    }, { threshold: 0.4 });
+    io.observe(el); return () => { io.disconnect(); cancelAnimationFrame(raf); };
+  }, [to]);
+  return <span ref={ref}>{v.toLocaleString('id-ID', { minimumFractionDigits: dec, maximumFractionDigits: dec })}</span>;
+}
+function Tag({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
+  return <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#1c1a6b] bg-indigo-50 border border-indigo-100 px-2.5 py-1 rounded mb-3">{icon}{children}</span>;
+}
+function OrgNode({ row, label, sub, icon, sel, onSel, dark = false }: { row: string; label: string; sub?: string; icon: React.ReactNode; sel: string | null; onSel: (id: string) => void; dark?: boolean }) {
+  const on = sel === row;
+  return (
+    <button onClick={() => onSel(row)} aria-pressed={on} className={`group relative w-full text-center rounded-md border px-4 py-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg active:scale-95 ${dark ? `bg-[#1c1a6b] text-white border-[#1c1a6b] ${on ? 'ring-4 ring-indigo-300 shadow-xl' : ''}` : `bg-white border-gray-300 ${on ? 'border-[#1c1a6b] ring-4 ring-indigo-100 shadow-xl' : 'hover:border-[#1c1a6b]'}`}`}>
+      <span className={`mx-auto mb-1 flex w-7 h-7 items-center justify-center rounded-full transition-transform group-hover:scale-110 ${dark ? 'bg-white/15' : 'bg-indigo-50 text-[#1c1a6b]'}`}>{icon}</span>
+      <span className="block text-sm font-extrabold leading-tight">{label}</span>
+      {sub && <span className={`block text-[11px] mt-0.5 leading-snug ${dark ? 'text-indigo-200' : 'text-gray-500'}`}>{sub}</span>}
+    </button>
+  );
+}
 
 export default function TentangKami() {
   const { lang } = useContext(LanguageContext);
-  const t = translations[lang as 'ID' | 'EN' | 'ZH'] || translations['ID'];
-  const [openAccordion, setOpenAccordion] = useState<number | null>(0);
+  const L = (['ID', 'EN', 'ZH'].includes(lang) ? lang : 'ID') as 'ID' | 'EN' | 'ZH';
+  const t = H[L];
+
+  const [scrollY, setScrollY] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [active, setActive] = useState(SECS[0]);
+  const [tl, setTl] = useState(TIMELINE.length - 1);
+  const [sel, setSel] = useState<string | null>('kepala');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const on = () => {
+      setScrollY(window.scrollY);
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(h > 0 ? (window.scrollY / h) * 100 : 0);
+      let cur = SECS[0];
+      for (const id of SECS) { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top <= 200) cur = id; }
+      setActive(cur);
+    };
+    on(); window.addEventListener('scroll', on, { passive: true });
+    return () => window.removeEventListener('scroll', on);
+  }, []);
+
+  const go = (id: string) => { const el = document.getElementById(id); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' }); };
+  const selRow = ROWS.find(r => r.id === sel);
+  const card = 'bg-white border border-gray-200 rounded-md';
+  const secHead = (tag: React.ReactNode, title: string, side: string) => (
+    <div className="grid lg:grid-cols-[1.2fr_1fr] gap-4 lg:items-end mb-8">
+      <div>{tag}<h2 className="text-2xl md:text-4xl font-extrabold text-[#0f172a] leading-tight">{title}</h2></div>
+      <p className="text-sm text-gray-600 leading-relaxed">{side}</p>
+    </div>
+  );
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
-      <Navbar/>
-
-      {/* --- CSS ANIMASI KUSTOM --- */}
+    <div className="min-h-screen bg-white font-sans overflow-x-hidden">
       <style>{`
-        @keyframes fade-in-up {
-          0% { opacity: 0; transform: translateY(30px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slow-pan {
-          0% { transform: scale(1); }
-          50% { transform: scale(1.08); }
-          100% { transform: scale(1); }
-        }
-        .animate-fade-in-up { animation: fade-in-up 1s ease-out forwards; }
-        .animate-slow-pan { animation: slow-pan 25s ease-in-out infinite; }
-        .delay-100 { animation-delay: 100ms; }
-        .delay-200 { animation-delay: 200ms; }
+        @keyframes tkTitle{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+        @keyframes tkPop{from{opacity:0;transform:scale(.95) translateY(8px)}to{opacity:1;transform:none}}
+        @keyframes tkFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+        @keyframes tkRing{0%{box-shadow:0 0 0 0 rgba(28,26,107,.35)}100%{box-shadow:0 0 0 14px rgba(28,26,107,0)}}
+        .tk-title{animation:tkTitle .4s ease-out both}.tk-pop{animation:tkPop .3s ease-out both}
+        .tk-float{animation:tkFloat 4s ease-in-out infinite}.tk-ring{animation:tkRing 1.6s ease-out infinite}
+        @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
       `}</style>
 
-      {/* --- HERO SECTION (Desain Gradasi Biru Animatif) --- */}
-      <div className="relative w-full h-[350px] md:h-[450px] overflow-hidden flex flex-col justify-center bg-[#0b162c]">
-        
-        {/* Background Image dengan Animasi Slow Zoom/Pan */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=1600&q=80" 
-            alt="Background Imigrasi" 
-            className="w-full h-full object-cover animate-slow-pan opacity-50"
-          />
-          {/* Overlay Gradasi Biru yang memudar ke warna abu-abu (gray-50) di bawah */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0b162c]/95 via-[#1a3673]/80 to-gray-50"></div>
+      <div className="fixed top-0 left-0 right-0 h-1 z-[60]"><div className="h-full bg-gradient-to-r from-yellow-400 to-indigo-500 transition-[width] duration-150" style={{ width: `${progress}%` }} /></div>
+
+      {/* navigator samping */}
+      <div className="hidden xl:flex fixed right-5 top-1/2 -translate-y-1/2 z-40 flex-col gap-3">
+        {SECS.map((id, i) => (
+          <button key={id} onClick={() => go(id)} aria-label={t.nav[i]} className="group relative flex items-center justify-end">
+            <span className="absolute right-6 whitespace-nowrap text-[11px] font-bold bg-[#1c1a6b] text-white px-2.5 py-1 rounded opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all pointer-events-none">{t.nav[i]}</span>
+            <span className={`block rounded-full border-2 transition-all duration-300 ${active === id ? 'w-3.5 h-3.5 bg-[#1c1a6b] border-[#1c1a6b]' : 'w-2.5 h-2.5 bg-white border-gray-400 group-hover:border-[#1c1a6b]'}`} />
+          </button>))}
+      </div>
+
+      <Navbar />
+
+      {/* HERO */}
+      <div className="relative h-[300px] overflow-hidden bg-gradient-to-br from-amber-500 via-amber-400 to-yellow-400">
+        <div className="absolute -top-16 left-1/3 w-80 h-80 rounded-full bg-white/20 blur-3xl" style={{ transform: `translateY(${Math.min(scrollY, 400) * 0.2}px)` }} />
+        <Link to="/" className="absolute top-24 left-6 z-20 inline-flex items-center text-white font-semibold bg-white/15 border border-white/40 px-4 py-2 rounded-full backdrop-blur-sm hover:bg-white/30 hover:-translate-x-1 active:scale-95 transition-all"><ChevronLeft className="w-5 h-5 mr-1" />{t.back}</Link>
+        <div className="absolute inset-0 flex flex-col justify-end pb-10 px-6 lg:px-12 max-w-7xl mx-auto">
+          <h1 className="tk-title text-4xl lg:text-6xl font-extrabold text-white tracking-tight drop-shadow-[0_2px_8px_rgba(120,53,15,.45)]">{t.title}</h1>
+          <p className="tk-title text-white/95 mt-2 max-w-2xl text-sm md:text-base drop-shadow" style={{ animationDelay: '80ms' }}>{t.sub}</p>
         </div>
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 w-full pt-12 md:pt-16">
-          
-          {/* Tombol Kembali (Animasi Muncul Pertama) */}
-          <div className="opacity-0 animate-fade-in-up">
-            <a 
-              href="/" 
-              className="inline-flex items-center px-5 py-2.5 mb-8 rounded-full border border-white/40 bg-white/10 hover:bg-white/30 backdrop-blur-md transition-all text-white font-medium text-sm group shadow-lg"
-            >
-              <ChevronLeft className="w-4 h-4 mr-1.5 stroke-[3] group-hover:-translate-x-1 transition-transform" />
-              {t.hero.back}
-            </a>
-          </div>
-
-          {/* Judul Halaman (Animasi Muncul Kedua) */}
-          <div className="opacity-0 animate-fade-in-up delay-200">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight drop-shadow-lg mb-6">
-              {t.hero.title}
-            </h1>
-            {/* Garis Aksen Estetik */}
-            <div className="w-24 h-1.5 bg-yellow-400 rounded-full shadow-md"></div>
-          </div>
-          
+        <div className="hidden md:flex absolute right-12 lg:right-24 top-24 items-center gap-4">
+          <span className="tk-float w-28 h-28 rounded-full bg-[#0b162c] border-4 border-white shadow-2xl flex items-center justify-center text-yellow-400"><Shield className="w-12 h-12" /></span>
+          <span className="tk-float w-28 h-28 rounded-full bg-[#1c1a6b] border-4 border-white shadow-2xl flex items-center justify-center text-yellow-300" style={{ animationDelay: '.6s' }}><Landmark className="w-12 h-12" /></span>
+          <span className="absolute -bottom-12 right-6 flex gap-2">{[<Award key="a" />, <Star key="s" />].map((ic, i) => <span key={i} className="tk-float w-9 h-9 rounded-full bg-[#0b162c] border-2 border-white flex items-center justify-center text-yellow-300 [&>svg]:w-4 [&>svg]:h-4" style={{ animationDelay: `${i * 0.4}s` }}>{ic}</span>)}</span>
         </div>
       </div>
-      {/* --- END HERO SECTION --- */}
-      
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 space-y-24">
-        
-        {/* SECTION 1: SEJARAH & TIMELINE */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div>
-            <span className="text-sm font-bold text-yellow-600 uppercase tracking-widest">{t.history.sub}</span>
-            <h2 className="text-3xl font-extrabold text-[#0b162c] mt-2 mb-6">{t.history.title}</h2>
-            <p className="text-gray-600 leading-relaxed mb-8">{t.history.p1}</p>
-            
-            {/* Timeline */}
-            <div className="space-y-6 border-l-2 border-yellow-400 ml-3 pl-6">
-              {t.history.timeline.map((item, idx) => (
-                <div key={idx} className="relative">
-                  <div className="absolute -left-[33px] top-1 w-4 h-4 bg-yellow-400 rounded-full border-4 border-gray-50"></div>
-                  <h4 className="font-bold text-[#0b162c] text-lg">{item.year}</h4>
-                  <p className="text-sm text-gray-600 mt-1">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="rounded-2xl overflow-hidden shadow-xl h-full min-h-[400px] relative">
-            {/* Menggunakan placeholder gambar gedung */}
-            <img src="src/assets/kantor_imigrasi_gedung.jpg" alt="Gedung Imigrasi" className="absolute inset-0 w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0b162c]/80 to-transparent"></div>
-            <div className="absolute bottom-6 left-6 right-6">
-              <h3 className="text-white font-bold text-xl">Kantor Imigrasi Kelas I Khusus Non TPI Tangerang</h3>
-            </div>
-          </div>
-        </section>
 
-        {/* SECTION 2: WILAYAH KERJA */}
-        <section>
-          <div className="text-center mb-10">
-            <h2 className="text-2xl font-extrabold text-[#0b162c] mb-3">{t.wilayah.title}</h2>
-            <p className="text-gray-500">{t.wilayah.desc}</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {t.wilayah.areas.map((area, idx) => (
-              <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center space-x-4">
-                <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-blue-600">
-                  <Map className="w-6 h-6"/>
-                </div>
-                <h4 className="font-bold text-gray-800">{area}</h4>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-24">
+
+        {/* ===== 1. SEJARAH ===== */}
+        <section id="sejarah" className="scroll-mt-24">
+          {secHead(<Tag icon={<Building2 className="w-3.5 h-3.5" />}>Unit Pelaksana Teknis</Tag>, t.s1, 'Sebagai Unit Pelaksana Teknis di bawah naungan Kementerian Imigrasi dan Pemasyarakatan, Kantor Imigrasi Kelas I Khusus Non TPI Tangerang menyelenggarakan administrasi dan kedaulatan hukum keimigrasian di seluruh kawasan strategis Tangerang Raya.')}
+          <div className="grid lg:grid-cols-[1.35fr_1fr] gap-6">
+            <div className={`${card} p-6 md:p-8 flex flex-col hover:shadow-xl transition-shadow duration-500`}>
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#1c1a6b] mb-3"><History className="w-3.5 h-3.5" />Evolusi Kelembagaan Publik</span>
+              <h3 className="text-xl md:text-2xl font-extrabold text-[#0f172a] leading-snug mb-4">Menjaga Pintu Gerbang Kedaulatan di Jantung Penyangga Barat Ibukota</h3>
+              <p className="text-sm text-gray-600 leading-relaxed mb-4">Sejak didirikan pada masa reformasi, Kantor Imigrasi Tangerang telah melalui berbagai transformasi struktural penting. Wilayah Tangerang Raya yang berkembang dari kawasan agraris menjadi pusat manufaktur internasional, pemukiman terencana, dan koridor transit global menuntut daya adaptasi keimigrasian berstandar tinggi.</p>
+              <p className="text-sm text-gray-600 leading-relaxed mb-6">Kenaikan status kelembagaan menjadi Kantor Imigrasi Kelas I Khusus Non TPI pada tahun 2024 menandai babak baru dalam pengakuan kapasitas operasional, pengawasan orang asing yang lebih presisi, dan komitmen pelayanan publik tanpa diskriminasi.</p>
+              <div className="mt-auto pt-4 border-t border-gray-100 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3"><Scale className="w-5 h-5 text-[#1c1a6b]" /><div><p className="text-[10px] font-bold text-gray-400 tracking-wide">LANDASAN HUKUM OPERASIONAL</p><p className="text-sm font-extrabold text-gray-900">UU No. 6 Tahun 2011 tentang Keimigrasian</p></div></div>
+                <span className="text-[11px] font-bold text-gray-500 bg-gray-50 border border-gray-200 px-3 py-1 rounded">Satker ID: 409124</span>
               </div>
-            ))}
+            </div>
+            <figure className="relative rounded-md overflow-hidden min-h-[320px] group shadow-lg">
+              <img src="src/assets/kantor_imigrasi_gedung.jpg" alt="Gedung Utama Kanim Tangerang" onError={e => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=900'; }} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1200ms]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0b162c]/90 via-transparent to-transparent" />
+              <figcaption className="absolute bottom-0 inset-x-0 p-5 text-white"><p className="text-[10px] font-bold text-yellow-300 tracking-wide mb-1">GEDUNG PELAYANAN TERPADU</p><p className="font-extrabold">Gedung Utama Kanim Tangerang</p><p className="text-xs text-gray-200 mt-1">Jl. Taman Makam Pahlawan Taruna No. 10, Babakan, Kota Tangerang</p></figcaption>
+            </figure>
           </div>
-        </section>
 
-        {/* SECTION 3: TUPOKSI */}
-        <section>
-          <div className="mb-10 border-b border-gray-200 pb-4">
-            <h2 className="text-2xl font-extrabold text-[#0b162c]">{t.tupoksi.title}</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {t.tupoksi.items.map((item, idx) => (
-              <div key={idx} className="bg-white p-8 rounded-2xl shadow-sm border-t-4 border-yellow-500 relative">
-                <div className="absolute -top-5 left-6 w-10 h-10 bg-[#0b162c] text-white font-bold rounded-full flex items-center justify-center border-4 border-white">
-                  {idx + 1}
-                </div>
-                <h3 className="text-xl font-bold text-[#0b162c] mt-4 mb-3">{item.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+          {/* linimasa */}
+          <div className={`${card} mt-8 p-6 md:p-8`}>
+            <h3 className="text-xl font-extrabold text-[#0f172a]">Linimasa Rekam Jejak Institusi (1998 — 2024)</h3>
+            <p className="text-xs text-gray-500 mb-6">Transformasi kelembagaan menuju kantor keimigrasian berstandar internasional. <span className="inline-flex items-center gap-1 text-[#1c1a6b] font-semibold"><MousePointerClick className="w-3 h-3" />Klik untuk menyorot</span></p>
+            <div className="relative">
+              <span className="absolute left-[19px] top-5 bottom-5 w-0.5 bg-gray-200" />
+              <span className="absolute left-[19px] top-5 w-0.5 bg-[#1c1a6b] transition-[height] duration-700 ease-out" style={{ height: `calc((100% - 40px) * ${tl / (TIMELINE.length - 1)})` }} />
+              <div className="space-y-2">
+                {TIMELINE.map(([short, year, title, desc], i) => {
+                  const on = i === tl, passed = i <= tl;
+                  return (
+                    <button key={year} onClick={() => setTl(i)} aria-pressed={on} className={`relative w-full text-left flex gap-4 items-start p-2 rounded-md transition-all duration-300 hover:bg-indigo-50/60 ${on ? 'bg-indigo-50/70' : ''}`}>
+                      <span className={`relative z-10 w-10 h-10 rounded-full border-2 text-xs font-extrabold flex items-center justify-center flex-shrink-0 transition-all duration-300 ${passed ? 'bg-[#1c1a6b] text-white border-[#1c1a6b]' : 'bg-indigo-50 text-[#1c1a6b] border-indigo-200'} ${on ? 'scale-110 tk-ring' : ''}`}>{short}</span>
+                      <span className="pt-1"><span className="block text-sm font-extrabold text-[#0f172a]"><span className="inline-block bg-gray-100 text-gray-600 text-[11px] px-2 py-0.5 rounded mr-2">{year}</span>{title}</span><span className={`block text-xs leading-relaxed mt-1 transition-colors ${on ? 'text-gray-700' : 'text-gray-500'}`}>{desc}</span></span>
+                    </button>);
+                })}
               </div>
-            ))}
-          </div>
-        </section>
-
-        {/* SECTION 4: VISI MISI */}
-        <section>
-          <h2 className="text-2xl font-extrabold text-[#0b162c] mb-8">{t.visimisi.title}</h2>
-          {/* Kotak Biru Gelap Visi */}
-          <div className="bg-[#0b162c] text-white p-10 rounded-3xl shadow-2xl mb-8 relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-8 opacity-10"><Building2 className="w-32 h-32"/></div>
-            <h3 className="text-sm font-bold text-yellow-400 tracking-widest uppercase mb-4">Visi Instansi</h3>
-            <p className="text-2xl md:text-3xl font-extrabold leading-tight italic relative z-10">{t.visimisi.visi}</p>
-          </div>
-          {/* Grid Misi */}
-          <div>
-            <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center">
-              <CheckCircle className="w-5 h-5 text-yellow-500 mr-2"/> {t.visimisi.misiTitle}
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {t.visimisi.misi.map((m, idx) => (
-                <div key={idx} className="flex items-start p-4 bg-white rounded-xl border border-gray-100 shadow-sm">
-                  <div className="min-w-[24px] mt-0.5 text-blue-600 font-bold">{idx + 1}.</div>
-                  <p className="text-gray-700 text-sm">{m}</p>
-                </div>
-              ))}
             </div>
           </div>
         </section>
 
-        {/* SECTION 5: STRUKTUR ORGANISASI */}
-        <section className="pb-16">
-          <div className="mb-10 border-b border-gray-200 pb-4">
-            <h2 className="text-2xl font-extrabold text-[#0b162c]">{t.struktur.title}</h2>
-          </div>
-          
-          {/* Bagan Organisasi Sederhana */}
-          <div className="flex flex-col items-center mb-12">
-            <div className="bg-[#0b162c] text-white px-8 py-4 rounded-xl shadow-lg font-bold text-center z-10">
-              {t.struktur.kepala}
-            </div>
-            <div className="w-0.5 h-8 bg-gray-300"></div>
-            <div className="w-full max-w-4xl border-t-2 border-gray-300 relative">
-              <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-300 rounded-full"></div>
-            </div>
-            <div className="flex justify-between w-full max-w-4xl px-4 mt-8 hidden md:flex">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <div key={i} className="flex flex-col items-center relative -mt-8">
-                  <div className="w-0.5 h-8 bg-gray-300"></div>
-                  <div className="bg-white border-2 border-yellow-500 px-4 py-3 rounded-lg text-xs font-bold text-center w-32 shadow-sm text-gray-700">
-                    {t.struktur.items[i-1].title}
-                  </div>
+        {/* ===== 2. WILAYAH ===== */}
+        <section id="wilayah" className="scroll-mt-24">
+          <h2 className="flex items-center gap-2.5 text-xl font-extrabold text-[#0f172a]"><MapPin className="w-5 h-5 text-[#1c1a6b]" />Wilayah Kerja Keimigrasian</h2>
+          <p className="text-xs text-gray-500 mb-5">Kewenangan yurisdiksi mencakup 3 entitas pemerintahan daerah di kawasan Tangerang Raya.</p>
+          <div className="grid md:grid-cols-3 gap-5">
+            {WILAYAH.map(w => (
+              <div key={w.name} className={`${card} border-t-4 border-t-[#1c1a6b] p-5 hover:-translate-y-2 hover:shadow-2xl transition-all duration-500`}>
+                <span className="text-[10px] font-extrabold text-[#1c1a6b] bg-indigo-50 px-2 py-0.5 rounded">{w.tag}</span>
+                <h3 className="text-lg font-extrabold text-[#0f172a] mt-2 mb-3">{w.name}</h3>
+                <div className="text-xs text-gray-600 space-y-1 mb-3">
+                  <p className="flex justify-between">Cakupan Wilayah: <b className="text-gray-900"><CountUp to={w.kec} /> Kecamatan</b></p>
+                  <p className="flex justify-between">Luas Administratif: <b className="text-gray-900"><CountUp to={w.luas} dec={2} /> km²</b></p>
                 </div>
-              ))}
+                <p className="text-xs text-gray-500 leading-relaxed">{w.desc}</p>
+              </div>))}
+          </div>
+          <div className="mt-6 bg-slate-50 border border-gray-200 rounded-md p-5 md:p-6">
+            <div className="flex flex-wrap items-start justify-between gap-2 mb-4">
+              <div><h3 className="font-extrabold text-[#0f172a]">Titik Layanan Publik Eksternal (Unit Layanan Paspor)</h3><p className="text-xs text-gray-500">Desentralisasi gerai layanan untuk mempermudah akses warga Tangerang Raya.</p></div>
+              <span className="text-[11px] font-bold text-[#1c1a6b] bg-white border border-indigo-100 px-2.5 py-1 rounded">3 Lokasi Resmi Terintegrasi</span>
             </div>
+            <div className="grid md:grid-cols-3 gap-4">
+              {ULP.map(u => (
+                <a key={u.name} href={`https://www.google.com/maps/search/${encodeURIComponent(u.q)}`} target="_blank" rel="noopener noreferrer" className="group bg-white border border-gray-200 rounded-md p-4 hover:border-[#1c1a6b] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+                  <div className="flex gap-3 items-start mb-2"><span className="w-9 h-9 rounded bg-indigo-50 text-[#1c1a6b] flex items-center justify-center flex-shrink-0 group-hover:bg-[#1c1a6b] group-hover:text-white transition-colors"><Building2 className="w-4 h-4" /></span><div><p className="text-sm font-extrabold text-gray-900">{u.name}</p><p className="text-[11px] text-gray-500">{u.place}</p></div></div>
+                  <p className="text-xs text-gray-600 leading-relaxed mb-3">{u.desc}</p>
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#1c1a6b] group-hover:gap-2 transition-all">Buka di Peta<ExternalLink className="w-3 h-3" /></span>
+                </a>))}
+            </div>
+          </div>
+        </section>
+
+        {/* ===== 3. TUPOKSI ===== */}
+        <section id="tupoksi" className="scroll-mt-24">
+          {secHead(<Tag icon={<Briefcase className="w-3.5 h-3.5" />}>Tri Fungsi Imigrasi</Tag>, t.s3, 'Melaksanakan kebijakan keimigrasian secara terpadu meliputi pelayanan dokumen, perlindungan kedaulatan, penegakan hukum, dan akselerasi pertumbuhan ekonomi daerah.')}
+          <div className="grid md:grid-cols-3 gap-5">
+            {PILARS.map(p => (
+              <div key={p.n} className={`${card} p-6 flex flex-col group hover:-translate-y-2 hover:shadow-2xl hover:border-[#1c1a6b]/40 transition-all duration-500`}>
+                <span className="w-11 h-11 rounded-md bg-[#1c1a6b] text-white flex items-center justify-center mb-4 group-hover:rotate-6 group-hover:scale-110 transition-transform">{p.icon}</span>
+                <p className="text-[11px] font-bold text-gray-400 tracking-wide">PILAR {p.n}</p>
+                <h3 className="text-lg font-extrabold text-[#0f172a] mb-2">{p.t}</h3>
+                <p className="text-xs text-gray-600 leading-relaxed mb-4">{p.d}</p>
+                <ul className="mt-auto space-y-2 pt-3 border-t border-gray-100">{p.b.map(b => <li key={b} className="flex gap-2 text-xs font-semibold text-gray-800"><CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />{b}</li>)}</ul>
+              </div>))}
+          </div>
+          <div className={`${card} mt-6 p-5 md:p-6 flex gap-4 hover:shadow-lg transition-shadow`}>
+            <Network className="w-6 h-6 text-[#1c1a6b] flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="font-extrabold text-[#0f172a] mb-2">Sinergitas Antar-Lembaga dan Ketahanan Wilayah Penyangga</h3>
+              <p className="text-xs text-gray-600 leading-relaxed mb-3">Sebagai kantor keimigrasian yang berbatasan langsung dengan episentrum transportasi udara terbesar di Indonesia, Kanim Tangerang aktif menjalin koordinasi strategis lintas sektoral dengan Direktorat Jenderal Bea dan Cukai (DJBC), Badan Karantina Indonesia, <b className="text-gray-900">Kepolisian Daerah Metro Jaya & Banten</b>, serta Komando Distrik Militer (Kodim).</p>
+              <div className="flex flex-wrap gap-2">{['Rapat Koordinasi TIMPORA Berkala', 'Pertukaran Data Intelijen', 'Patroli Pengawasan Bersama Nasional'].map(c => <span key={c} className="text-[11px] font-semibold text-gray-700 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded hover:bg-[#1c1a6b] hover:text-white hover:border-[#1c1a6b] transition-colors cursor-default">{c}</span>)}</div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== 4. VISI MISI ===== */}
+        <section id="visi" className="scroll-mt-24">
+          {secHead(<Tag icon={<ScrollText className="w-3.5 h-3.5" />}>Arah Strategis Menuju Indonesia Emas 2045</Tag>, t.s4, 'Kompas fundamental yang memandu aparatur keimigrasian dalam berkinerja secara profesional, akuntabel, sinergis, transparan, dan inovatif.')}
+          <div className="relative overflow-hidden rounded-md bg-gradient-to-br from-[#1c1a6b] to-[#2a2790] text-white p-8 md:p-12 group">
+            <Quote className="absolute right-6 bottom-4 w-28 h-28 text-white/5 group-hover:text-white/10 group-hover:rotate-6 transition-all duration-700" />
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold bg-white/10 border border-white/20 px-3 py-1 rounded mb-5"><Landmark className="w-3.5 h-3.5" />VISI KEMENTERIAN IMIGRASI DAN PEMASYARAKATAN RI</span>
+            <p className="text-2xl md:text-4xl font-extrabold leading-snug mb-6 max-w-5xl">“Terwujudnya Pelayanan Keimigrasian dan Pemasyarakatan yang Modern, Transparan, Humanis, dan Berintegritas guna Menjaga Kedaulatan Negara serta Mendorong Pertumbuhan Ekonomi Nasional Menuju Indonesia Emas 2045.”</p>
+            <p className="text-xs text-indigo-200 flex flex-wrap items-center gap-3"><span>Diletakkan dalam Rencana Pembangunan Jangka Menengah Nasional</span><span className="text-yellow-300 font-bold">• Tangerang Berintegritas</span></p>
           </div>
 
-          {/* Accordion Detail Struktur */}
-          <div className="space-y-3 max-w-4xl mx-auto">
-            {t.struktur.items.map((item, idx) => (
-              <div key={idx} className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-                <button 
-                  onClick={() => setOpenAccordion(openAccordion === idx ? null : idx)}
-                  className="w-full flex items-center justify-between p-5 text-left hover:bg-gray-50 transition-colors"
-                >
-                  <div className="flex items-center space-x-4">
-                    <Users className="w-5 h-5 text-blue-600"/>
-                    <span className="font-bold text-[#0b162c]">{item.title}</span>
-                  </div>
-                  {openAccordion === idx ? <ChevronUp className="w-5 h-5 text-gray-400"/> : <ChevronDown className="w-5 h-5 text-gray-400"/>}
-                </button>
-                {openAccordion === idx && (
-                  <div className="p-5 pt-0 bg-gray-50 border-t border-gray-100 text-gray-600 text-sm leading-relaxed">
-                    {item.desc}
-                  </div>
-                )}
+          <h3 className="flex items-center gap-2 font-extrabold text-[#0f172a] mt-10 mb-4"><FolderOpen className="w-4 h-4 text-[#1c1a6b]" />Misi Kelembagaan Resmi</h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            {MISI.map(([n, ti, de]) => (
+              <div key={n} className={`${card} p-5 flex gap-4 hover:border-[#1c1a6b] hover:-translate-y-1 hover:shadow-lg transition-all duration-300 group`}>
+                <span className="w-9 h-9 rounded border border-indigo-100 bg-indigo-50 text-[#1c1a6b] text-sm font-extrabold flex items-center justify-center flex-shrink-0 group-hover:bg-[#1c1a6b] group-hover:text-white transition-colors">{n}</span>
+                <div><p className="font-extrabold text-sm text-[#0f172a] mb-1">{ti}</p><p className="text-xs text-gray-600 leading-relaxed">{de}</p></div>
+              </div>))}
+          </div>
+
+          <h3 className="flex items-center gap-2 font-extrabold text-[#0f172a] mt-10 mb-4"><Target className="w-4 h-4 text-[#1c1a6b]" />Tujuan Strategis Kinerja</h3>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {SASARAN.map(([lb, ic], i) => (
+              <div key={lb} className={`${card} p-4 flex items-center gap-3 hover:border-[#1c1a6b] hover:-translate-y-1 hover:shadow-md transition-all duration-300 group`}>
+                <span className="w-9 h-9 rounded bg-indigo-50 text-[#1c1a6b] flex items-center justify-center group-hover:bg-[#1c1a6b] group-hover:text-white group-hover:scale-110 transition-all">{ic}</span>
+                <div><p className="text-[10px] text-gray-400 font-semibold">Sasaran {String(i + 1).padStart(2, '0')}</p><p className="text-xs font-extrabold text-gray-900 leading-snug">{lb}</p></div>
+              </div>))}
+          </div>
+        </section>
+
+        {/* ===== 5. STRUKTUR ===== */}
+        <section id="struktur" className="scroll-mt-24">
+          {secHead(<Tag icon={<GitBranch className="w-3.5 h-3.5" />}>Bagan Kelembagaan Resmi</Tag>, t.s5, 'Susunan tata kelola organisasi Kantor Imigrasi Kelas I Khusus Non TPI Tangerang sesuai Keputusan Menteri Imigrasi dan Pemasyarakatan Republik Indonesia.')}
+          <div className={`${card} p-5 md:p-8`}>
+            <div className="flex flex-wrap items-start justify-between gap-2 mb-6">
+              <div><h3 className="font-extrabold text-[#0f172a]">Bagan Alur Komando & Koordinasi Teknis</h3><p className="text-xs text-gray-500">Struktur vertikal satuan kerja eselon II.b.</p></div>
+              <span className="text-[11px] font-bold text-[#1c1a6b] bg-indigo-50 border border-indigo-100 px-2.5 py-1 rounded inline-flex items-center gap-1.5"><MousePointerClick className="w-3 h-3" />Tampilan Organogram Interaktif</span>
+            </div>
+
+            <div className="max-w-3xl mx-auto">
+              <div className="max-w-xs mx-auto"><OrgNode row="kepala" dark label="Kepala Kantor Imigrasi" sub="Kelas I Khusus Non TPI Tangerang" icon={<Landmark className="w-4 h-4" />} sel={sel} onSel={setSel} /></div>
+              <div className="w-px h-6 bg-gray-300 mx-auto" />
+              <div className="max-w-sm mx-auto"><OrgNode row="tu" label="Bagian / Subbagian Tata Usaha" sub="Kepegawaian • Keuangan • Umum & Rumah Tangga" icon={<Briefcase className="w-4 h-4" />} sel={sel} onSel={setSel} /></div>
+              <div className="w-px h-6 bg-gray-300 mx-auto" />
+              <div className="relative pt-6">
+                <span className="absolute top-0 left-[12.5%] right-[12.5%] h-px bg-gray-300" />
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {[['lantaskim', 'Lantaskim', 'Lalu Lintas Keimigrasian & Paspor WNI', <Scan key="1" className="w-4 h-4" />], ['intaltuskim', 'Intaltuskim', 'Izin Tinggal & Status Keimigrasian WNA', <FileCheck2 key="2" className="w-4 h-4" />], ['inteldakim', 'Inteldakim', 'Intelijen & Penindakan Hukum Keimigrasian', <ShieldCheck key="3" className="w-4 h-4" />], ['tikim', 'TIKIM', 'Teknologi Informasi & Komunikasi Keimigrasian', <Cpu key="4" className="w-4 h-4" />]].map(([id, lb, sb, ic]) => (
+                    <div key={id as string} className="relative"><span className="hidden md:block absolute -top-6 left-1/2 w-px h-6 bg-gray-300" />
+                      <OrgNode row={id as string} label={lb as string} sub={sb as string} icon={ic as React.ReactNode} sel={sel} onSel={setSel} /></div>))}
+                </div>
               </div>
-            ))}
+              <div className="mt-6 text-center bg-slate-50 border border-dashed border-gray-300 rounded-md py-3 px-4"><p className="text-[10px] font-bold text-gray-400 tracking-wide">JABATAN FUNGSIONAL TERTENTU (JFT)</p><p className="text-sm font-extrabold text-gray-800">Kelompok Analis Keimigrasian & Pemeriksa Keimigrasian Ahli</p></div>
+
+              <div className="mt-6 min-h-[88px]">
+                {selRow ? (
+                  <div key={selRow.id} className="tk-pop border-l-4 border-[#1c1a6b] bg-indigo-50/60 rounded-r-md p-4">
+                    <div className="flex items-center gap-2 mb-1"><p className="font-extrabold text-sm text-[#0f172a]">{selRow.t}</p><span className="text-[10px] font-bold text-[#1c1a6b] bg-white border border-indigo-100 px-2 py-0.5 rounded">{selRow.tag}</span></div>
+                    <p className="text-xs text-gray-600 leading-relaxed">{selRow.d}</p>
+                  </div>
+                ) : <p className="text-xs text-gray-400 text-center pt-6">{t.hint}</p>}
+              </div>
+            </div>
+          </div>
+
+          {/* rincian */}
+          <div className={`${card} mt-6 p-5 md:p-8`}>
+            <h3 className="flex items-center gap-2 font-extrabold text-[#0f172a]"><SearchIcon className="w-4 h-4 text-[#1c1a6b]" />Rincian Uraian Divisi & Pembagian Tugas</h3>
+            <p className="text-xs text-gray-500 mb-4">Daftar divisi operasional dan fungsi manajerial yang dapat diakses oleh masyarakat umum.</p>
+            <div className="space-y-2">
+              {ROWS.map((r, i) => {
+                const on = sel === r.id;
+                return (
+                  <button key={r.id} onClick={() => setSel(r.id)} aria-pressed={on} className={`w-full text-left flex gap-4 items-start border rounded-md p-4 transition-all duration-300 hover:border-[#1c1a6b]/60 hover:translate-x-1 ${on ? 'border-[#1c1a6b] bg-indigo-50/60 shadow-md' : 'border-gray-200 bg-white'}`}>
+                    <span className={`w-7 h-7 rounded text-xs font-extrabold flex items-center justify-center flex-shrink-0 transition-colors ${on ? 'bg-[#1c1a6b] text-white' : 'bg-indigo-50 text-[#1c1a6b]'}`}>{i + 1}</span>
+                    <span className="flex-1 min-w-0"><span className="block text-sm font-extrabold text-[#0f172a]">{r.t}</span><span className="block text-xs text-gray-600 leading-relaxed mt-0.5">{r.d}</span></span>
+                    <span className="hidden sm:block text-[11px] font-bold text-gray-600 bg-gray-50 border border-gray-200 px-2.5 py-1 rounded flex-shrink-0">{r.tag}</span>
+                  </button>);
+              })}
+            </div>
           </div>
         </section>
+      </main>
 
-      </div>
-      <Footer/>
+      <Footer />
+
+      {scrollY > 600 && <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label={t.top} className="tk-pop fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full bg-[#1c1a6b] text-white shadow-xl flex items-center justify-center hover:-translate-y-1 active:scale-90 transition-all"><ArrowUp className="w-5 h-5" /></button>}
     </div>
   );
 }
